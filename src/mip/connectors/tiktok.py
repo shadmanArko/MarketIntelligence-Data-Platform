@@ -18,7 +18,7 @@ from mip.core.types import EntityRef, HealthStatus, RateLimitPolicy, RawRecord, 
 from mip.db import connect
 
 MAX_VIDEOS = 200
-DETAIL_VIDEOS = 40
+DETAIL_VIDEOS = 12  # full metadata (shares, saves, music) only for the most recent videos
 KEEP = ("id", "title", "description", "timestamp", "upload_date", "duration", "view_count", "like_count",
         "comment_count", "repost_count", "save_count", "track", "artist", "artists", "album", "creator", "uploader",
         "uploader_id", "channel", "channel_id", "channel_follower_count", "webpage_url", "thumbnail", "tags",
@@ -47,7 +47,7 @@ def _ydl(flat: bool, end: int | None = None) -> yt_dlp.YoutubeDL:
 @register
 class TikTok:
     source: ClassVar[str] = "tiktok"
-    version: ClassVar[str] = "1.0.0"
+    version: ClassVar[str] = "1.0.1"
     rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=1, per_seconds=2.5, jitter=(0.3, 1.5))
     contracts: ClassVar[dict[str, type[BaseModel]]] = {"profile": Profile, "video": Video}
 
@@ -103,9 +103,26 @@ class TikTok:
                                                      **{k: v for k, v in info.items() if k in KEEP or k in (
                                                          "uploader", "channel_id", "description")},
                                                      "videos": videos}, {"url": url}, 200)
-        for v in videos[:DETAIL_VIDEOS]:
-            if v.get("id"):
-                yield EntityRef("video", str(v["id"]), {"handle": ref.natural_key}, priority=50)
+        if self._plausible(ref.natural_key, info):
+            for v in videos[:DETAIL_VIDEOS]:
+                if v.get("id"):
+                    yield EntityRef("video", str(v["id"]), {"handle": ref.natural_key}, priority=50)
+
+    def _plausible(self, handle: str, info: dict) -> bool:
+        """Spend per-video requests only on profiles that look like the business that linked them."""
+        from rapidfuzz import fuzz
+
+        bid = None
+        with connect() as c:
+            row = c.execute("select b.name_key from core.social_link_candidate s join core.business b using (business_id)"
+                            " where s.platform='tiktok' and s.handle=%s or s.platform='instagram' and s.handle=%s limit 1",
+                            (handle, handle)).fetchone()
+            bid = row["name_key"] if row else None
+        if not bid:
+            return False
+        h = handle.replace(".", " ").replace("_", " ")
+        name = (info.get("uploader") or info.get("channel") or "") + " " + h
+        return fuzz.token_set_ratio(bid, name.lower()) >= 60
 
     def _video(self, ref: EntityRef) -> Iterator[RawRecord]:
         url = f"https://www.tiktok.com/@{ref.params['handle']}/video/{ref.natural_key}"

@@ -14,4 +14,4 @@ jobs:
       - run: uv run ruff check src tests
       - run: uv run mip db migrate
       - run: uv run pytest -q
-      - run: uv run mip transform
+      - run: uv run dbt parse --project-dir dbt --profiles-dir dbt   # full build needs data; runs locally

@@ -1,0 +1,435 @@
+[
+ {
+  "filtering": {
+   "filters": [
+    {
+     "id": "primary",
+     "values": [
+      "american",
+      "burgers"
+     ]
+    },
+    {
+     "id": "price-range",
+     "values": [
+      "price-range-1"
+     ]
+    },
+    {
+     "id": "wolt-plus",
+     "values": []
+    }
+   ]
+  },
+  "image": {
+   "blurhash": "jbVqsZOT9rKW;WKSNmpC;zh7RRFS",
+   "url": "https://imageproxy.wolt.com/mes-image/3f3fa004-34bd-4063-aa5e-7b97fb82fb18/6057af35-9a43-4f51-a655-96a79fbdb915"
+  },
+  "link": {
+   "selected_delivery_method": "homedelivery",
+   "target": "6389fa31cf1fb21ef5d3b5d9",
+   "target_sort": "delivers-to",
+   "target_title": "",
+   "title": "",
+   "type": "venue-id",
+   "venue_mainimage_blurhash": "jaVqx0TaeHTa;GqCNCFC;yd6Nllm",
+   "view_name": "venue"
+  },
+  "sorting": {
+   "sortables": [
+    {
+     "id": "delivery-price",
+     "value": 0
+    },
+    {
+     "id": "rating",
+     "value": 101
+    },
+    {
+     "id": "delivery-estimate",
+     "value": 6
+    },
+    {
+     "id": "distance",
+     "value": 13
+    },
+    {
+     "id": "preparation-estimate",
+     "value": 150
+    }
+   ]
+  },
+  "telemetry_object_id": "6ac036fbb71e4051806b1012",
+  "telemetry_venue_badges": [],
+  "template": "venue-large",
+  "title": "McDonald's Friedrichstrasse",
+  "track_id": "venue-mcdonalds-friedrichstrae",
+  "venue": {
+   "address": "Friedrichstraße 141-142",
+   "badges": [],
+   "badges_v2": [],
+   "brand_image": {
+    "blurhash": "U7C?G0fQ0TfQj@fQ9|fQ0BfQ}-fQWWfQ^KfQ",
+    "url": "https://imageproxy.wolt.com/mes-image/3f3fa004-34bd-4063-aa5e-7b97fb82fb18/f65099b2-a037-4470-ad76-326707310ae0"
+   },
+   "categories": [],
+   "city": "",
+   "country": "DEU",
+   "currency": "EUR",
+   "delivers": true,
+   "delivery_highlight": false,
+   "delivery_price_highlight": false,
+   "delivery_within_time_range": false,
+   "estimate": 25,
+   "estimate_box": {
+    "subtitle": "min",
+    "template": "estimate",
+    "title": "20-30"
+   },
+   "estimate_range": "20-30",
+   "franchise": "",
+   "id": "6389fa31cf1fb21ef5d3b5d9",
+   "location": [
+    13.386396,
+    52.520297
+   ],
+   "name": "McDonald's Friedrichstrasse",
+   "online": true,
+   "price_range": 1,
+   "product_line": "restaurant",
+   "promotions": [],
+   "promotions_for_telemetry": [],
+   "rating": {
+    "rating": 3,
+    "score": 7.2,
+    "volume": 576
+   },
+   "short_description": "I'm lovin' it",
+   "short_description_v2": {
+    "lang": "en",
+    "value": "I'm lovin' it"
+   },
+   "show_best_of_wolt": false,
+   "show_wolt_plus": false,
+   "show_zero_markup": false,
+   "slug": "mcdonalds-friedrichstrae",
+   "tags": [
+    "burger"
+   ],
+   "venue_preview_items": [
+    {
+     "currency": "EUR",
+     "id": "64ab9df9cf970316dbd531b1",
+     "image": {
+      "blurhash": "UEBXDKW:10so5njt=vWVI=ayxYoL}qfj5nf6",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/6903698902cb3146a9cca155/722313d8-ea88-11f0-95be-766103c5de79_wlt_gui_de_main_2110.png"
+     },
+     "name": "9 Chicken McNuggets®",
+     "price": 939
+    },
+    {
+     "currency": "EUR",
+     "id": "64ab9df9cf970316dbd531af",
+     "image": {
+      "blurhash": "UFD0#tt70LM{56WB=|oz0fWB^jt7~Vt756M{",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/6903698902cb3146a9cca155/7221d89c-ea88-11f0-95be-766103c5de79_wlt_gui_de_main_2120.png"
+     },
+     "name": "20 Chicken McNuggets®",
+     "price": 1379
+    },
+    {
+     "currency": "EUR",
+     "id": "64f85d0a28762598d3ac01a3",
+     "image": {
+      "blurhash": "U9C?}SjY0MXSx[w^M{Aa1HkV}ZVtELJT-V;|",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/6618f14ea9e19fafef526fbb/373943b0-4388-11f1-8e26-b29c37cadde7_wlt_gui_de_main_2838.png"
+     },
+     "name": "Big Mac® McMenü®",
+     "price": 1459
+    },
+    {
+     "currency": "EUR",
+     "id": "64f85d0a28762598d3ac01bb",
+     "image": {
+      "blurhash": "U6DT5*wc02BVF|$g#75;1HS#}Z#S$wJUSj[:",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/64fecc3f4ede3d193eb0e5fb/4378c3fe-4373-11f1-9f10-a2fa0c527cd4_wlt_gui_de_main_2846.png"
+     },
+     "name": "9 Chicken McNuggets® McMenü®",
+     "price": 1429
+    },
+    {
+     "currency": "EUR",
+     "id": "64f85d0a28762598d3ac01ad",
+     "image": {
+      "blurhash": "U9DA3pw]02F2k;w^a0F10zX8}@rYXNNwr_;|",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/68a6df87150eda287f66b48c/79eb2d06-4395-11f1-a912-cabb79f235da_wlt_gui_de_main_6539.png"
+     },
+     "name": "Big Tasty® Bacon McMenü®",
+     "price": 1629
+    },
+    {
+     "currency": "EUR",
+     "id": "64f85d0a28762598d3ac01b5",
+     "image": {
+      "blurhash": "U8C?}Sn$02S$tk$NR6Aa0|bu}tixX4E$nm]*",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/66e7f3722d353d1d431a0cfd/39201796-4381-11f1-91d1-ee90062544d7_wlt_gui_de_main_2840.png"
+     },
+     "name": "Hamburger Royal Cheese McMenü®",
+     "price": 1389
+    },
+    {
+     "currency": "EUR",
+     "id": "64f85d0a28762598d3ac01b1",
+     "image": {
+      "blurhash": "U8C@1asS02OFxu$NRPAu0|bu}tn5J~JAwh]j",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/6618f14ea9e19fafef526fbb/373c1432-4388-11f1-8e26-b29c37cadde7_wlt_gui_de_main_2839.png"
+     },
+     "name": "Hamburger Royal TS McMenü®",
+     "price": 1479
+    },
+    {
+     "currency": "EUR",
+     "id": "64ab9df9cf970316dbd53193",
+     "image": {
+      "blurhash": "UA9j0~jr03R:0gof^iWA0NR*~Axt~9od59Rl",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/698b2408403eceb5d7f692a2/3d58a934-b764-11f1-abc7-0e7508fae476_wlt_gui_de_main_6474.png"
+     },
+     "name": "Big Tasty® Bacon",
+     "price": 1029
+    },
+    {
+     "currency": "EUR",
+     "id": "64f85d0a28762598d3ac01bd",
+     "image": {
+      "blurhash": "U4DA0g=t0115C7wJ+ZBo1aS~]:#8I-Fd%3{z",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/638deede90a06c4bb8541910/0bbca612-4376-11f1-a609-92bdb90f07d9_wlt_gui_de_main_2843.png"
+     },
+     "name": "6 Chicken McNuggets® McMenü®",
+     "price": 1379
+    }
+   ]
+  }
+ },
+ {
+  "filtering": {
+   "filters": [
+    {
+     "id": "primary",
+     "values": [
+      "american",
+      "burgers"
+     ]
+    },
+    {
+     "id": "price-range",
+     "values": [
+      "price-range-1"
+     ]
+    },
+    {
+     "id": "wolt-plus",
+     "values": []
+    }
+   ]
+  },
+  "image": {
+   "blurhash": "jdLWGjhlPchn4xJBlmKW7LOXlmGC",
+   "url": "https://imageproxy.wolt.com/assets/67335dba5d1bf94a0f05fd43"
+  },
+  "link": {
+   "selected_delivery_method": "homedelivery",
+   "target": "664620c143744630e54bd67d",
+   "target_sort": "delivers-to",
+   "target_title": "",
+   "title": "",
+   "type": "venue-id",
+   "venue_mainimage_blurhash": "j3Fp5Z;c7;0h8z0101Lr2:NiZi;K",
+   "view_name": "venue"
+  },
+  "sorting": {
+   "sortables": [
+    {
+     "id": "delivery-price",
+     "value": 1
+    },
+    {
+     "id": "rating",
+     "value": 31
+    },
+    {
+     "id": "delivery-estimate",
+     "value": 0
+    },
+    {
+     "id": "distance",
+     "value": 3
+    },
+    {
+     "id": "preparation-estimate",
+     "value": 146
+    }
+   ]
+  },
+  "telemetry_object_id": "6ac036fbb71e4051806b1013",
+  "telemetry_venue_badges": [],
+  "template": "venue-large",
+  "title": "Burgermeister Alexanderplatz",
+  "track_id": "venue-burgermeister-alexanderplatz",
+  "venue": {
+   "address": "Dircksenstr. 112-113",
+   "badges": [],
+   "badges_v2": [],
+   "brand_image": {
+    "blurhash": "UGSs50WBoffQWBjtofay~qofayj[xuayRjj[",
+    "url": "https://imageproxy.wolt.com/mes-image/2b68a5f5-999e-4af3-ad34-5d26a9d5d72e/1492c70d-1f7b-45c7-bb3b-06189cf122e5"
+   },
+   "categories": [],
+   "city": "",
+   "country": "DEU",
+   "currency": "EUR",
+   "delivers": true,
+   "delivery_highlight": false,
+   "delivery_price_highlight": false,
+   "delivery_within_time_range": false,
+   "estimate": 20,
+   "estimate_box": {
+    "subtitle": "min",
+    "template": "estimate",
+    "title": "15-25"
+   },
+   "estimate_range": "15-25",
+   "franchise": "",
+   "id": "664620c143744630e54bd67d",
+   "location": [
+    13.41308,
+    52.52026
+   ],
+   "name": "Burgermeister Alexanderplatz",
+   "online": true,
+   "price_range": 1,
+   "product_line": "restaurant",
+   "promotions": [],
+   "promotions_for_telemetry": [],
+   "rating": {
+    "rating": 3,
+    "score": 8.4,
+    "volume": 528
+   },
+   "short_description": "The Classic Berlin Burger 🍔",
+   "short_description_v2": {
+    "lang": "en",
+    "value": "The Classic Berlin Burger 🍔"
+   },
+   "show_best_of_wolt": false,
+   "show_wolt_plus": false,
+   "show_zero_markup": false,
+   "slug": "burgermeister-alexanderplatz",
+   "tags": [
+    "burger",
+    "hamburger"
+   ],
+   "venue_preview_items": [
+    {
+     "currency": "EUR",
+     "id": "55695b6c182aff923454a0ed",
+     "image": {
+      "blurhash": "UfSPIXof.Tt7soayozkB.9j[I9WVx]j[V@WC",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/67285d7cf17c3ea335d8fc88/469dd95a-750c-11f1-86fc-b2b26e5adfa7_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvqk1fqlvsr0vsx0nisuxjluniruvtrujvukdfui1qag90b3jvb20tnjkzytc0zdq5yje1zgvhmmjmytnlmzdmlnbuzw__.jpeg"
+     },
+     "name": "CHILI-CHEESEBURGER",
+     "price": 900
+    },
+    {
+     "currency": "EUR",
+     "id": "235250a4e1019b3af87c3b56",
+     "image": {
+      "blurhash": "UnR:1tj]?wxtniazo}j[.8oeIAWBxuj[V@ay",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/68b04d3696b7e6fa774f954e/9d85ac98-88d0-11f1-98cd-62bb17d1edc3_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvqk1fqlvsr0vsx01fsvnurvitquxmrvits0xbu1nfti1qag90b3jvb20tnjkzytc1mwrhnmzkmtc1zjmzmzy3mjy3lnbuzw__.jpeg"
+     },
+     "name": "MEISTER ALLER KLASSEN®",
+     "price": 1300
+    },
+    {
+     "currency": "EUR",
+     "id": "e28b65596c4374fae99690af",
+     "image": {
+      "blurhash": "UhSPFPoM.Txus:ayf+j[.9ofI9WBtRj[i{ae",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/66ac87fa4e7f9a629fb77989/05e1acf8-8b2c-11f1-8e1a-8e8c135f6e2f_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvqk1fqlvsr0vsx0zmrultq0hfuk1fsvnurvitughvdg9yb29tlty5m2e3ngvkymy4nzy2n2m0y2uyzwzhzs5wbmc_.jpeg"
+     },
+     "name": "FLEISCHERMEISTER",
+     "price": 1290
+    },
+    {
+     "currency": "EUR",
+     "id": "3c96cd64e379b83fd47d2d23",
+     "image": {
+      "blurhash": "UeSYz1of.TxtxHa|buj[.9oLH?WCtRj[nPay",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/66505a8f5d0adccad4961e7f/b93b8428-83fb-11f1-b15c-0613e84e86e9_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvqk1fqlvsr0vsx1dbternrultvevslvbob3rvcm9vbs02otnhnzu1nthkntk2ndk5ntc3ytexotmucg5n.jpeg"
+     },
+     "name": "WALDMEISTER® (VEGGIE)",
+     "price": 920
+    },
+    {
+     "currency": "EUR",
+     "id": "589961b7a65c2dd6ad06f09f",
+     "image": {
+      "blurhash": "UmS5|qe..Tx]%hkCROaeyDaxR5j^VYj[tRWB",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/664ef169045289403812d27b/ff2ef4f0-7e7a-11f1-9cc9-eae346a101db_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvy2hlzxnlynvyz2vylw1lbnutnjkzytcwymeymgy4zjyyogy5yzy2mzy5lnbuzw__.jpeg"
+     },
+     "name": "Cheeseburger Menü",
+     "price": 1630
+    },
+    {
+     "currency": "EUR",
+     "id": "e7e87646c7e009642c63edb8",
+     "image": {
+      "blurhash": "UlS66^of.Txts9aykWj[.9j[D$WCxuj[aKWV",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/66ac87fa4e7f9a629fb77989/05e882c6-8b2c-11f1-8e1a-8e8c135f6e2f_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvqk1fqlvsr0vsx01fsvnurvjcvvjhrvitughvdg9yb29tlty5m2e3ntm3ogq1oty0otk1nzdhmte5mc5wbmc_.jpeg"
+     },
+     "name": "MEISTERBURGER",
+     "price": 1050
+    },
+    {
+     "currency": "EUR",
+     "id": "88297e046d96591807739e1b",
+     "image": {
+      "blurhash": "UmS66^og.Tt6s9aykWj[.8jZIAbHtRj[i_ae",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/66ac87fa4e7f9a629fb77989/05ec91c2-8b2c-11f1-8e1a-8e8c135f6e2f_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvqk1fqlvsr0vsx0hbvvnnrultvevslvbob3rvcm9vbs02otnhnzuwm2rmm2nlmzgxzmu3mmuxmmuucg5n.jpeg"
+     },
+     "name": "HAUSMEISTER®",
+     "price": 1050
+    },
+    {
+     "currency": "EUR",
+     "id": "e225aa00ed4e76f095d959ad",
+     "image": {
+      "blurhash": "UPSr_vt7?wxt.9jsMxa$x^j[MwWCVqa#x^ob",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/68b04d3696b7e6fa774f954e/9d7d0a02-88d0-11f1-98cd-62bb17d1edc3_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvv29sdg1laxn0zxilmjayltzhmjgwodbmzdjhmtm1ywq2ogm1m2exyi5wbmc_.jpeg"
+     },
+     "name": "Woltmeister Menü",
+     "price": 1650
+    },
+    {
+     "currency": "EUR",
+     "id": "2120b9cc802af25590d9a854",
+     "image": {
+      "blurhash": "UnR._bWB.T%M-=ofM_WAx^axR5j^RObItRe-",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/68b04d3696b7e6fa774f954e/06ef8980-8b2c-11f1-965f-86bb3b880c0d_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvbwfrlw1lbnutnjkzytcwztq2yme4njnhndhjogywnjdklnbuzw__.jpeg"
+     },
+     "name": "Meister aller Klassen Menü",
+     "price": 2090
+    },
+    {
+     "currency": "EUR",
+     "id": "591e313b570c613451a239ca",
+     "image": {
+      "blurhash": "UnR{c3ae.Tx]%hofROadtmaxR5oNROj]tRWA",
+      "url": "https://wolt-menu-images-cdn.wolt.com/menu-images/68b04d3696b7e6fa774f954e/06f13c4e-8b2c-11f1-965f-86bb3b880c0d_ahr0chm6ly9zdg9yywdllmdvb2dszwfwaxmuy29tl2lrb25hlwj1y2tldc1wcm9kdwn0aw9ul2ltywdlcy82mgvlytq5ntyzm2ywzteyztg0ymy4otkvd2fszg1laxn0zxitbwvuds02otnhnzbmowjmodc2njdjngnlmmvmowiucg5n.jpeg"
+     },
+     "name": "Waldmeister (Veggie) Menü",
+     "price": 1710
+    }
+   ]
+  }
+ }
+]

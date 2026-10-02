@@ -1,0 +1,193 @@
+[
+ {
+  "id": "10614123",
+  "name": "The Mood Burger",
+  "uniqueName": "the-mood-burger-mitte",
+  "address": {
+   "city": "Berlin",
+   "firstLine": "Große Hamburger Straße 23",
+   "postalCode": "10115",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     13.399642,
+     52.523914
+    ]
+   }
+  },
+  "rating": {
+   "count": 2119,
+   "starRating": 4.5,
+   "userRating": null
+  },
+  "isNew": false,
+  "driveDistanceMeters": 1194,
+  "openingTimeLocal": "2026-10-03T11:00:00",
+  "deliveryOpeningTimeLocal": "2026-10-03T00:00:00",
+  "deliveryEtaMinutes": {
+   "rangeLower": 35,
+   "rangeUpper": 50
+  },
+  "isCollection": true,
+  "isDelivery": true,
+  "isOpenNowForCollection": true,
+  "isOpenNowForDelivery": true,
+  "isOpenNowForPreorder": false,
+  "isTemporarilyOffline": false,
+  "deliveryCost": 1.99,
+  "minimumDeliveryValue": 12,
+  "defaultDisplayRank": 0,
+  "isTemporaryBoost": false,
+  "isPremier": false,
+  "logoUrl": "https://res.cloudinary.com/tkwy-prod-eu/image/upload/c_pad,h_100,w_100/f_auto/q_auto/v1/static-takeaway-com/images/chains/de/the_mood_burger/logo_465x320.png",
+  "isTestRestaurant": false,
+  "deals": [
+   {
+    "description": "50% off selected items",
+    "offerType": "ItemLevelDiscount"
+   },
+   {
+    "description": "50% off selected items",
+    "offerType": "ItemLevelDiscount"
+   },
+   {
+    "description": "50% off selected items",
+    "offerType": "ItemLevelDiscount"
+   },
+   {
+    "description": "",
+    "offerType": "StampCard"
+   }
+  ],
+  "tags": [],
+  "cuisines": [
+   {
+    "name": "Burgers",
+    "uniqueName": "burger"
+   },
+   {
+    "name": "100% Halal",
+    "uniqueName": "100-percent-halal"
+   },
+   {
+    "name": "Offers",
+    "uniqueName": "offers"
+   }
+  ],
+  "availability": {
+   "delivery": {
+    "isOpen": true,
+    "canPreOrder": false,
+    "isTemporarilyOffline": false,
+    "nextAvailability": {
+     "from": "2026-10-03T11:00:00"
+    },
+    "etaMinutes": {
+     "rangeLower": 35,
+     "rangeUpper": 50
+    }
+   },
+   "collection": {
+    "isOpen": true,
+    "canPreOrder": false,
+    "isTemporarilyOffline": false,
+    "nextAvailability": {
+     "from": "2026-10-03T11:00:00"
+    },
+    "etaMinutes": {
+     "approximate": 15
+    }
+   }
+  }
+ },
+ {
+  "id": "10468613",
+  "name": "McDonald's®",
+  "uniqueName": "mcdonalds-berlin-bhf-friedrichstrasse",
+  "address": {
+   "city": "Berlin",
+   "firstLine": "Friedrichstraße 141-142",
+   "postalCode": "10117",
+   "location": {
+    "type": "Point",
+    "coordinates": [
+     13.386652,
+     52.520298
+    ]
+   }
+  },
+  "rating": {
+   "count": 368,
+   "starRating": 3.4,
+   "userRating": null
+  },
+  "isNew": false,
+  "driveDistanceMeters": 481,
+  "openingTimeLocal": "2026-10-03T10:30:00",
+  "deliveryOpeningTimeLocal": "2026-10-03T00:00:00",
+  "deliveryEtaMinutes": {
+   "rangeLower": 35,
+   "rangeUpper": 50
+  },
+  "isCollection": false,
+  "isDelivery": true,
+  "isOpenNowForCollection": false,
+  "isOpenNowForDelivery": true,
+  "isOpenNowForPreorder": false,
+  "isTemporarilyOffline": false,
+  "deliveryCost": 0.99,
+  "minimumDeliveryValue": 10,
+  "defaultDisplayRank": 1,
+  "isTemporaryBoost": false,
+  "isPremier": false,
+  "logoUrl": "https://res.cloudinary.com/tkwy-prod-eu/image/upload/c_pad,h_100,w_100/f_auto/q_auto/v1/static-takeaway-com/images/chains/de/mcdonalds/logo_465x320.png",
+  "isTestRestaurant": false,
+  "deals": [
+   {
+    "description": "2-for-1",
+    "offerType": "Bogof"
+   },
+   {
+    "description": "2-for-1",
+    "offerType": "Bogof"
+   }
+  ],
+  "tags": [],
+  "cuisines": [
+   {
+    "name": "American",
+    "uniqueName": "american-food"
+   },
+   {
+    "name": "Burgers",
+    "uniqueName": "burger"
+   },
+   {
+    "name": "Wraps",
+    "uniqueName": "wraps"
+   },
+   {
+    "name": "Offers",
+    "uniqueName": "offers"
+   },
+   {
+    "name": "Football Deals",
+    "uniqueName": "football-deals"
+   }
+  ],
+  "availability": {
+   "delivery": {
+    "isOpen": true,
+    "canPreOrder": false,
+    "isTemporarilyOffline": false,
+    "nextAvailability": {
+     "from": "2026-10-03T10:30:00"
+    },
+    "etaMinutes": {
+     "rangeLower": 35,
+     "rangeUpper": 50
+    }
+   }
+  }
+ }
+]
