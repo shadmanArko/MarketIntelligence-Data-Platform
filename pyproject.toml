@@ -31,6 +31,8 @@ dependencies = [
   "instaloader>=4.13",
   "yt-dlp>=2024.10",
   "lingua-language-detector>=2.0",
+  "holidays>=0.105",
+  "convertdate>=2.5.1",
 ]
 
 [dependency-groups]

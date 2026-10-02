@@ -199,6 +199,18 @@ wheels = [
 ]
 
 [[package]]
+name = "convertdate"
+version = "2.5.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pymeeus" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fa/ae/9169c1aec7b66002b95a793c996710fd4e78abad24d1ce941b29e2c88a92/convertdate-2.5.1.tar.gz", hash = "sha256:8ade438cced7eae579e622f3f54354e52609840f597f7b09a16d7789a15d4e0a", size = 52984, upload-time = "2026-09-13T21:20:17.633Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2e/34/b05d803dad6234b4cd1e724c2190bfdd1fb022df20a4c00d26dcbe9ab4d5/convertdate-2.5.1-py3-none-any.whl", hash = "sha256:f78f2c06d27825e6926aa14b2824845b7aeacbfbe426e8097681f160b12bb724", size = 47934, upload-time = "2026-09-13T21:20:16.529Z" },
+]
+
+[[package]]
 name = "courlan"
 version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -543,6 +555,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ab/5f/311725e2a905534dfee2dcb5b08414f249147f1f12252bfc2bd24caa075c/hf_xet-1.6.0-cp38-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:8fb4f71cba6129110c3374a33f919001ff130488fc23553698e34cc1c2a1198c", size = 4675937, upload-time = "2026-08-03T22:33:08.616Z" },
     { url = "https://files.pythonhosted.org/packages/98/b7/8c59a66d15205024662f1d66968136f13893f96df1ddc5087e2e281fc95f/hf_xet-1.6.0-cp38-abi3-win_amd64.whl", hash = "sha256:fb4fadde1b2b70bf4c0c14a6dccbe7194b1c28947fefd5bbe3fed9d940676c3b", size = 4033128, upload-time = "2026-08-03T22:33:10.171Z" },
     { url = "https://files.pythonhosted.org/packages/73/63/ca511b6f802f28cf3489b280fe77475bcca8de85e81a6299d7916b5b5555/hf_xet-1.6.0-cp38-abi3-win_arm64.whl", hash = "sha256:3dc3e35441ba395006af5aaacc40ef2e603c51ef46c3530b9156185f00935ea3", size = 3859359, upload-time = "2026-08-03T22:33:11.725Z" },
+]
+
+[[package]]
+name = "holidays"
+version = "0.105"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "python-dateutil" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5b/b7/b0563bf091ff8089a8a4299068236d277c299e13b5809afeaa99b0c11280/holidays-0.105.tar.gz", hash = "sha256:fc9abc0c187b62e955f92aa12dbe7ed1998cc94712f295ec9244db788594d662", size = 1039659, upload-time = "2026-09-21T21:32:01.423Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9e/d0/dbc6c50f190ed0c32e4ebca037bff252280b0707049ee95825f4e8c3cc19/holidays-0.105-py3-none-any.whl", hash = "sha256:7fbd87770f1128eb24514fbb4c3ec6afa1c72d65c346713dbc13c2d0297df481", size = 1637790, upload-time = "2026-09-21T21:31:59.345Z" },
 ]
 
 [[package]]
@@ -981,10 +1005,12 @@ name = "mip"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "convertdate" },
     { name = "curl-cffi" },
     { name = "duckdb" },
     { name = "extruct" },
     { name = "h3" },
+    { name = "holidays" },
     { name = "httpx", extra = ["http2"] },
     { name = "huggingface-hub" },
     { name = "instaloader" },
@@ -1022,10 +1048,12 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "convertdate", specifier = ">=2.5.1" },
     { name = "curl-cffi", specifier = ">=0.7" },
     { name = "duckdb", specifier = ">=1.1" },
     { name = "extruct", specifier = ">=0.17" },
     { name = "h3", specifier = ">=4.1" },
+    { name = "holidays", specifier = ">=0.105" },
     { name = "httpx", extras = ["http2"], specifier = ">=0.27" },
     { name = "huggingface-hub", specifier = ">=0.25" },
     { name = "instaloader", specifier = ">=4.13" },
@@ -1465,6 +1493,12 @@ sdist = { url = "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da
 wheels = [
     { url = "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl", hash = "sha256:2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9", size = 1250147, upload-time = "2026-08-17T08:02:44.912Z" },
 ]
+
+[[package]]
+name = "pymeeus"
+version = "0.5.12"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/81/76/599896b37e60f43078afd8354b3802eb7ca257a7e7f6253cc21c4c672877/PyMeeus-0.5.12.tar.gz", hash = "sha256:548f7186bd8b96cbc069cf649a8e8e377dce49ac74486709849fe63a99cad684", size = 5752712, upload-time = "2022-12-11T11:37:48.504Z" }
 
 [[package]]
 name = "pyparsing"

@@ -19,7 +19,7 @@ market:
     instagram_graph:  { enabled: true }
     instaloader:      { enabled: false }
     tiktok:           { enabled: true }
-    web_crawl:        { enabled: true, seeds: seeds/berlin_food_media.txt, max_depth: 2 }
+    web_crawl:        { enabled: true, seeds: seeds/berlin_food_media.txt, max_depth: 2, respect_robots: true }
     serp:             { enabled: true, provider: free, devices: [mobile, desktop] }
     keyword_volume:   { enabled: false, provider: dataforseo }      # paid
     crux:             { enabled: true, country: de }
