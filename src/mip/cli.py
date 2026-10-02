@@ -16,10 +16,12 @@ db_app = typer.Typer(no_args_is_help=True, help="Database migrations and mainten
 geo_app = typer.Typer(no_args_is_help=True, help="Boundary and H3 grid")
 ds_app = typer.Typer(no_args_is_help=True, help="Bulk datasets: download once, register, load to raw")
 er_app = typer.Typer(no_args_is_help=True, help="Entity resolution")
+ml_app = typer.Typer(no_args_is_help=True, help="Versioned ML training-set exports")
 app.add_typer(db_app, name="db")
 app.add_typer(geo_app, name="geo")
 app.add_typer(ds_app, name="datasets")
 app.add_typer(er_app, name="resolve")
+app.add_typer(ml_app, name="ml")
 console = Console()
 
 Market = Annotated[str, typer.Option("--market", "-m", help="market id, e.g. berlin-food")]
@@ -245,6 +247,27 @@ def er_social() -> None:
     from mip.resolution.social import resolve_social
 
     resolve_social()
+
+
+@ml_app.command("export")
+def ml_export_cmd(name: str = typer.Argument("business_features"),
+                  as_of: str | None = typer.Option(None, help="cut-off timestamp (UTC); default now")) -> None:
+    """Build point-in-time features as of a cut-off and write a registered, versioned Parquet set."""
+    from mip.ml_export import export
+
+    export(name, as_of)
+
+
+@ml_app.command("list")
+def ml_list() -> None:
+    from mip.db import connect
+
+    with connect() as c:
+        t = Table("name", "version", "as of", "rows", "features", "git", "path")
+        for r in c.execute("SELECT * FROM ml.training_sets ORDER BY name, version"):
+            t.add_row(r["name"], str(r["version"]), str(r["as_of"])[:19], f"{r['row_count']:,}",
+                      str(len(r["feature_list"])), r["git_commit"] or "", r["path"])
+        console.print(t)
 
 
 @app.command()

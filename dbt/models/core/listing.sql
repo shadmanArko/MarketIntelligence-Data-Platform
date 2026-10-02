@@ -8,7 +8,8 @@
 with agg as (
   select
     listing_key, listing_id, platform, platform_id,
-    {% for c in latest %}(array_agg({{ c }} order by observed_at desc) filter (where {{ c }} is not null))[1] as {{ c }},
+    {% for c in latest %}(array_agg({{ c }} order by observed_at desc) filter (where {{ c }} is not null
+      {%- if c == 'price_range' %} and price_range between 1 and 4{% endif %}))[1] as {{ c }},
     {% endfor %}
     (array_agg(lat order by (obs_kind in ('venue_static', 'menu_manifest', 'place', 'poi')) desc, observed_at desc)
        filter (where lat is not null))[1] as lat,

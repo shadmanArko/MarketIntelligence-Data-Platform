@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: listing
+    description: One business on one platform (current state). History in listing_history, numbers in listing_snapshot.
+    tests:
+      - min_rows: {min_count: 10000}
+    columns:
+      - name: listing_id
+        tests: [unique, not_null]
+      - name: listing_key
+        tests: [unique, not_null]
+      - name: platform
+        tests:
+          - not_null
+          - accepted_values: {values: [wolt, lieferando, uber_eats, google_maps, osm, overture, foursquare, tripadvisor]}
+      - name: lat
+        tests: [{between: {arguments: {min_value: 52.3, max_value: 52.7}, config: {where: "in_market"}}}]
+      - name: lon
+        tests: [{between: {arguments: {min_value: 13.0, max_value: 13.8}, config: {where: "in_market"}}}]
+      - name: price_range
+        tests: [{between: {min_value: 1, max_value: 4}}]
+
+  - name: listing_snapshot
+    columns:
+      - name: listing_id
+        tests:
+          - not_null
+          - relationships: {to: ref('listing'), field: listing_id}
+      - name: rating_norm
+        tests: [{between: {min_value: 0, max_value: 1}}]
+      - name: rating_count
+        tests: [{between: {min_value: 0}}]
+      - name: order_minimum
+        tests: [{between: {arguments: {min_value: 0, max_value: 150}, config: {where: "outlier_reason is null"}}}]
+      - name: base_delivery_fee
+        tests: [{between: {arguments: {min_value: 0, max_value: 30}, config: {where: "outlier_reason is null"}}}]
+
+  - name: listing_history
+    tests:
+      - unique_combination: {columns: [listing_id, valid_from]}
+
+  - name: coverage_observation
+    columns:
+      - name: listing_id
+        tests: [not_null]
+
+  - name: offering
+    columns:
+      - name: offering_id
+        tests: [unique, not_null]
+      - name: listing_id
+        tests:
+          - not_null
+          - relationships: {to: ref('listing'), field: listing_id}
+
+  - name: offering_price_snapshot
+    columns:
+      - name: price
+        tests: [not_null, {between: {arguments: {min_value: 0.01, max_value: 500}, config: {where: "outlier_reason is null"}}}]
+      - name: discount_share
+        tests: [{between: {min_value: 0, max_value: 1}}]
+
+  - name: review
+    columns:
+      - name: review_id
+        tests: [unique, not_null]
+      - name: rating_norm
+        tests: [{between: {min_value: 0, max_value: 1}}]
+
+  - name: business
+    description: One real-world business across all platforms; id owned by ops.business_assignment.
+    tests:
+      - min_rows: {min_count: 10000}
+    columns:
+      - name: business_id
+        tests: [unique, not_null]
+      - name: listing_count
+        tests: [{between: {min_value: 1, max_value: 30}}]
+
+  - name: listing_cuisine
+    tests:
+      - unique_combination: {columns: [listing_id, cuisine_id]}
+
+  - name: area_stat
+    tests:
+      - unique_combination: {columns: [area_type, area_id, variable, reference_date]}

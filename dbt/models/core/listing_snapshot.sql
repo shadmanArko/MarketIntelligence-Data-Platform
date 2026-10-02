@@ -16,6 +16,7 @@ d as (
 select distinct on (listing_id, obs_kind, coalesce(run_id::text, observed_at::text), h)
   listing_id, listing_key, platform, obs_kind as observed_via, run_id, observed_at,
   rating_value, rating_scale_min, rating_scale_max, rating_norm, rating_count,
-  order_minimum, base_delivery_fee, delivery_estimate_min, business_status, 'EUR' as currency
+  order_minimum, base_delivery_fee, delivery_estimate_min, business_status, 'EUR' as currency,
+  case when base_delivery_fee > 30 or order_minimum > 150 then 'catering_or_error' end as outlier_reason
 from d
 order by listing_id, obs_kind, coalesce(run_id::text, observed_at::text), h, observed_at
