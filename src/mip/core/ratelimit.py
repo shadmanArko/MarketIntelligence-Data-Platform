@@ -16,6 +16,19 @@ class TokenBucket:
         self.updated = time.monotonic()
         self.lock = threading.Lock()
         self.pause_until = 0.0
+        self.max_rate = self.rate
+        self.min_rate = min(self.rate, 0.05)
+
+    def throttle(self) -> None:
+        """Adaptive: halve the rate after a 429 (multiplicative decrease)."""
+        with self.lock:
+            self.rate = max(self.min_rate, self.rate / 2)
+
+    def recover(self) -> None:
+        """Adaptive: creep back towards the policy rate on success (additive increase)."""
+        with self.lock:
+            if self.rate < self.max_rate:
+                self.rate = min(self.max_rate, self.rate + self.max_rate * 0.02)
 
     def acquire(self) -> None:
         while True:

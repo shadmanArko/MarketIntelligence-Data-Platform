@@ -53,7 +53,9 @@ class HttpClient:
     ):
         self.source = source
         self.policy = policy
+        self.identity = identity
         self.bucket = bucket(source, identity, policy)
+        self.extra_buckets: dict[str, object] = {}
         self.breaker = breaker(source, policy)
         self.impersonate = impersonate or random.choice(IMPERSONATE)
         self.session = creq.Session(impersonate=self.impersonate, timeout=timeout, proxy=proxy)
@@ -81,7 +83,10 @@ class HttpClient:
         headers: dict | None = None,
         ok_statuses: frozenset[int] = frozenset({200}),
         gone_statuses: frozenset[int] = frozenset({404, 410}),
+        lane: str | None = None,
     ) -> Response:
+        """`lane` gives an endpoint its own token bucket (see `add_lane`)."""
+        bkt = self.extra_buckets[lane] if lane else self.bucket
         cpath = self._cache_path(method, url, params, json or data)
         if cpath and cpath.exists():
             blob = orjson.loads(cpath.read_bytes())
@@ -92,7 +97,7 @@ class HttpClient:
         for attempt in range(self.max_attempts):
             if self.breaker.open:
                 raise SourceBlocked(f"{self.source}: circuit breaker open")
-            self.bucket.acquire()
+            bkt.acquire()
             t0 = time.monotonic()
             try:
                 r = self.session.request(method, url, params=params, json=json, data=data, headers=headers)
@@ -111,6 +116,7 @@ class HttpClient:
 
             if r.status_code in ok_statuses:
                 self.breaker.success()
+                bkt.recover()
                 if cpath:
                     cpath.parent.mkdir(parents=True, exist_ok=True)
                     cpath.write_bytes(
@@ -124,7 +130,10 @@ class HttpClient:
                 self.breaker.success()
                 raise SourceGone(f"{self.source}: {r.status_code} {url}")
             if r.status_code in RETRY_STATUSES or r.status_code == 403:
-                self.breaker.failure()
+                if r.status_code == 429:
+                    bkt.throttle()  # rate limit: slow down, the source is fine
+                else:
+                    self.breaker.failure()
                 retry_after = r.headers.get("retry-after")
                 delay = (
                     float(retry_after)
@@ -132,7 +141,7 @@ class HttpClient:
                     else backoff_delay(self.policy, attempt + (2 if r.status_code in (403, 429) else 0))
                 )
                 if r.status_code in (403, 429):
-                    self.bucket.pause(delay)
+                    bkt.pause(delay)
                     # rotate TLS fingerprint on blocks
                     self.impersonate = random.choice(IMPERSONATE)
                     hdrs = dict(self.session.headers)
@@ -145,6 +154,9 @@ class HttpClient:
             # other 4xx: return so the caller can decide (stored in raw with its status)
             return resp
         raise last_err or SourceBlocked(f"{self.source}: exhausted retries for {url}")
+
+    def add_lane(self, lane: str, policy: RateLimitPolicy) -> None:
+        self.extra_buckets[lane] = bucket(self.source, f"{self.identity}:{lane}", policy)
 
     def get(self, url: str, **kw) -> Response:
         return self.request("GET", url, **kw)

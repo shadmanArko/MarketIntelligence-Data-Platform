@@ -47,6 +47,7 @@ class RawWriter:
         self.run_id = run_id
         self.contracts = contracts
         self.known: dict[str, set[str]] = {}
+        self.baseline: set[str] = set()  # entity types seen for the first time in this run: no drift alerts
         self.stats = {"stored": 0, "deduped_payloads": 0, "quarantined": 0, "drift_fields": 0, "bytes": 0}
 
     def _known_fields(self, entity_type: str) -> set[str]:
@@ -56,6 +57,8 @@ class RawWriter:
                 (self.source, entity_type),
             ).fetchall()
             self.known[entity_type] = {r["field_path"] for r in rows}
+            if not rows:
+                self.baseline.add(entity_type)
         return self.known[entity_type]
 
     def _drift(self, rec: RawRecord) -> None:
@@ -64,7 +67,7 @@ class RawWriter:
         new = paths - known
         if not new:
             return
-        baseline = not known
+        baseline = rec.entity_type in self.baseline
         with self.c.cursor() as cur:
             cur.executemany(
                 "INSERT INTO ops.schema_known_fields (source, entity_type, field_path) VALUES (%s,%s,%s)"
