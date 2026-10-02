@@ -97,6 +97,8 @@ class HttpClient:
         for attempt in range(self.max_attempts):
             if self.breaker.open:
                 raise SourceBlocked(f"{self.source}: circuit breaker open")
+            if lane:
+                self.bucket.acquire()  # source-wide ceiling first, then the lane's own pace
             bkt.acquire()
             t0 = time.monotonic()
             try:

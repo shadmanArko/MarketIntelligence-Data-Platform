@@ -62,7 +62,7 @@ def claim(c: psycopg.Connection, market_id: str, source: str, worker: str, run_i
           WHERE market_id=%(m)s AND source=%(s)s {et_filter}
             AND ((status IN ('pending','failed') AND next_attempt_at <= now())
                  OR (status='running' AND claimed_at < now() - interval '{STALE_CLAIM}'))
-          ORDER BY priority, next_attempt_at
+          ORDER BY priority, md5(task_key)  -- scatter: parallel workers spread over hosts / cells
           LIMIT %(n)s
           FOR UPDATE SKIP LOCKED)
         RETURNING task_id, entity_type, natural_key, params, attempts, max_attempts, priority

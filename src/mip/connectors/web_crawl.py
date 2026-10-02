@@ -48,6 +48,9 @@ ORDERING = {
 }
 
 
+HOST_POLICY = RateLimitPolicy(requests=1, per_seconds=1.5, jitter=(0.1, 0.6))
+
+
 class _A(BaseModel):
     model_config = ConfigDict(extra="allow")
 
@@ -111,7 +114,8 @@ def extract(html: str, url: str) -> dict:
 class WebCrawl:
     source: ClassVar[str] = "web_crawl"
     version: ClassVar[str] = "1.0.0"
-    rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=8, per_seconds=1.0, jitter=(0.05, 0.3),
+    # global ceiling; politeness is per host (HOST_POLICY): one request every ~1.5 s to any single site
+    rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=25, per_seconds=1.0, jitter=(0.0, 0.05),
                                                             breaker_failures=10_000)  # many independent sites
     contracts: ClassVar[dict[str, type[BaseModel]]] = {"web_page": WebPage}
 
@@ -143,6 +147,12 @@ class WebCrawl:
                             {"url": r["website"], "depth": 0, "kind": "business", "site": site_of(r["website"]),
                              "business_id": r["business_id"]}, priority=30)
 
+    def _lane(self, url: str) -> str:
+        host = site_of(url)
+        if host not in self.http.extra_buckets:
+            self.http.add_lane(host, HOST_POLICY)
+        return host
+
     def _allowed(self, url: str) -> bool:
         if not self.respect_robots:
             return True
@@ -151,7 +161,8 @@ class WebCrawl:
             rp = RobotFileParser()
             try:
                 r = self.http.get(f"{urlsplit(url).scheme}://{urlsplit(url).netloc}/robots.txt",
-                                  ok_statuses=frozenset({200, 404, 403, 401}), gone_statuses=frozenset())
+                                  ok_statuses=frozenset({200, 404, 403, 401}), gone_statuses=frozenset(),
+                                  lane=self._lane(url))
                 rp.parse(r.text.splitlines() if r.status == 200 else [])
                 self._robots[site] = rp
             except Exception:
@@ -167,7 +178,8 @@ class WebCrawl:
                                                           "blocked_by_robots": True, **p}, {"url": url}, 299)
             return
         try:
-            r = self.http.get(url, ok_statuses=frozenset(range(200, 300)), gone_statuses=frozenset({404, 410}))
+            r = self.http.get(url, ok_statuses=frozenset(range(200, 300)), gone_statuses=frozenset({404, 410}),
+                              lane=self._lane(url))
         except SourceGone:
             yield RawRecord("web_page", ref.natural_key, {"url": url, "final_url": url, "status": 404, **p},
                             {"url": url}, 404)

@@ -17,11 +17,13 @@ geo_app = typer.Typer(no_args_is_help=True, help="Boundary and H3 grid")
 ds_app = typer.Typer(no_args_is_help=True, help="Bulk datasets: download once, register, load to raw")
 er_app = typer.Typer(no_args_is_help=True, help="Entity resolution")
 ml_app = typer.Typer(no_args_is_help=True, help="Versioned ML training-set exports")
+enrich_app = typer.Typer(no_args_is_help=True, help="Deterministic text enrichment (languages, mentions)")
 app.add_typer(db_app, name="db")
 app.add_typer(geo_app, name="geo")
 app.add_typer(ds_app, name="datasets")
 app.add_typer(er_app, name="resolve")
 app.add_typer(ml_app, name="ml")
+app.add_typer(enrich_app, name="enrich")
 console = Console()
 
 Market = Annotated[str, typer.Option("--market", "-m", help="market id, e.g. berlin-food")]
@@ -247,6 +249,20 @@ def er_social() -> None:
     from mip.resolution.social import resolve_social
 
     resolve_social()
+
+
+@enrich_app.command("languages")
+def enrich_languages() -> None:
+    from mip.enrich.text import detect_languages
+
+    detect_languages()
+
+
+@enrich_app.command("mentions")
+def enrich_mentions() -> None:
+    from mip.enrich.text import find_mentions
+
+    find_mentions()
 
 
 @ml_app.command("export")
