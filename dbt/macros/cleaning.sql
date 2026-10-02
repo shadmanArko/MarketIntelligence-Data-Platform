@@ -93,8 +93,11 @@
 
 {# URL without tracking parameters #}
 {% macro clean_url(expr) -%}
-  nullif(regexp_replace(regexp_replace(({{ expr }})::text,
-    '([?&])(utm_[a-z]+|fbclid|gclid|mc_[a-z]+|ref|ved|usg|sa|source)=[^&#]*', '\1', 'gi'), '[?&]+(#|$)', '\1'), '')
+  nullif(regexp_replace(regexp_replace(regexp_replace(
+    ops.unwrap_redirect(btrim(({{ expr }})::text)),
+    '([?&])(utm_[a-z_]+|fbclid|gclid|dclid|msclkid|mc_[a-z_]+|igshid|_ga|ref_src|opi|ved|usg|sa)=[^&#]*', '\1', 'gi'),
+    '([?&])&+', '\1', 'g'),
+    '[?&]+(#|$)', '\1'), '')
 {%- endmacro %}
 
 {# German phone -> E.164-ish digits (+49...) #}
