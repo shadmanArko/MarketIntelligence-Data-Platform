@@ -45,6 +45,15 @@ uv run pytest -q
 - `config/markets/*.yaml`, `config/tenants/*.yaml`, `config/taxonomies/*.yaml`
 - `data/` (git-ignored): bulk downloads, media by content hash, dev cache, logs
 
+## Things learned the hard way
+- Google throttles an IP after a few thousand fast Maps searches: keep `google_maps`/`serp` at ~1 req / 3 s.
+- Wolt rate-limits per endpoint: separate lanes (`list`, `static`, `menu`, `dynamic`) keep one from starving others.
+- Lieferando reviews API rejects `limit` > 30.
+- Unsupervised EM over location blocks learns "same building = same business"; keep name m-values fixed and the
+  cannot-link constraints in `resolution/listings.py`.
+- Never solve CAPTCHAs or evade bot challenges; use the official-API slot instead and note it in docs/paid-sources.md.
+- dbt untyped NULLs inside separate CTEs become `text`; union branches inline. Unnest JSON via `ops.jarr()`.
+
 ## Adding a source
 New module in `src/mip/connectors/`, implement `discover`, `fetch`, `healthcheck`, give it `contracts`,
 add it to the market YAML, add a fixture test in `tests/fixtures/<source>/`.
