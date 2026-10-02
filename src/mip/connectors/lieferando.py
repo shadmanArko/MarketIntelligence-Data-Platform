@@ -71,7 +71,7 @@ def split_restaurant(r: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]
 @register
 class Lieferando:
     source: ClassVar[str] = "lieferando"
-    version: ClassVar[str] = "1.0.0"
+    version: ClassVar[str] = "1.0.1"
     rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=4, per_seconds=1.0, jitter=(0.05, 0.3))
     contracts: ClassVar[dict[str, type[BaseModel]]] = {
         "coverage": Coverage,
@@ -85,7 +85,7 @@ class Lieferando:
         self.market = market
         self.cfg = market.source(self.source)
         self.country = self.cfg.opt("country", "de")
-        self.max_reviews = int(self.cfg.opt("max_reviews", 2000))
+        self.max_reviews = int(self.cfg.opt("max_reviews", 300))
         self.http = HttpClient(self.source, self.rate_limit, headers={
             "Accept": "application/json", "Accept-Language": "de-DE,de;q=0.9",
             "x-country-code": self.country, "x-language-code": "de",
@@ -152,7 +152,7 @@ class Lieferando:
         url = f"{REST}/restaurants/{self.country}/{rid}/reviews"
         after, page, n = None, 0, 0
         while n < self.max_reviews:
-            params = {"limit": 100, **({"after": after} if after else {})}
+            params = {"limit": 30, **({"after": after} if after else {})}  # API rejects > 30
             r = self.http.get(url, params=params)
             if r.status != 200:
                 yield RawRecord("reviews", f"{rid}:{page}", {"_status": r.status, "_body": r.text[:2000],

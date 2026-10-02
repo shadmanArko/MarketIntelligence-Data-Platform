@@ -12,7 +12,7 @@ market:
     overture:         { enabled: true, release: latest }
     foursquare_os:    { enabled: true }
     wolt:             { enabled: true, menus: true }
-    lieferando:       { enabled: true, country: de, menus: true }
+    lieferando:       { enabled: true, country: de, menus: true, reviews: true, max_reviews: 300 }
     uber_eats:        { enabled: true, addresses_per_district: 2 }
     google_maps:      { enabled: true, mode: scrape, reviews: true, max_reviews: 200 }
     google_places:    { enabled: false, details_tier: enterprise }   # needs API key + billing
