@@ -1,0 +1,108 @@
+# Unified taxonomy for the food_delivery vertical.
+# cuisines: canonical id -> parent group + platform tags / OSM cuisine values / words that map to it.
+# dishes:   canonical dish -> patterns matched against normalised menu item names (lowercase, umlauts folded).
+# `mip taxonomy export` writes dbt/seeds/cuisine_map.csv and dish_map.csv from this file.
+vertical: food_delivery
+
+cuisines:
+  bangladeshi:   { group: south_asian, tags: [bangladeshi, bangladesch, bangladeschisch, bengali, bangla, dhaka] }
+  indian:        { group: south_asian, tags: [indian, indisch, indische, north indian, south indian, punjabi, tandoori, curry] }
+  pakistani:     { group: south_asian, tags: [pakistani, pakistanisch] }
+  nepali:        { group: south_asian, tags: [nepali, nepalese, nepalesisch, himalaya, himalayan, tibetan, tibetisch] }
+  sri_lankan:    { group: south_asian, tags: [sri lankan, sri lanka, srilankisch, ceylon] }
+  afghan:        { group: central_asian, tags: [afghan, afghanisch, afghani] }
+  uzbek:         { group: central_asian, tags: [uzbek, usbekisch, plov, central asian] }
+  persian:       { group: middle_eastern, tags: [persian, persisch, iranian, iranisch] }
+  arabic:        { group: middle_eastern, tags: [arabic, arabisch, arab, yemeni, jemenitisch, saudi, mandi, kabsa] }
+  lebanese:      { group: middle_eastern, tags: [lebanese, libanesisch, levantine] }
+  syrian:        { group: middle_eastern, tags: [syrian, syrisch] }
+  palestinian:   { group: middle_eastern, tags: [palestinian, palästinensisch] }
+  israeli:       { group: middle_eastern, tags: [israeli, israelisch] }
+  middle_eastern:{ group: middle_eastern, tags: [middle eastern, orientalisch, oriental, falafel, hummus, shawarma] }
+  turkish:       { group: turkish, tags: [turkish, türkisch, tuerkisch, doner, döner, kebab, kebap, lahmacun, pide] }
+  kurdish:       { group: turkish, tags: [kurdish, kurdisch] }
+  greek:         { group: mediterranean, tags: [greek, griechisch, gyros, souvlaki] }
+  italian:       { group: mediterranean, tags: [italian, italienisch, pasta, trattoria, osteria] }
+  pizza:         { group: mediterranean, tags: [pizza, pizzeria] }
+  spanish:       { group: mediterranean, tags: [spanish, spanisch, tapas] }
+  portuguese:    { group: mediterranean, tags: [portuguese, portugiesisch] }
+  mediterranean: { group: mediterranean, tags: [mediterranean, mediterran] }
+  german:        { group: european, tags: [german, deutsch, regional, bavarian, bayerisch, schnitzel, currywurst] }
+  austrian:      { group: european, tags: [austrian, österreichisch] }
+  french:        { group: european, tags: [french, französisch, bistro, brasserie] }
+  eastern_european: { group: european, tags: [polish, polnisch, russian, russisch, ukrainian, ukrainisch, georgian, georgisch, balkan, bosnian, serbian, croatian] }
+  european:      { group: european, tags: [european, europäisch, international] }
+  vietnamese:    { group: east_asian, tags: [vietnamese, vietnamesisch, pho, banh mi] }
+  thai:          { group: east_asian, tags: [thai, thailändisch] }
+  chinese:       { group: east_asian, tags: [chinese, chinesisch, cantonese, sichuan, dim sum] }
+  japanese:      { group: east_asian, tags: [japanese, japanisch, ramen, izakaya] }
+  sushi:         { group: east_asian, tags: [sushi, poke, poké] }
+  korean:        { group: east_asian, tags: [korean, koreanisch, bibimbap] }
+  asian:         { group: east_asian, tags: [asian, asiatisch, pan asian, wok, noodles, nudeln] }
+  indonesian:    { group: east_asian, tags: [indonesian, indonesisch, malaysian, malaysisch, filipino] }
+  american:      { group: american, tags: [american, amerikanisch, burger, burgers, bbq, barbecue, wings, hot dog] }
+  mexican:       { group: american, tags: [mexican, mexikanisch, tacos, burrito, tex-mex] }
+  latin_american:{ group: american, tags: [latin american, peruvian, peruanisch, brazilian, brasilianisch, argentinian, argentinisch, colombian, venezuelan] }
+  african:       { group: african, tags: [african, afrikanisch, ethiopian, äthiopisch, eritrean, eritreisch, nigerian, ghanaian, senegalese] }
+  north_african: { group: african, tags: [moroccan, marokkanisch, tunisian, tunesisch, algerian, egyptian, ägyptisch] }
+  chicken:       { group: fast_food, tags: [chicken, hähnchen, fried chicken, broiler, grillhähnchen] }
+  fast_food:     { group: fast_food, tags: [fast food, fastfood, imbiss, snack, snacks] }
+  sandwich:      { group: fast_food, tags: [sandwich, sandwiches, bagel, bagels, wraps, subs] }
+  healthy:       { group: other, tags: [healthy, gesund, salad, salat, salads, bowl, bowls, vegan, vegetarian, vegetarisch] }
+  breakfast:     { group: other, tags: [breakfast, frühstück, brunch] }
+  bakery:        { group: other, tags: [bakery, bäckerei, backwaren, pastry, konditorei] }
+  dessert:       { group: other, tags: [dessert, desserts, sweets, süßes, cake, kuchen, waffles, crepes, ice cream, eis, gelato] }
+  cafe:          { group: other, tags: [cafe, café, coffee, kaffee] }
+  drinks:        { group: other, tags: [drinks, getränke, bubble tea, juice, smoothies, bar] }
+  grocery:       { group: other, tags: [grocery, supermarket, supermarkt, lebensmittel, convenience, späti, kiosk] }
+
+dishes:
+  kacchi_biryani:   [kacchi, kachchi, kachi biryani, katchi, mutton kacchi, kacchi biriyani]
+  hyderabadi_biryani: [hyderabadi, dum biryani, dum biriyani]
+  chicken_biryani:  [chicken biryani, chicken biriyani, hähnchen biryani, murgh biryani, chicken briyani]
+  lamb_biryani:     [lamb biryani, lamm biryani, mutton biryani, gosht biryani, hammel biryani]
+  beef_biryani:     [beef biryani, rind biryani, rinder biryani]
+  veg_biryani:      [veg biryani, vegetable biryani, gemüse biryani, paneer biryani]
+  biryani:          [biryani, biriyani, briyani, biriani, beryani]
+  tehari:           [tehari, tehri]
+  pulao:            [pulao, pilau, pilaw, pilaf]
+  plov:             [plov, osh, palov, kabuli pulao, kabuli palau, qabili palaw]
+  mandi:            [mandi]
+  kabsa:            [kabsa, kabseh, machboos]
+  haleem:           [haleem, halim]
+  nihari:           [nihari]
+  korma:            [korma, kurma, qorma]
+  butter_chicken:   [butter chicken, murgh makhani, chicken makhani]
+  tikka_masala:     [tikka masala]
+  vindaloo:         [vindaloo, vindalu]
+  saag:             [saag, palak]
+  dal:              [dal, daal, dhal, tadka]
+  samosa:           [samosa, samosas, singara]
+  pakora:           [pakora, pakoda, bhaji]
+  naan:             [naan, nan bread, garlic naan, butter naan]
+  tandoori_chicken: [tandoori chicken, tandoori hähnchen]
+  kebab_skewer:     [seekh kebab, shish kebab, schisch kebab, adana, kofta, köfte]
+  chapli_kebab:     [chapli]
+  borhani:          [borhani, burhani]
+  lassi:            [lassi, mango lassi]
+  firni:            [firni, phirni, kheer, rice pudding, milchreis]
+  gulab_jamun:      [gulab jamun, gulab jamon, kalojam]
+  doner_plate:      [döner teller, doner teller, dönerteller, döner plate, doner plate]
+  doner:            [döner, doner, döner kebab, dürüm, durum, yufka]
+  lahmacun:         [lahmacun]
+  falafel:          [falafel]
+  shawarma:         [shawarma, schawarma, shawerma]
+  hummus:           [hummus, humus]
+  pizza:            [pizza]
+  pasta:            [pasta, spaghetti, penne, lasagne, lasagna, tagliatelle, gnocchi]
+  burger:           [burger, cheeseburger]
+  sushi:            [sushi, maki, nigiri, sashimi, uramaki]
+  pho:              [pho, phở]
+  ramen:            [ramen]
+  pad_thai:         [pad thai]
+  curry_generic:    [curry]
+  currywurst:       [currywurst]
+  schnitzel:        [schnitzel]
+  salad:            [salat, salad]
+  bowl:             [bowl, poke]
+  momos:            [momo, momos, dumplings, mantu, manti, gyoza]

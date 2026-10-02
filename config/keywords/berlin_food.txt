@@ -1,0 +1,23 @@
+# Searches Berliners actually type; {district} expanded by the SERP connector
+biryani berlin
+kacchi biryani berlin
+bangladeshi food berlin
+bangladeschisches essen berlin
+indisch essen lieferung berlin
+indisches restaurant berlin
+pakistanisches restaurant berlin
+halal restaurant berlin
+halal essen lieferung berlin
+mandi berlin
+kabsa berlin
+arabisches restaurant berlin
+afghanisches restaurant berlin
+persisches restaurant berlin
+curry lieferung berlin
+essen bestellen berlin
+lieferservice berlin
+best biryani berlin
+biryani lieferung
+biryani {district}
+indisches restaurant {district}
+halal {district}

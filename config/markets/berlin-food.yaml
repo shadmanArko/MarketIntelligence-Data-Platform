@@ -1,0 +1,37 @@
+market:
+  id: berlin-food
+  vertical: food_delivery
+  geography:
+    city: Berlin
+    country: DE
+    boundary: geo/berlin.geojson
+    h3_resolution: 8
+    osm_relation_id: 62422
+  sources:
+    osm:              { enabled: true }
+    overture:         { enabled: true, release: latest }
+    foursquare_os:    { enabled: true }
+    wolt:             { enabled: true, menus: true }
+    lieferando:       { enabled: true, country: de, menus: true }
+    uber_eats:        { enabled: true, addresses_per_district: 2 }
+    google_maps:      { enabled: true, mode: scrape, reviews: true, max_reviews: 200 }
+    google_places:    { enabled: false, details_tier: enterprise }   # needs API key + billing
+    instagram_graph:  { enabled: true }
+    instaloader:      { enabled: false }
+    tiktok:           { enabled: true }
+    web_crawl:        { enabled: true, seeds: seeds/berlin_food_media.txt, max_depth: 2 }
+    serp:             { enabled: true, provider: free, devices: [mobile, desktop] }
+    keyword_volume:   { enabled: false, provider: dataforseo }      # paid
+    crux:             { enabled: true, country: de }
+    common_crawl:     { enabled: true }
+    apify:            { enabled: false, fallback_for: [tiktok, instaloader, google_places] }
+  discovery:
+    hashtags: [berlinfood, berlinfoodie, biryaniberlin, halalberlin, berlinessen, foodberlin,
+               indianfoodberlin, pakistanifoodberlin, bangladeshifood, kacchibiryani, berlinrestaurant]
+    search_terms: [biryani, kacchi, mandi, kabsa, plov, indisch, pakistanisch, bangladeschisch,
+                   arabisch, persisch, afghanisch, türkisch, halal, curry, döner]
+    keywords: keywords/berlin_food.txt
+    osm_tags:
+      amenity: [restaurant, fast_food, cafe, food_court, bar, pub, biergarten, ice_cream]
+      shop: [deli, bakery, pastry, confectionery]
+  taxonomy: taxonomies/food_delivery.yaml

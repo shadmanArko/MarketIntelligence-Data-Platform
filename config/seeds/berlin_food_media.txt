@@ -1,0 +1,20 @@
+# Berlin food media, guides and blogs: crawl seeds (one URL per line)
+https://www.tip-berlin.de/essen-trinken/
+https://www.mitvergnuegen.com/kategorie/essen-trinken/
+https://www.exberliner.com/food/
+https://www.berlin.de/restaurants/
+https://www.visitberlin.de/de/essen-und-trinken-berlin
+https://www.qiez.de/essen-trinken/
+https://www.berliner-zeitung.de/food
+https://www.tagesspiegel.de/berlin/essen-trinken/
+https://www.timeout.com/berlin/restaurants
+https://www.thefork.de/restaurants/berlin-c561353
+https://guide.michelin.com/de/de/berlin-region/berlin/restaurants
+https://www.falstaff.com/de/restaurants/berlin
+https://www.gaultmillau.de/
+https://www.berlinfoodstories.com/
+https://www.stilinberlin.de/category/food
+https://www.travelfoodberlin.com/
+https://www.berlinfoodtours.com/blog/
+https://www.prinz.de/berlin/essen-trinken/
+https://www.restaurant-ranglisten.de/berlin/

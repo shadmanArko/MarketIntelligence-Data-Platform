@@ -1,0 +1,17 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      CI: "1"
+      MIP_DATABASE_URL: postgresql://mip:mip@localhost:5434/mip
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: docker compose up -d --build --wait
+      - run: uv sync
+      - run: uv run ruff check src tests
+      - run: uv run mip db migrate
+      - run: uv run pytest -q
+      - run: uv run mip transform

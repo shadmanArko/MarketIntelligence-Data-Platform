@@ -1,0 +1,11 @@
+tenant:
+  id: dhaka-kacchi
+  markets: [berlin-food]
+  accounts:
+    instagram: dhakakacchi.berlin
+    website: https://dhakakacchi.com
+  watchlist: []
+  first_party:
+    search_console:   { site: "https://dhakakacchi.com", enabled: false }
+    business_profile: { enabled: false }
+    orders_db:        { dsn_env: DHAKA_KACCHI_ORDERS_DSN, enabled: false }
