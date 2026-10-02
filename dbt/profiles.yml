@@ -1,0 +1,12 @@
+mip:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('MIP_PG_HOST', 'localhost') }}"
+      port: "{{ env_var('MIP_PG_PORT', '5434') | int }}"
+      user: "{{ env_var('MIP_PG_USER', 'mip') }}"
+      password: "{{ env_var('MIP_PG_PASSWORD', 'mip') }}"
+      dbname: "{{ env_var('MIP_PG_DB', 'mip') }}"
+      schema: core
+      threads: 6

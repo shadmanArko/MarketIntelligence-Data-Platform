@@ -18,7 +18,7 @@ cuisines:
   syrian:        { group: middle_eastern, tags: [syrian, syrisch] }
   palestinian:   { group: middle_eastern, tags: [palestinian, palästinensisch] }
   israeli:       { group: middle_eastern, tags: [israeli, israelisch] }
-  middle_eastern:{ group: middle_eastern, tags: [middle eastern, orientalisch, oriental, falafel, hummus, shawarma] }
+  middle_eastern: { group: middle_eastern, tags: [middle eastern, orientalisch, oriental, falafel, hummus, shawarma] }
   turkish:       { group: turkish, tags: [turkish, türkisch, tuerkisch, doner, döner, kebab, kebap, lahmacun, pide] }
   kurdish:       { group: turkish, tags: [kurdish, kurdisch] }
   greek:         { group: mediterranean, tags: [greek, griechisch, gyros, souvlaki] }
@@ -42,7 +42,7 @@ cuisines:
   indonesian:    { group: east_asian, tags: [indonesian, indonesisch, malaysian, malaysisch, filipino] }
   american:      { group: american, tags: [american, amerikanisch, burger, burgers, bbq, barbecue, wings, hot dog] }
   mexican:       { group: american, tags: [mexican, mexikanisch, tacos, burrito, tex-mex] }
-  latin_american:{ group: american, tags: [latin american, peruvian, peruanisch, brazilian, brasilianisch, argentinian, argentinisch, colombian, venezuelan] }
+  latin_american: { group: american, tags: [latin american, peruvian, peruanisch, brazilian, brasilianisch, argentinian, argentinisch, colombian, venezuelan] }
   african:       { group: african, tags: [african, afrikanisch, ethiopian, äthiopisch, eritrean, eritreisch, nigerian, ghanaian, senegalese] }
   north_african: { group: african, tags: [moroccan, marokkanisch, tunisian, tunesisch, algerian, egyptian, ägyptisch] }
   chicken:       { group: fast_food, tags: [chicken, hähnchen, fried chicken, broiler, grillhähnchen] }

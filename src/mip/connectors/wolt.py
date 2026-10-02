@@ -114,6 +114,8 @@ class Wolt:
         self.http.add_lane("dynamic", RateLimitPolicy(requests=1, per_seconds=1.5, jitter=(0.1, 0.5)))
         # the city-wide listing is the heaviest call and throttles at ~0.3/s; keep it from slowing menus
         self.http.add_lane("list", RateLimitPolicy(requests=1, per_seconds=2.0, jitter=(0.1, 0.6)))
+        self.http.add_lane("static", RateLimitPolicy(requests=1, per_seconds=1.0, jitter=(0.1, 0.4)))
+        self.http.add_lane("menu", RateLimitPolicy(requests=2, per_seconds=1.0, jitter=(0.05, 0.3)))
 
     # ------------------------------------------------------------------ discover
     def discover(self, scope: Scope) -> Iterator[EntityRef]:
@@ -128,7 +130,7 @@ class Wolt:
             case "coverage":
                 yield from self._grid_point(ref)
             case "venue_static":
-                yield from self._simple(ref, STATIC_URL.format(slug=ref.natural_key))
+                yield from self._simple(ref, STATIC_URL.format(slug=ref.natural_key), lane="static")
             case "venue_dynamic":
                 p = ref.params
                 yield from self._simple(ref, DYNAMIC_URL.format(slug=ref.natural_key),
@@ -185,7 +187,7 @@ class Wolt:
 
     def _menu(self, ref: EntityRef) -> Iterator[RawRecord]:
         url = MENU_URL.format(slug=ref.natural_key)
-        r = self.http.get(url)
+        r = self.http.get(url, lane="menu")
         meta = {"url": url, **ref.params}
         if r.status != 200:
             yield RawRecord("menu", ref.natural_key, {"_status": r.status, "_body": r.text[:2000]}, meta, r.status)
@@ -199,7 +201,7 @@ class Wolt:
                 if not cslug:
                     continue
                 cu = CATEGORY_URL.format(slug=ref.natural_key, cat=cslug)
-                cr = self.http.get(cu)
+                cr = self.http.get(cu, lane="menu")
                 if cr.status == 200:
                     pages.append({"category_slug": cslug, "page": cr.json()})
             body["_category_pages"] = pages

@@ -69,6 +69,7 @@ class _Worker(threading.Thread):
         super().__init__(daemon=True, name=f"worker-{idx}")
         self.ctx = ctx
         self.name_id = f"{socket.gethostname()}:{os.getpid()}:{idx}"
+        self.rr = 0
 
     def run(self) -> None:
         ctx = self.ctx
@@ -78,7 +79,14 @@ class _Worker(threading.Thread):
             while not ctx.stop.is_set():
                 if ctx.max_tasks and ctx.claimed >= ctx.max_tasks:
                     break
-                tasks = queue.claim(c, ctx.market.id, ctx.source, self.name_id, ctx.run_id, 1, ctx.entity_types)
+                # rotate entity types across workers so one throttled endpoint never starves the others
+                tasks = []
+                if ctx.lanes:
+                    pref = ctx.lanes[(self.rr + int(self.name_id.rsplit(":", 1)[1])) % len(ctx.lanes)]
+                    self.rr += 1
+                    tasks = queue.claim(c, ctx.market.id, ctx.source, self.name_id, ctx.run_id, 1, [pref])
+                if not tasks:
+                    tasks = queue.claim(c, ctx.market.id, ctx.source, self.name_id, ctx.run_id, 1, ctx.entity_types)
                 c.commit()
                 if not tasks:
                     if ctx.idle_wait():
@@ -159,6 +167,7 @@ class _FetchCtx:
         self.breaker_open = False
         self.progress = None
         self.ptask = None
+        self.lanes: list[str] = []
 
     def count(self, k: str, n: int = 1) -> None:
         with self.lock:
@@ -215,6 +224,10 @@ def fetch(market: Market, source: str, workers: int = 4, max_tasks: int | None =
                                                     "entity_types": entity_types})
     ctx = _FetchCtx(market, source, run_id, max_tasks, entity_types, refresh_children)
     with connect() as c:
+        ctx.lanes = [r["entity_type"] for r in c.execute(
+            "SELECT DISTINCT entity_type FROM ops.tasks WHERE market_id=%s AND source=%s AND status IN ('pending','failed')"
+            " AND (%s::text[] IS NULL OR entity_type = ANY(%s)) ORDER BY 1",
+            (market.id, source, entity_types, entity_types)).fetchall()]
         pending = c.execute(
             "SELECT count(*) AS n FROM ops.tasks WHERE market_id=%s AND source=%s AND status IN"
             " ('pending','failed','running') AND (%s::text[] IS NULL OR entity_type = ANY(%s))",
