@@ -112,6 +112,8 @@ class Wolt:
         })
         # the per-venue dynamic endpoint is rate-limited much harder than listings and menus
         self.http.add_lane("dynamic", RateLimitPolicy(requests=1, per_seconds=1.5, jitter=(0.1, 0.5)))
+        # the city-wide listing is the heaviest call and throttles at ~0.3/s; keep it from slowing menus
+        self.http.add_lane("list", RateLimitPolicy(requests=1, per_seconds=2.0, jitter=(0.1, 0.6)))
 
     # ------------------------------------------------------------------ discover
     def discover(self, scope: Scope) -> Iterator[EntityRef]:
@@ -139,7 +141,7 @@ class Wolt:
     def _grid_point(self, ref: EntityRef) -> Iterator[RawRecord | EntityRef]:
         lat, lon = ref.params["lat"], ref.params["lon"]
         params = {"lat": lat, "lon": lon}
-        r = self.http.get(LIST_URL, params=params)
+        r = self.http.get(LIST_URL, params=params, lane="list")
         meta = {"url": LIST_URL, "params": params, "cell": ref.natural_key}
         body = r.json()
         sections = body.pop("sections", [])

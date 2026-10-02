@@ -101,12 +101,13 @@ class _Worker(threading.Thread):
                                                entity_type=ref.entity_type, key=ref.natural_key)
         try:
             children: list[EntityRef] = []
-            stored = 0
+            records: list[RawRecord] = []
             for item in connector.fetch(ref):
                 if isinstance(item, RawRecord):
-                    stored += writer.write(item, t["task_id"])
+                    records.append(item)
                 elif isinstance(item, EntityRef):
                     children.append(item)
+            writer.write_many(records, t["task_id"])
             if children:
                 queue.enqueue(c, ctx.market.id, ctx.source, children, parent_task_id=t["task_id"],
                               refresh=ctx.refresh_children)
@@ -181,9 +182,33 @@ class _FetchCtx:
             self.progress.update(self.ptask, advance=1, description=f"{self.source} {dict(self.counter)}")
 
 
+def release_orphans(market: Market, source: str) -> int:
+    """Tasks left 'running' by a process on this machine that no longer exists go straight back to the queue."""
+    host = socket.gethostname()
+    n = 0
+    with connect() as c:
+        rows = c.execute("SELECT task_id, claimed_by FROM ops.tasks WHERE market_id=%s AND source=%s AND status='running'"
+                         " AND claimed_by LIKE %s", (market.id, source, f"{host}:%")).fetchall()
+        for r in rows:
+            pid = int(r["claimed_by"].split(":")[1])
+            try:
+                os.kill(pid, 0)
+                continue  # still alive
+            except ProcessLookupError:
+                pass
+            except PermissionError:
+                continue
+            queue.release(c, r["task_id"])
+            n += 1
+    if n:
+        console.print(f"[yellow]released {n} orphaned task(s) from a previous run[/]")
+    return n
+
+
 def fetch(market: Market, source: str, workers: int = 4, max_tasks: int | None = None,
           entity_types: list[str] | None = None, skip_health: bool = False,
           refresh_children: bool = False) -> dict[str, Any]:
+    release_orphans(market, source)
     if not skip_health and not healthcheck(market, source):
         raise SystemExit(f"{source}: healthcheck failed — not starting 10,000 doomed tasks")
     run_id = start_run(market.id, source, "fetch", {"workers": workers, "max_tasks": max_tasks,

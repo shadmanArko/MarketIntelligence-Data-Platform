@@ -64,7 +64,7 @@ class RawWriter:
     def _drift(self, rec: RawRecord) -> None:
         paths = field_paths(rec.payload)
         known = self._known_fields(rec.entity_type)
-        new = paths - known
+        new = sorted(paths - known)
         if not new:
             return
         baseline = rec.entity_type in self.baseline
@@ -92,32 +92,44 @@ class RawWriter:
         )
         self.stats["quarantined"] += 1
 
+    def write_many(self, recs: list[RawRecord], task_id: UUID | None = None) -> int:
+        """Validate, then insert payloads in digest order: concurrent workers never deadlock on shared hashes."""
+        valid: list[tuple[RawRecord, bytes, bytes]] = []
+        for rec in recs:
+            contract = self.contracts.get(rec.entity_type)
+            # 4xx/5xx tombstones (e.g. a venue that disappeared) skip the contract: the status is the signal.
+            if contract is not None and 200 <= rec.http_status < 300:
+                try:
+                    contract.model_validate(rec.payload)
+                except ValidationError as e:
+                    self.quarantine(rec, "contract_violation", orjson.loads(e.json(include_url=False)))
+                    continue
+            self._drift(rec)
+            digest, blob = payload_hash(rec.payload)
+            valid.append((rec, digest, blob))
+        unique = {d: b for _, d, b in valid}
+        with self.c.cursor() as cur:
+            for digest in sorted(unique):
+                blob = unique[digest]
+                cur.execute(
+                    "INSERT INTO raw.payloads (payload_sha256, payload, byte_size) VALUES (%s, %s::jsonb, %s)"
+                    " ON CONFLICT DO NOTHING",
+                    (digest, blob.decode(), len(blob)),
+                )
+                if cur.rowcount == 0:
+                    self.stats["deduped_payloads"] += 1
+                else:
+                    self.stats["bytes"] += len(blob)
+            cur.executemany(
+                "INSERT INTO raw.observations (market_id, source, entity_type, natural_key, run_id, task_id,"
+                " connector_ver, request_meta, http_status, payload_sha256, fetched_at)"
+                " VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                [(self.market_id, self.source, rec.entity_type, rec.natural_key, self.run_id, task_id,
+                  self.connector_ver, rec.request_meta, rec.http_status, digest, rec.fetched_at)
+                 for rec, digest, _ in valid],
+            )
+        self.stats["stored"] += len(valid)
+        return len(valid)
+
     def write(self, rec: RawRecord, task_id: UUID | None = None) -> bool:
-        contract = self.contracts.get(rec.entity_type)
-        # 4xx/5xx tombstones (e.g. a venue that disappeared) skip the contract: the status is the signal.
-        if contract is not None and 200 <= rec.http_status < 300:
-            try:
-                contract.model_validate(rec.payload)
-            except ValidationError as e:
-                self.quarantine(rec, "contract_violation", orjson.loads(e.json(include_url=False)))
-                return False
-        self._drift(rec)
-        digest, blob = payload_hash(rec.payload)
-        cur = self.c.execute(
-            "INSERT INTO raw.payloads (payload_sha256, payload, byte_size) VALUES (%s, %s::jsonb, %s)"
-            " ON CONFLICT DO NOTHING",
-            (digest, blob.decode(), len(blob)),
-        )
-        if cur.rowcount == 0:
-            self.stats["deduped_payloads"] += 1
-        else:
-            self.stats["bytes"] += len(blob)
-        self.c.execute(
-            "INSERT INTO raw.observations (market_id, source, entity_type, natural_key, run_id, task_id,"
-            " connector_ver, request_meta, http_status, payload_sha256, fetched_at)"
-            " VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-            (self.market_id, self.source, rec.entity_type, rec.natural_key, self.run_id, task_id,
-             self.connector_ver, rec.request_meta, rec.http_status, digest, rec.fetched_at),
-        )
-        self.stats["stored"] += 1
-        return True
+        return self.write_many([rec], task_id) == 1
