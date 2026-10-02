@@ -57,7 +57,9 @@ cuisines:
   grocery:       { group: other, tags: [grocery, supermarket, supermarkt, lebensmittel, convenience, späti, kiosk] }
 
 dishes:
-  kacchi_biryani:   [kacchi, kachchi, kachi biryani, katchi, mutton kacchi, kacchi biriyani]
+  dabeli:           [dabeli]
+  kacchi_biryani:   [kacchi biryani, kachchi biryani, kachi biryani, katchi biryani, kachhi biryani, kacchi biriyani,
+                     kacchi biriani, kachi biriyani, mutton kacchi, kacchi mutton, kacchi lamm, lamm kacchi, kacchi gosht]
   hyderabadi_biryani: [hyderabadi, dum biryani, dum biriyani]
   chicken_biryani:  [chicken biryani, chicken biriyani, hähnchen biryani, murgh biryani, chicken briyani]
   lamb_biryani:     [lamb biryani, lamm biryani, mutton biryani, gosht biryani, hammel biryani]

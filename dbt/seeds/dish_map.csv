@@ -1,147 +1,155 @@
 dish_id,pattern,priority
-kacchi_biryani,kacchi,0
-kacchi_biryani,kachchi,0
-kacchi_biryani,kachi biryani,0
-kacchi_biryani,katchi,0
-kacchi_biryani,mutton kacchi,0
-kacchi_biryani,kacchi biriyani,0
-hyderabadi_biryani,hyderabadi,1
-hyderabadi_biryani,dum biryani,1
-hyderabadi_biryani,dum biriyani,1
-chicken_biryani,chicken biryani,2
-chicken_biryani,chicken biriyani,2
-chicken_biryani,haehnchen biryani,2
-chicken_biryani,murgh biryani,2
-chicken_biryani,chicken briyani,2
-lamb_biryani,lamb biryani,3
-lamb_biryani,lamm biryani,3
-lamb_biryani,mutton biryani,3
-lamb_biryani,gosht biryani,3
-lamb_biryani,hammel biryani,3
-beef_biryani,beef biryani,4
-beef_biryani,rind biryani,4
-beef_biryani,rinder biryani,4
-veg_biryani,veg biryani,5
-veg_biryani,vegetable biryani,5
-veg_biryani,gemuese biryani,5
-veg_biryani,paneer biryani,5
-biryani,biryani,6
-biryani,biriyani,6
-biryani,briyani,6
-biryani,biriani,6
-biryani,beryani,6
-tehari,tehari,7
-tehari,tehri,7
-pulao,pulao,8
-pulao,pilau,8
-pulao,pilaw,8
-pulao,pilaf,8
-plov,plov,9
-plov,osh,9
-plov,palov,9
-plov,kabuli pulao,9
-plov,kabuli palau,9
-plov,qabili palaw,9
-mandi,mandi,10
-kabsa,kabsa,11
-kabsa,kabseh,11
-kabsa,machboos,11
-haleem,haleem,12
-haleem,halim,12
-nihari,nihari,13
-korma,korma,14
-korma,kurma,14
-korma,qorma,14
-butter_chicken,butter chicken,15
-butter_chicken,murgh makhani,15
-butter_chicken,chicken makhani,15
-tikka_masala,tikka masala,16
-vindaloo,vindaloo,17
-vindaloo,vindalu,17
-saag,saag,18
-saag,palak,18
-dal,dal,19
-dal,daal,19
-dal,dhal,19
-dal,tadka,19
-samosa,samosa,20
-samosa,samosas,20
-samosa,singara,20
-pakora,pakora,21
-pakora,pakoda,21
-pakora,bhaji,21
-naan,naan,22
-naan,nan bread,22
-naan,garlic naan,22
-naan,butter naan,22
-tandoori_chicken,tandoori chicken,23
-tandoori_chicken,tandoori haehnchen,23
-kebab_skewer,seekh kebab,24
-kebab_skewer,shish kebab,24
-kebab_skewer,schisch kebab,24
-kebab_skewer,adana,24
-kebab_skewer,kofta,24
-kebab_skewer,koefte,24
-chapli_kebab,chapli,25
-borhani,borhani,26
-borhani,burhani,26
-lassi,lassi,27
-lassi,mango lassi,27
-firni,firni,28
-firni,phirni,28
-firni,kheer,28
-firni,rice pudding,28
-firni,milchreis,28
-gulab_jamun,gulab jamun,29
-gulab_jamun,gulab jamon,29
-gulab_jamun,kalojam,29
-doner_plate,doener teller,30
-doner_plate,doner teller,30
-doner_plate,doenerteller,30
-doner_plate,doener plate,30
-doner_plate,doner plate,30
-doner,doener,31
-doner,doner,31
-doner,doener kebab,31
-doner,dueruem,31
-doner,durum,31
-doner,yufka,31
-lahmacun,lahmacun,32
-falafel,falafel,33
-shawarma,shawarma,34
-shawarma,schawarma,34
-shawarma,shawerma,34
-hummus,hummus,35
-hummus,humus,35
-pizza,pizza,36
-pasta,pasta,37
-pasta,spaghetti,37
-pasta,penne,37
-pasta,lasagne,37
-pasta,lasagna,37
-pasta,tagliatelle,37
-pasta,gnocchi,37
-burger,burger,38
-burger,cheeseburger,38
-sushi,sushi,39
-sushi,maki,39
-sushi,nigiri,39
-sushi,sashimi,39
-sushi,uramaki,39
-pho,pho,40
-pho,pho,40
-ramen,ramen,41
-pad_thai,pad thai,42
-curry_generic,curry,43
-currywurst,currywurst,44
-schnitzel,schnitzel,45
-salad,salat,46
-salad,salad,46
-bowl,bowl,47
-bowl,poke,47
-momos,momo,48
-momos,momos,48
-momos,dumplings,48
-momos,mantu,48
-momos,manti,48
-momos,gyoza,48
+dabeli,dabeli,0
+kacchi_biryani,kacchi biryani,1
+kacchi_biryani,kachchi biryani,1
+kacchi_biryani,kachi biryani,1
+kacchi_biryani,katchi biryani,1
+kacchi_biryani,kachhi biryani,1
+kacchi_biryani,kacchi biriyani,1
+kacchi_biryani,kacchi biriani,1
+kacchi_biryani,kachi biriyani,1
+kacchi_biryani,mutton kacchi,1
+kacchi_biryani,kacchi mutton,1
+kacchi_biryani,kacchi lamm,1
+kacchi_biryani,lamm kacchi,1
+kacchi_biryani,kacchi gosht,1
+hyderabadi_biryani,hyderabadi,2
+hyderabadi_biryani,dum biryani,2
+hyderabadi_biryani,dum biriyani,2
+chicken_biryani,chicken biryani,3
+chicken_biryani,chicken biriyani,3
+chicken_biryani,haehnchen biryani,3
+chicken_biryani,murgh biryani,3
+chicken_biryani,chicken briyani,3
+lamb_biryani,lamb biryani,4
+lamb_biryani,lamm biryani,4
+lamb_biryani,mutton biryani,4
+lamb_biryani,gosht biryani,4
+lamb_biryani,hammel biryani,4
+beef_biryani,beef biryani,5
+beef_biryani,rind biryani,5
+beef_biryani,rinder biryani,5
+veg_biryani,veg biryani,6
+veg_biryani,vegetable biryani,6
+veg_biryani,gemuese biryani,6
+veg_biryani,paneer biryani,6
+biryani,biryani,7
+biryani,biriyani,7
+biryani,briyani,7
+biryani,biriani,7
+biryani,beryani,7
+tehari,tehari,8
+tehari,tehri,8
+pulao,pulao,9
+pulao,pilau,9
+pulao,pilaw,9
+pulao,pilaf,9
+plov,plov,10
+plov,osh,10
+plov,palov,10
+plov,kabuli pulao,10
+plov,kabuli palau,10
+plov,qabili palaw,10
+mandi,mandi,11
+kabsa,kabsa,12
+kabsa,kabseh,12
+kabsa,machboos,12
+haleem,haleem,13
+haleem,halim,13
+nihari,nihari,14
+korma,korma,15
+korma,kurma,15
+korma,qorma,15
+butter_chicken,butter chicken,16
+butter_chicken,murgh makhani,16
+butter_chicken,chicken makhani,16
+tikka_masala,tikka masala,17
+vindaloo,vindaloo,18
+vindaloo,vindalu,18
+saag,saag,19
+saag,palak,19
+dal,dal,20
+dal,daal,20
+dal,dhal,20
+dal,tadka,20
+samosa,samosa,21
+samosa,samosas,21
+samosa,singara,21
+pakora,pakora,22
+pakora,pakoda,22
+pakora,bhaji,22
+naan,naan,23
+naan,nan bread,23
+naan,garlic naan,23
+naan,butter naan,23
+tandoori_chicken,tandoori chicken,24
+tandoori_chicken,tandoori haehnchen,24
+kebab_skewer,seekh kebab,25
+kebab_skewer,shish kebab,25
+kebab_skewer,schisch kebab,25
+kebab_skewer,adana,25
+kebab_skewer,kofta,25
+kebab_skewer,koefte,25
+chapli_kebab,chapli,26
+borhani,borhani,27
+borhani,burhani,27
+lassi,lassi,28
+lassi,mango lassi,28
+firni,firni,29
+firni,phirni,29
+firni,kheer,29
+firni,rice pudding,29
+firni,milchreis,29
+gulab_jamun,gulab jamun,30
+gulab_jamun,gulab jamon,30
+gulab_jamun,kalojam,30
+doner_plate,doener teller,31
+doner_plate,doner teller,31
+doner_plate,doenerteller,31
+doner_plate,doener plate,31
+doner_plate,doner plate,31
+doner,doener,32
+doner,doner,32
+doner,doener kebab,32
+doner,dueruem,32
+doner,durum,32
+doner,yufka,32
+lahmacun,lahmacun,33
+falafel,falafel,34
+shawarma,shawarma,35
+shawarma,schawarma,35
+shawarma,shawerma,35
+hummus,hummus,36
+hummus,humus,36
+pizza,pizza,37
+pasta,pasta,38
+pasta,spaghetti,38
+pasta,penne,38
+pasta,lasagne,38
+pasta,lasagna,38
+pasta,tagliatelle,38
+pasta,gnocchi,38
+burger,burger,39
+burger,cheeseburger,39
+sushi,sushi,40
+sushi,maki,40
+sushi,nigiri,40
+sushi,sashimi,40
+sushi,uramaki,40
+pho,pho,41
+pho,pho,41
+ramen,ramen,42
+pad_thai,pad thai,43
+curry_generic,curry,44
+currywurst,currywurst,45
+schnitzel,schnitzel,46
+salad,salat,47
+salad,salad,47
+bowl,bowl,48
+bowl,poke,48
+momos,momo,49
+momos,momos,49
+momos,dumplings,49
+momos,mantu,49
+momos,manti,49
+momos,gyoza,49
