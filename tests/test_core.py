@@ -36,3 +36,16 @@ def test_token_bucket_does_not_block_within_capacity():
     for _ in range(5):
         tb.acquire()
     assert time.monotonic() - t0 < 0.2
+
+
+def test_resolution_name_and_address_rules():
+    from mip.resolution.listings import _TOKEN_DF, address_conflict, name_sim
+
+    _TOKEN_DF.clear()
+    _TOKEN_DF.update({"coffee": 900, "fellows": 20, "imren": 3, "grill": 400})
+    assert name_sim("imren", "imren mullerstrasse") >= 60          # distinctive shared token
+    assert name_sim("coffee", "coffee fellows") == 0              # only a generic word in common
+    assert address_conflict("rathausstrasse 6", "panoramastrasse 1")
+    assert address_conflict("mullerstrasse 134", "mullerstrasse 12")
+    assert not address_conflict("mullerstrasse 134", "mullerstrasse 134a")
+    assert not address_conflict(None, "mullerstrasse 134")
