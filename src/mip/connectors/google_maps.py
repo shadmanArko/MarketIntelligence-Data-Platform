@@ -164,7 +164,8 @@ def build_pb(tpl: str, lat: float, lon: float, viewport_m: float, offset: int) -
 class GoogleMaps:
     source: ClassVar[str] = "google_maps"
     version: ClassVar[str] = "1.1.0"
-    rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=2, per_seconds=1.0, jitter=(0.1, 0.5),
+    # Google throttles an IP after a few thousand fast searches; slow and steady finishes the city
+    rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=1, per_seconds=3.0, jitter=(0.5, 2.0),
                                                             breaker_failures=12)
     contracts: ClassVar[dict[str, type[BaseModel]]] = {"search_page": SearchPage, "place": Place,
                                                        "reviews": Reviews}

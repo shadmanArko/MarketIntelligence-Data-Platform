@@ -97,6 +97,7 @@ def load_dataset(name: str, market: Market, version: str | None = None) -> None:
     from mip.datasets import (  # noqa: F401  (register loaders)
         berlin_open,
         calendar,
+        crux,
         kaggle_tripadvisor,
         osm,
         overture,
@@ -104,7 +105,7 @@ def load_dataset(name: str, market: Market, version: str | None = None) -> None:
     )
 
     if name == "all":
-        for n in ("osm", "overture", "zensus", "lor", "holidays", "weather", "tripadvisor"):
+        for n in ("osm", "overture", "zensus", "holidays", "weather", "crux", "lor", "tripadvisor"):
             try:
                 LOADERS[n](market, version)
             except Exception as e:
