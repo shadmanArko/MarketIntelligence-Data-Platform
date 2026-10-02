@@ -81,7 +81,7 @@ class RawWriter:
                     [(self.run_id, self.source, rec.entity_type, p, {"natural_key": rec.natural_key}) for p in new],
                 )
                 self.stats["drift_fields"] += len(new)
-        known |= new
+        known.update(new)
 
     def quarantine(self, rec: RawRecord, reason: str, errors: Any = None) -> None:
         self.c.execute(
