@@ -30,6 +30,8 @@ select
   (array_agg(m.postcode_resolved order by {{ prec | replace('l.', 'm.') }}) filter (where m.postcode_resolved is not null))[1] as postcode,
   (array_agg(m.district) filter (where m.district is not null))[1]   as district,
   (array_agg(m.locality) filter (where m.locality is not null))[1]   as locality,
+  (array_agg(m.planning_area_id order by {{ prec | replace('l.', 'm.') }}) filter (where m.planning_area_id is not null))[1] as planning_area_id,
+  (array_agg(m.planning_area order by {{ prec | replace('l.', 'm.') }}) filter (where m.planning_area is not null))[1] as planning_area,
   (array_agg(m.phone order by {{ prec | replace('l.', 'm.') }}) filter (where m.phone is not null))[1] as phone,
   (array_agg(m.website order by {{ prec | replace('l.', 'm.') }}) filter (where m.website is not null and m.website !~ '(wolt|lieferando|ubereats)\.'))[1] as website,
   (array_agg(m.website_domain order by {{ prec | replace('l.', 'm.') }}) filter (where m.website_domain is not null))[1] as website_domain,

@@ -25,6 +25,35 @@ CREATE TABLE IF NOT EXISTS raw.geo_h3 (
 """
 
 
+LOR_WFS = ("https://gdi.berlin.de/services/wfs/lor_2021?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature"
+           "&TYPENAMES=lor_2021:a_lor_plr_2021&OUTPUTFORMAT=application/json&SRSNAME=EPSG:4326")
+
+
+def _load_lor(c, market: Market) -> int:
+    """Berlin's 542 LOR planning areas (Lebensweltlich orientierte Räume, 2021) from the official WFS."""
+    if market.geography.city != "Berlin":
+        return 0
+    import httpx
+
+    try:
+        fc = httpx.get(LOR_WFS, timeout=120).json()
+    except Exception as e:
+        console.print(f"[yellow]LOR WFS unavailable: {e}[/]")
+        return 0
+    n = 0
+    for f in fc.get("features", []):
+        props = f.get("properties", {})
+        code = str(props.get("plr_id") or props.get("PLR_ID") or f.get("id"))
+        c.execute(
+            "INSERT INTO raw.geo_area (market_id, kind, code, name, share_in_market, tags, geom) VALUES "
+            "(%s,'planning_area',%s,%s,1,%s, ST_Multi(ST_MakeValid(ST_SetSRID(ST_GeomFromGeoJSON(%s),4326))))"
+            " ON CONFLICT DO NOTHING",
+            (market.id, code, props.get("plr_name") or props.get("PLR_NAME"), props,
+             orjson.dumps(f["geometry"]).decode()))
+        n += 1
+    return n
+
+
 def load_grid(market: Market, res: int | None = None) -> None:
     with connect() as c:
         c.execute(DDL)
@@ -46,6 +75,7 @@ def load_grid(market: Market, res: int | None = None) -> None:
                      orjson.dumps(a["geometry"]).decode()),
                 )
                 n += 1
+        n += _load_lor(c, market)
         c.execute("DELETE FROM raw.geo_h3 WHERE market_id=%s", (market.id,))
         rows = []
         for r in ([res] if res else [7, 8, 9]):

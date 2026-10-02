@@ -34,9 +34,12 @@ select
   coalesce(st_covers(m.geom, st_setsrid(st_makepoint(a.lon, a.lat), 4326)), false) as in_market,
   d.name                                                   as district,
   lo.name                                                  as locality,
+  plr.code                                                 as planning_area_id,
+  plr.name                                                 as planning_area,
   coalesce(a.postcode, pc.code)                            as postcode_resolved
 from agg a
 left join raw.geo_area m  on m.kind = 'market'   and m.market_id = '{{ var("market_id") }}'
 left join raw.geo_area d  on d.kind = 'district' and st_covers(d.geom, st_setsrid(st_makepoint(a.lon, a.lat), 4326))
 left join raw.geo_area lo on lo.kind = 'locality' and st_covers(lo.geom, st_setsrid(st_makepoint(a.lon, a.lat), 4326))
 left join raw.geo_area pc on pc.kind = 'postcode' and st_covers(pc.geom, st_setsrid(st_makepoint(a.lon, a.lat), 4326))
+left join raw.geo_area plr on plr.kind = 'planning_area' and st_covers(plr.geom, st_setsrid(st_makepoint(a.lon, a.lat), 4326))
