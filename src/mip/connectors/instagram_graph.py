@@ -23,7 +23,7 @@ MEDIA_FIELDS = ("id,caption,comments_count,like_count,media_type,media_product_t
 ACCOUNT_FIELDS = ("id,ig_id,username,name,biography,website,followers_count,follows_count,media_count,"
                   "profile_picture_url")
 HASHTAG_MEDIA_FIELDS = "id,caption,comments_count,like_count,media_type,media_product_type,permalink,timestamp"
-MAX_MEDIA_PAGES = 10   # 25 per page -> 250 most recent posts per account
+MAX_MEDIA_PAGES = 4    # 25 per page -> 100 most recent posts per account (API allows ~200 calls / hour)
 
 
 class _A(BaseModel):
@@ -70,12 +70,17 @@ class InstagramGraph:
                 osm as (
                   select lower(regexp_replace(instagram, '^.*instagram\\.com/|/.*$|@', '', 'g')) as handle, null::text
                   from staging.stg_osm__poi where instagram is not null)
-                select handle, max(business_id) as business_id from (select * from crawl union all select * from osm) x
-                where handle ~ '^[a-z0-9_.]{2,30}$' group by 1""").fetchall()
+                select x.handle, max(x.business_id) as business_id,
+                       -- accounts already linked to a business go first, then the grey zone, then the rest
+                       min(case sa.decision when 'auto' then 10 when 'review' then 30 else 50 end) as priority
+                from (select * from crawl union all select * from osm) x
+                left join ops.social_assignment sa on sa.account_key = 'instagram:' || x.handle
+                where x.handle ~ '^[a-z0-9_.]{2,30}$' and coalesce(sa.decision, '') <> 'rejected'
+                group by 1""").fetchall()
         for i, h in enumerate(handles):
             if scope.limit and i >= scope.limit:
                 break
-            yield EntityRef("account", h["handle"], {"business_id": h["business_id"]}, priority=20)
+            yield EntityRef("account", h["handle"], {"business_id": h["business_id"]}, priority=h["priority"])
         for tag in scope.market.discovery.hashtags:
             for edge in ("top_media", "recent_media"):
                 yield EntityRef("hashtag_media", f"{tag}|{edge}", {"hashtag": tag, "edge": edge}, priority=40)
@@ -151,6 +156,11 @@ class InstagramGraph:
         if not (self.token and self.ig_user):
             return HealthStatus(False, "set META_ACCESS_TOKEN and META_IG_USER_ID in .env (Instagram business "
                                        "account linked to a Facebook Page + Meta app with instagram_basic)")
-        r = self._get(self.ig_user, {"fields": "username,followers_count"})
+        # look up a public business account we do not own: proves Business Discovery (Advanced Access) works
+        r = self._get(self.ig_user, {"fields": "business_discovery.username(instagram){username,followers_count}"})
         body = r.json()
-        return HealthStatus("username" in body, str(body)[:200], r.elapsed_ms)
+        if "business_discovery" in body:
+            return HealthStatus(True, "business discovery works", r.elapsed_ms)
+        err = (body.get("error") or {}).get("message", str(body)[:200])
+        return HealthStatus(False, f"business discovery not allowed yet: {err} -> needs Advanced Access for "
+                                   "instagram_basic + pages_read_engagement (Meta App Review)", r.elapsed_ms)
