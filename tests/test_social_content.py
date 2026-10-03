@@ -64,3 +64,12 @@ def test_content_dictionary_matches_across_scripts():
     assert got == {("dish", "kacchi_biryani"), ("occasion", "eid_al_adha"), ("dish", "hainan_chicken_rice"),
                    ("cue", "review_test")}
     assert fold("Döner Größe") == "doener groesse"
+
+
+def test_reddit_timeout_splits_window():
+    conn = RedditArchive.__new__(RedditArchive)
+    conn.http = type("H", (), {"get": lambda self, *a, **k: _Resp({"data": None, "error": "Timeout. Maybe slow down a bit"})})()
+    out = list(conn.fetch(EntityRef("posts_month", "germany|2025-02", {"subreddit": "germany", "month": "2025-02"})))
+    assert [type(o).__name__ for o in out] == ["EntityRef", "EntityRef"]
+    (a1, b1), (a2, b2) = out[0].params["window"], out[1].params["window"]
+    assert b1 == a2 and b2 - a1 == 28 * 86400

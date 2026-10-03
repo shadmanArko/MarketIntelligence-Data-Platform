@@ -37,6 +37,7 @@ SUBREDDITS = {
     "halal": "2019-01", "ramadan": "2019-01", "islam": "2025-01",
 }
 MAX_PAGES = 400   # per subreddit-month safety cap (40k posts)
+SPLIT_MIN_S = 6 * 3600   # windows shorter than 6 h are not split further (retry with backoff instead)
 
 
 class _A(BaseModel):
@@ -64,7 +65,7 @@ def _next(month: str) -> str:
 @register
 class RedditArchive:
     source: ClassVar[str] = "reddit_archive"
-    version: ClassVar[str] = "1.0.1"
+    version: ClassVar[str] = "1.1.0"
     rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=1, per_seconds=1.5, jitter=(0.1, 0.6),
                                                             backoff_cap=120)
     contracts: ClassVar[dict[str, type[BaseModel]]] = {"posts_page": Page}
@@ -88,15 +89,29 @@ class RedditArchive:
                 yield EntityRef("posts_month", f"{sub}|{month}", {"subreddit": sub, "month": month},
                                 priority=20 if month >= "2025-01" else 40)
 
-    def fetch(self, ref: EntityRef) -> Iterator[RawRecord]:
+    def fetch(self, ref: EntityRef) -> Iterator[RawRecord | EntityRef]:
         sub, month = ref.params["subreddit"], ref.params["month"]
-        after, before = f"{month}-01", f"{_next(month)}-01"
+        win = ref.params.get("window")           # [after_epoch, before_epoch] after a timeout split
+        if win:
+            after, before = str(win[0]), str(win[1])
+        else:
+            after = str(int(datetime.strptime(f"{month}-01", "%Y-%m-%d").replace(tzinfo=UTC).timestamp()))
+            before = str(int(datetime.strptime(f"{_next(month)}-01", "%Y-%m-%d").replace(tzinfo=UTC).timestamp()))
+        tag = f"{sub}|{month}" + (f"|{win[0]}" if win else "")
         seen: set[str] = set()
         for page in range(MAX_PAGES):
             params = {"subreddit": sub, "after": after, "before": before, "sort": "asc", "limit": "100"}
             r = self.http.get(API, params=params, ok_statuses=frozenset({200}), gone_statuses=frozenset())
             body = r.json()
             if body.get("error"):
+                a, b = int(after), int(before)
+                if "Timeout" in body["error"] and b - a > SPLIT_MIN_S:
+                    # busy subreddit: the archive cannot scan this window in time -> split the rest of it in two
+                    mid = (a + b) // 2
+                    for lo, hi in ((a, mid), (mid, b)):
+                        yield EntityRef("posts_month", f"{sub}|{month}|{lo}-{hi}",
+                                        {"subreddit": sub, "month": month, "window": [lo, hi]}, priority=15)
+                    return
                 raise SourceBlocked(f"arctic_shift: {body['error']}")
             posts = []
             for p in body.get("data") or []:
@@ -108,7 +123,7 @@ class RedditArchive:
                 for k in DROP:
                     p.pop(k, None)
             if posts or page == 0:
-                yield RawRecord("posts_page", f"{sub}|{month}|{page:03d}",
+                yield RawRecord("posts_page", f"{tag}|{page:03d}",
                                 {"subreddit": sub, "month": month, "page": page, "posts": posts},
                                 {"url": API, "params": params}, r.status)
             if len(body.get("data") or []) < 100 or not posts:
