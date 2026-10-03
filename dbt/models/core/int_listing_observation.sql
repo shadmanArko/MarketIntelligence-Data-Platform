@@ -99,6 +99,16 @@ with unioned as (
          exists (select 1 from jsonb_array_elements_text(ops.jarr(cuisines)) c where c ilike '%halal%'),
          null, null, null, null, null, null, share_url
   from {{ ref('stg_uber_eats__store') }}
+  union all
+  -- foursquare open places
+  select 'foursquare', platform_id, 'place', null::uuid, null::uuid, coalesce(date_refreshed, date_created)::timestamptz,
+         name, address_line, postcode, city, lat, lon, phone, website, null, null, null, null,
+         array(select lower(trim(t)) from jsonb_array_elements_text(ops.jarr(category_labels)) c,
+               unnest(string_to_array(c, '>')) t),
+         null::smallint, null::numeric, 1, 5, null::integer,
+         null, null, null, null, null, null, null, null, null,
+         case when date_closed is not null then 'closed_permanently' end, null
+  from {{ ref('stg_foursquare__place') }}
 )
 select
   platform || ':' || platform_id                           as listing_key,

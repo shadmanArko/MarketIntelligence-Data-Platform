@@ -98,6 +98,7 @@ def load_dataset(name: str, market: Market, version: str | None = None) -> None:
         berlin_open,
         calendar,
         crux,
+        foursquare,
         kaggle_tripadvisor,
         osm,
         overture,
