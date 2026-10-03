@@ -116,7 +116,7 @@ class WebCrawl:
     version: ClassVar[str] = "1.0.0"
     # global ceiling; politeness is per host (HOST_POLICY): one request every ~1.5 s to any single site
     rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=25, per_seconds=1.0, jitter=(0.0, 0.05),
-                                                            breaker_failures=10_000)  # many independent sites
+                                                            backoff_cap=30.0, breaker_failures=10_000)  # many independent sites
     contracts: ClassVar[dict[str, type[BaseModel]]] = {"web_page": WebPage}
 
     def __init__(self, market):

@@ -138,7 +138,7 @@ class HttpClient:
                     self.breaker.failure()
                 retry_after = r.headers.get("retry-after")
                 delay = (
-                    float(retry_after)
+                    min(float(retry_after), self.policy.backoff_cap)  # a server asking for hours must not park a worker
                     if retry_after and retry_after.isdigit()
                     else backoff_delay(self.policy, attempt + (2 if r.status_code in (403, 429) else 0))
                 )
