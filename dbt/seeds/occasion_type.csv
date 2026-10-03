@@ -8,7 +8,7 @@ mawlid,family_meal,3,celebratory,Prophet's Birthday|Mawlid|Birthday of Muhammad
 islamic_new_year,family_meal,2,solemn,Islamic New Year|Hijri New Year
 ashura,remembrance,0,solemn,Ashura|Tasua|Arbaeen
 isra_miraj,family_meal,1,solemn,Isra' and Mi'raj|Isra and Miraj
-nowruz,feast,10,celebratory,Nowruz|Navruz|Nauryz|Novruz|Newroz
+nowruz,feast,10,celebratory,Nowruz|Navruz|Nauryz|Novruz|Newroz|Nevruz
 yalda,family_meal,5,celebratory,Yalda
 bengali_new_year,feast,7,celebratory,Bengali New Year
 south_asian_new_year,feast,5,celebratory,Nepali New Year|Sinhala|Tamil New Year|Vaisakhi|Baisakhi
@@ -17,7 +17,7 @@ durga_puja,feast,10,celebratory,Durga Puja|Bijaya Dashami|Vijaya Dashami|Dussehr
 dashain,feast,10,celebratory,Ghatasthapana|Fulpati|Dashain
 diwali,gift_season,10,celebratory,Diwali|Deepavali|Laxmi Pooja|Tihar
 holi,party,5,celebratory,\bHoli\b|Fagu Poornima
-lunar_new_year,feast,10,celebratory,Lunar New Year|Chinese New Year|Korean New Year|Spring Festival|Tet\b|Tết
+lunar_new_year,feast,10,celebratory,Lunar New Year|Chinese New Year|Korean New Year|Tet\b|Tết
 mid_autumn,family_meal,7,celebratory,Mid-Autumn|Chuseok
 dragon_boat,family_meal,3,celebratory,Dragon Boat
 songkran,party,5,celebratory,Songkran
@@ -29,7 +29,7 @@ ethiopian_new_year,feast,5,celebratory,Ethiopian New Year
 jewish_new_year,feast,5,celebratory,Rosh Hashanah
 jewish_holiday,family_meal,3,celebratory,Pesach|Sukkot|Shavuot|Hanukkah|Simchat Torah
 yom_kippur,remembrance,0,solemn,Yom Kippur
-thanksgiving,feast,7,festive_secular,Thanksgiving
+thanksgiving,feast,7,festive_secular,^Thanksgiving( Day)?$
 national_day,party,3,national_pride,Independence|National Day|Republic Day|Victory Day|Statehood|Unity Day|Fiestas Patrias|Pakistan Day|Liberation Day|Founding Day|Cumhuriyet|Deutschen Einheit|German Unity
 remembrance_day,remembrance,0,solemn,Martyr|Memorial|Commemoration|Genocide|Death of
 ramadan_period,fasting_evening,14,celebratory,

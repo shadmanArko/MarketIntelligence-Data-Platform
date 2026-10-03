@@ -22,7 +22,7 @@ types:
   islamic_new_year: { food_role: family_meal, lead_days: 2, tone: solemn, match: "Islamic New Year|Hijri New Year" }
   ashura:         { food_role: remembrance, lead_days: 0, tone: solemn, match: "Ashura|Tasua|Arbaeen" }
   isra_miraj:     { food_role: family_meal, lead_days: 1, tone: solemn, match: "Isra' and Mi'raj|Isra and Miraj" }
-  nowruz:         { food_role: feast, lead_days: 10, tone: celebratory, match: "Nowruz|Navruz|Nauryz|Novruz|Newroz" }
+  nowruz:         { food_role: feast, lead_days: 10, tone: celebratory, match: "Nowruz|Navruz|Nauryz|Novruz|Newroz|Nevruz" }
   yalda:          { food_role: family_meal, lead_days: 5, tone: celebratory, match: "Yalda" }
   bengali_new_year: { food_role: feast, lead_days: 7, tone: celebratory, match: "Bengali New Year" }
   south_asian_new_year: { food_role: feast, lead_days: 5, tone: celebratory, match: "Nepali New Year|Sinhala|Tamil New Year|Vaisakhi|Baisakhi" }
@@ -31,7 +31,7 @@ types:
   dashain:        { food_role: feast, lead_days: 10, tone: celebratory, match: "Ghatasthapana|Fulpati|Dashain" }
   diwali:         { food_role: gift_season, lead_days: 10, tone: celebratory, match: "Diwali|Deepavali|Laxmi Pooja|Tihar" }
   holi:           { food_role: party, lead_days: 5, tone: celebratory, match: "\\bHoli\\b|Fagu Poornima" }
-  lunar_new_year: { food_role: feast, lead_days: 10, tone: celebratory, match: "Lunar New Year|Chinese New Year|Korean New Year|Spring Festival|Tet\\b|Tết" }
+  lunar_new_year: { food_role: feast, lead_days: 10, tone: celebratory, match: "Lunar New Year|Chinese New Year|Korean New Year|Tet\\b|Tết" }
   mid_autumn:     { food_role: family_meal, lead_days: 7, tone: celebratory, match: "Mid-Autumn|Chuseok" }
   dragon_boat:    { food_role: family_meal, lead_days: 3, tone: celebratory, match: "Dragon Boat" }
   songkran:       { food_role: party, lead_days: 5, tone: celebratory, match: "Songkran" }
@@ -43,7 +43,7 @@ types:
   jewish_new_year: { food_role: feast, lead_days: 5, tone: celebratory, match: "Rosh Hashanah" }
   jewish_holiday: { food_role: family_meal, lead_days: 3, tone: celebratory, match: "Pesach|Sukkot|Shavuot|Hanukkah|Simchat Torah" }
   yom_kippur:     { food_role: remembrance, lead_days: 0, tone: solemn, match: "Yom Kippur" }
-  thanksgiving:   { food_role: feast, lead_days: 7, tone: festive_secular, match: "Thanksgiving" }
+  thanksgiving:   { food_role: feast, lead_days: 7, tone: festive_secular, match: "^Thanksgiving( Day)?$" }
   national_day:   { food_role: party, lead_days: 3, tone: national_pride, match: "Independence|National Day|Republic Day|Victory Day|Statehood|Unity Day|Fiestas Patrias|Pakistan Day|Liberation Day|Founding Day|Cumhuriyet|Deutschen Einheit|German Unity" }
   remembrance_day: { food_role: remembrance, lead_days: 0, tone: solemn, match: "Martyr|Memorial|Commemoration|Genocide|Death of" }
   # rule-based (python-holidays does not have these)
@@ -73,6 +73,8 @@ rules:
   - { type: ramadan_period, kind: hijri_range, from: [9, 1], to: [9, 30], communities: muslim }
   - { type: iftar_season_peak, kind: hijri_range, from: [9, 21], to: [9, 30], communities: muslim }
   - { type: yalda, kind: persian, date: [9, 30], communities: [iranian, afghan, kurdish] }
+  # diaspora celebrates Nowruz even where the home state no longer lists it (Afghanistan) or has no state (Kurds)
+  - { type: nowruz, kind: persian, date: [1, 1], communities: [afghan, kurdish] }
   - { type: chaharshanbe_suri, kind: nowruz_last_tuesday, communities: [iranian, kurdish, azerbaijani] }
   - { type: karneval_der_kulturen, kind: easter, offset: 47, days: 4, communities: all }   # Fri before Pentecost .. Whit Monday
   - { type: christmas_market_season, kind: advent, offset: -3, communities: all }
