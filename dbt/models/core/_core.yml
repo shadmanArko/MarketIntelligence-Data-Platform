@@ -85,3 +85,25 @@ models:
   - name: area_stat
     tests:
       - unique_combination: {columns: [area_type, area_id, variable, reference_date]}
+
+  - name: interest_daily
+    tests:
+      - unique_combination: {columns: [topic, day]}
+    columns:
+      - name: views_all_languages
+        tests: [{between: {min_value: 0}}]
+
+  - name: tenant_social_post
+    columns:
+      - name: post_id
+        tests: [unique, not_null]
+      - name: tenant_id
+        tests: [not_null]
+
+  - name: tenant_social_metrics_snapshot
+    columns:
+      - name: post_id
+        tests:
+          - relationships: {to: ref('tenant_social_post'), field: post_id}
+      - name: reach
+        tests: [{between: {min_value: 0}}]

@@ -24,6 +24,9 @@ market:
     keyword_volume:   { enabled: false, provider: dataforseo }      # paid
     crux:             { enabled: true, country: de }
     common_crawl:     { enabled: true }
+    first_party:      { enabled: true }      # tenant own posts + metrics (+ orders) from the AI Harness warehouse
+    osm_history:      { enabled: true }      # ohsome: food POI history since 2010 per district
+    wikipedia:        { enabled: true }      # daily page views of dishes / cuisines / occasions since 2015
     apify:            { enabled: false, fallback_for: [tiktok, instaloader, google_places] }
   discovery:
     hashtags: [berlinfood, berlinfoodie, biryaniberlin, halalberlin, berlinessen, foodberlin,
