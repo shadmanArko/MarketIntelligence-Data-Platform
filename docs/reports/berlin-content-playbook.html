@@ -1,0 +1,294 @@
+<title>Berlin Biryani Content Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (~72ch) with full-width data tables that scroll inside their own frame. */
+:root {
+  --bg: #f5f6f3; --surface: #ffffff; --fg: #1d2420; --muted: #5b6660; --line: #dfe3dd;
+  --accent: #0e5a45;      /* Bangladesh green, deepened */
+  --saffron: #b9770e;     /* kacchi saffron */
+  --good: #1f7a4d; --bad: #b3412e; --chip: #e8efe9;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "IBM Plex Sans", "Noto Sans", "Noto Sans Bengali", "Noto Naskh Arabic", "Noto Sans Devanagari", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #131714; --surface: #1a201c; --fg: #e6ebe7; --muted: #9aa69f; --line: #2c342f;
+  --accent: #5cc39d; --saffron: #e3a945; --good: #6fd19f; --bad: #ef8a76; --chip: #223029; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #131714; --surface: #1a201c; --fg: #e6ebe7; --muted: #9aa69f; --line: #2c342f;
+  --accent: #5cc39d; --saffron: #e3a945; --good: #6fd19f; --bad: #ef8a76; --chip: #223029; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--body); margin: 0; }
+.wrap { max-width: 1060px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; }
+.col { max-width: 72ch; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3.1rem); letter-spacing: -0.02em; }
+h2 { font-size: 1.55rem; margin-top: 56px; padding-top: 18px; border-top: 2px solid var(--fg); }
+h3 { font-size: 1.08rem; margin-top: 4px; }
+p { margin: 10px 0; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--saffron); }
+.lede { font-size: 1.12rem; color: var(--fg); margin-top: 14px; }
+.meta { color: var(--muted); font-size: 13px; margin-top: 10px; }
+.answer { display: grid; gap: 12px; margin-top: 18px; }
+.answer li { padding-left: 4px; }
+.answer li b { color: var(--accent); }
+ol.answer, ul.plain { padding-left: 22px; margin: 14px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 18px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; min-width: 0; }
+.card .role { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.card dl { display: grid; grid-template-columns: 92px 1fr; gap: 6px 10px; margin: 12px 0 0; font-size: 14px; }
+.card dt { color: var(--muted); font: 500 11px/1.9 var(--mono); text-transform: uppercase; letter-spacing: .05em; }
+.card dd { margin: 0; min-width: 0; }
+.pill { display: inline-block; font: 500 11px/1 var(--mono); padding: 4px 7px; border-radius: 3px; background: var(--chip); color: var(--accent); letter-spacing: .03em; }
+.pill.warn { color: var(--saffron); }
+.pill.no { color: var(--bad); }
+.tablebox { overflow-x: auto; margin-top: 16px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--surface); position: sticky; top: 0; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); white-space: nowrap; }
+td.date { font-family: var(--mono); white-space: nowrap; font-size: 13px; }
+.native { font-size: 15px; }
+.pos { color: var(--good); font-weight: 600; } .neg { color: var(--bad); font-weight: 600; }
+.bar { display: inline-block; height: 8px; background: var(--accent); border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+.bar.n { background: var(--bad); }
+.note { font-size: 13px; color: var(--muted); }
+.callout { border-left: 3px solid var(--saffron); padding: 4px 0 4px 14px; margin: 16px 0; }
+code { font: 13px var(--mono); background: var(--chip); padding: 1px 5px; border-radius: 3px; }
+a { color: var(--accent); }
+@media (max-width: 520px) { .card dl { grid-template-columns: 1fr; } .wrap { padding-block: 28px 56px; } }
+</style>
+
+<div class="wrap">
+  <header class="col">
+    <div class="eyebrow">Dhaka Kacchi · Market Intelligence · 3 Oct 2026</div>
+    <h1>Berlin Biryani Content Playbook</h1>
+    <p class="lede">What to post, on which platform, in which language, for which community and on which day. Built from current platform research and from the platform's own data (36,324 TikTok videos from 506 Berlin restaurants so far, with Reddit and YouTube collection running).</p>
+    <p class="meta">Every number here lives in the Postgres platform (<code>marts.*</code>, <code>ml.feature_content</code>) and refreshes weekly. Research sources are stored with each rule in <code>core.content_priors</code>.</p>
+  </header>
+
+  <section class="col">
+    <h2>The short answer</h2>
+    <ol class="answer">
+      <li><b>Content beats clock.</b> Across 36k Berlin restaurant TikToks, posting time between 09:00 and 22:00 changes performance by less than ±3 % against the account's own average. Topic, hook and format matter far more. Only 04:00–08:00 is clearly weak.</li>
+      <li><b>Feast moments win.</b> Ramadan content performs about 1.5× an account's usual video (+0.42 log-lift, 168 videos from 32 accounts). Price and value angles (+0.28) and openings or news (+0.30) also lift. Plain recipes underperform (−0.24).</li>
+      <li><b>Speak to each community in its own dish.</b> Berlin has 107k Turkish, 112k East Slavic, 50k Indian, 41k Syrian, 32k Vietnamese and 25k Afghan citizens. Each has its own meat-and-rice feast (etli pilav, plov, biryani, maqluba, cơm tấm, Kabuli palaw). Bridge from their dish to kacchi, with their greeting in their script.</li>
+      <li><b>One video, many cuts.</b> Shoot the dum seal breaking and the rice pull once. Cut 15–59 s versions for TikTok, Reels and Shorts, a carousel for Instagram, a text post for Threads, and a long making-of for YouTube. Never repost with another platform's watermark: Instagram, Facebook and TikTok all demote it.</li>
+      <li><b>Plan by occasion, not by week.</b> Start teasers 10–14 days before Eid, Ramadan, Nowruz, Diwali, Durga Puja and Lunar New Year. The calendar below has the dates, greetings and lead times.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Platform by platform</h2>
+      <p>Times are Berlin clock time. Industry studies (Sprout Social, Buffer, Socialinsider, Dash Social, 2025–26) are a starting point. Our own data replaces them as it grows. "Data" shows what the platform can collect today.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <h3>TikTok</h3><div class="role">Discovery engine for under-35s; the main reach channel</div>
+        <dl>
+          <dt>Format</dt><dd>Vertical video 15–59 s (best in our data: 15–29 s +0.07, 30–59 s +0.04; under 15 s −0.05). Hook inside 2 s: average watch time is 3.75 s.</dd>
+          <dt>Angles</dt><dd>Ramadan / iftar, price per portion, "new in Berlin", halal, spicy challenge, dum-pot reveal, staff and family story.</dd>
+          <dt>Text</dt><dd>Say the dish and "Berlin" out loud and on screen: TikTok search reads speech and captions. 6–10 hashtags did best (+0.11); 1–3 did worst (−0.15).</dd>
+          <dt>Cadence</dt><dd>3–5 per week; more than 4 a day cuts engagement 28 %.</dd>
+          <dt>Avoid</dt><dd>Watermarked reposts, low-effort AI video, recipe-only clips.</dd>
+          <dt>Data</dt><dd><span class="pill">public profiles ✓</span> 36k videos; food creators being added</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <h3>Instagram</h3><div class="role">Brand home; reach via Reels, depth via carousels</div>
+        <dl>
+          <dt>Format</dt><dd>Reels up to 90 s for reach (+36 % reach vs carousels). Carousels for saves and engagement (+12 % vs Reels): menu, price, "which kacchi are you".</dd>
+          <dt>Signal</dt><dd>Sends per reach (DM shares) is the top signal for non-followers. Make "send this to your friend" content.</dd>
+          <dt>Text</dt><dd>At most 5 hashtags (hard limit since Dec 2025). Keyword captions: posts are indexed by Google.</dd>
+          <dt>When</dt><dd>Tue–Thu, 12:00–19:00 per studies; Sunday weakest.</dd>
+          <dt>Cadence</dt><dd>3–5 posts per week, plus Stories daily around lunch and dinner.</dd>
+          <dt>Data</dt><dd><span class="pill warn">App Review pending</span> 4,733 accounts queued</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <h3>Facebook</h3><div class="role">Diaspora groups and the 35+ audience (Bangladeshi, Arab, Turkish families)</div>
+        <dl>
+          <dt>Format</dt><dd>All videos are now Reels. Original Reels views doubled in H2 2025. Photo albums for family platters.</dd>
+          <dt>Text</dt><dd>Bangla, Arabic or Turkish captions work here. Put the order link in the first comment: Meta is testing a cap of 2 link posts per month.</dd>
+          <dt>When</dt><dd>Mon–Thu 12:00–14:00; DACH pages peak at 11:00.</dd>
+          <dt>Cadence</dt><dd>3–5 per week.</dd>
+          <dt>Data</dt><dd><span class="pill">own page ✓</span> others need Meta review</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <h3>YouTube</h3><div class="role">Search and long-term proof: Shorts plus one long film a month</div>
+        <dl>
+          <dt>Format</dt><dd>Shorts with original audio (copyrighted music over 60 s gets blocked). Long-form gets about 6× the views of Shorts: "40 kg of kacchi for Eid", "Old Dhaka recipe in Berlin".</dd>
+          <dt>Text</dt><dd>The title carries the keyword ("Kacchi Biryani Berlin"). The first 3 hashtags show above the title.</dd>
+          <dt>When</dt><dd>Shorts Fri 16:00; long-form Sun 10:00.</dd>
+          <dt>Data</dt><dd><span class="pill warn">connector ready</span> needs a free API key</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <h3>Threads</h3><div class="role">Conversation, local Berlin food talk</div>
+        <dl>
+          <dt>Format</dt><dd>Short text with one photo. Ask a question ("Kacchi or tehari for Friday?"). Replies and early velocity drive reach. Links are not penalised.</dd>
+          <dt>Text</dt><dd>One topic tag per post, e.g. "Berlin Food".</dd>
+          <dt>When</dt><dd>Weekday mornings 07:00–12:00; daily.</dd>
+          <dt>Data</dt><dd><span class="pill">own posts ✓</span> search needs Meta review</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <h3>Reddit</h3><div class="role">Trust channel: r/berlin, r/berlinsocialclub, r/biryani</div>
+        <dl>
+          <dt>Rule</dt><dd>Never advertise. Join "where to eat biryani in Berlin" threads as the owner and say so. Keep at least 9 helpful comments for each mention of your own place.</dd>
+          <dt>Works</dt><dd>An honest "we cook Old Dhaka kacchi in Berlin, ask us anything" post, Ramadan iftar tips, photos of the pot.</dd>
+          <dt>Data</dt><dd><span class="pill">archive ✓</span> 31 subreddits since 2019, collecting now</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <h3>LinkedIn</h3><div class="role">B2B: office lunches, catering, founder story, hiring</div>
+        <dl>
+          <dt>Format</dt><dd>Multi-image (6.6 % engagement) and document posts (6.1 %). Catering case studies; "team lunch for 40" price examples.</dd>
+          <dt>When</dt><dd>Tue–Thu 11:00–17:00; 1–2 per week.</dd>
+          <dt>Avoid</dt><dd>Engagement bait ("comment YES").</dd>
+          <dt>Data</dt><dd><span class="pill no">no API</span> own page analytics only</dd>
+        </dl>
+      </article>
+      <article class="card">
+        <h3>X</h3><div class="role">Low priority in Berlin; expats, tech, journalists</div>
+        <dl>
+          <dt>Format</dt><dd>Repost your best short video with a one-line take. Replies are the strongest signal.</dd>
+          <dt>When</dt><dd>Weekdays 08:00–11:00; 3–7 per week only if there is capacity.</dd>
+          <dt>Data</dt><dd><span class="pill no">paid</span> $0.005 per post read (10k posts ≈ $50)</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Who lives in Berlin and how to reach them</h2>
+      <p>Counts are foreign citizens living in Berlin on 30 June 2026 (Amt für Statistik Berlin-Brandenburg). "Incl. Germans" adds Germans with that migration background, where published. Greetings marked † should be checked by a native speaker before printing.</p>
+    </div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Community</th><th class="num">Citizens</th><th class="num">Incl. Germans</th><th>Their meat + rice</th><th>Bridge to kacchi</th><th>Greeting</th></tr></thead>
+        <tbody>
+          <tr><td>Turkish</td><td class="num">107,051</td><td class="num">202,823</td><td>etli pilav, düğün pilavı, kuzu tandır</td><td>"Like wedding pilav, slow-cooked under a sealed lid"</td><td class="native">Bayramınız mübarek olsun</td></tr>
+          <tr><td>Russian / Ukrainian</td><td class="num">112,145</td><td class="num">163,433</td><td>плов (plov), голубцы</td><td>"Plov's South Asian cousin: lamb, rice, one pot"</td><td class="native">С Новым годом! · З Новим роком!</td></tr>
+          <tr><td>Balkan / Romanian / Bulgarian</td><td class="num">129,443</td><td class="num">–</td><td>sarma, đuveč, punjene paprike</td><td>"Sunday đuveč, Dhaka style"</td><td class="native">Bajram šerif mubarek olsun</td></tr>
+          <tr><td>Polish</td><td class="num">50,425</td><td class="num">107,245</td><td>gołąbki</td><td>"Meat and rice, the way grandmother had time for"</td><td class="native">Wesołych Świąt!</td></tr>
+          <tr><td>Indian</td><td class="num">49,504</td><td class="num">54,529</td><td>Hyderabadi, Lucknowi, Kolkata biryani</td><td>"Kolkata has aloo. Dhaka has kacchi. Taste the difference"</td><td class="native">दीपावली की हार्दिक शुभकामनाएँ</td></tr>
+          <tr><td>Syrian</td><td class="num">40,662</td><td class="num">71,578</td><td>مقلوبة maqluba, أوزي ouzi, kabsa</td><td>"For the family table you miss: one pot for 6"</td><td class="native">عيد مبارك · رمضان كريم</td></tr>
+          <tr><td>Vietnamese</td><td class="num">31,803</td><td class="num">47,929</td><td>cơm tấm, cơm gà</td><td>"Rice is the meal: try the Bangladeshi way"</td><td class="native">Chúc mừng năm mới!</td></tr>
+          <tr><td>Afghan</td><td class="num">24,786</td><td class="num">29,443</td><td>قابلی پلو Kabuli palaw</td><td>"Palaw's spicier neighbour from Dhaka"</td><td class="native">عیدتان مبارک · نوروزتان مبارک</td></tr>
+          <tr><td>Palestinian (incl. stateless)</td><td class="num">≈22,000</td><td class="num">–</td><td>مقلوبة maqluba, منسف mansaf</td><td>"Upside-down or layered: rice, meat, family"</td><td class="native">عيد مبارك</td></tr>
+          <tr><td>West African</td><td class="num">20,946</td><td class="num">–</td><td>jollof, party fried rice, thiéboudienne</td><td>"Jollof wars? Add a third contender"</td><td class="native">Barka da Sallah</td></tr>
+          <tr><td>Iranian</td><td class="num">13,333</td><td class="num">27,916</td><td>چلوکباب chelow kabab, ته‌چین tahchin</td><td>"Saffron, tahdig-style crust, slow lamb"</td><td class="native">نوروزتان پیروز · یلدا مبارک</td></tr>
+          <tr><td>Lebanese</td><td class="num">9,913</td><td class="num">35,255</td><td>رز على دجاج riz ʿa djej, ouzi</td><td>"Your riz ʿa djej, with Dhaka spice"</td><td class="native">عيد مبارك · ميلاد مجيد</td></tr>
+          <tr><td>Pakistani</td><td class="num">9,730</td><td class="num">–</td><td>Sindhi / Karachi biryani, yakhni pulao</td><td>"Karachi vs Dhaka: the friendly biryani rivalry"</td><td class="native">عید مبارک · جشنِ آزادی مبارک</td></tr>
+          <tr><td>Iraqi</td><td class="num">8,460</td><td class="num">16,158</td><td>قوزي quzi, timman</td><td>"Quzi-size platters for the whole family"</td><td class="native">كل عام وأنتم بخير</td></tr>
+          <tr><td>Egyptian</td><td class="num">7,372</td><td class="num">–</td><td>فتة fattah (the Eid al-Adha dish)</td><td>"After fattah, try the Bengali Eid table"</td><td class="native">كل سنة وانت طيب</td></tr>
+          <tr><td>Central Asian (+ Kazakh-Germans)</td><td class="num">6,255</td><td class="num">21,119</td><td>palov / osh, to'y oshi</td><td>"Wedding plov's Bengali sibling"</td><td class="native">Navro'z bayramingiz muborak bo'lsin</td></tr>
+          <tr><td>Bangladeshi</td><td class="num">3,581</td><td class="num">–</td><td>কাচ্চি বিরিয়ানি, তেহারি, মোরগ পোলাও</td><td>"Puran Dhaka's kacchi, in Berlin" (pride and nostalgia)</td><td class="native">ঈদ মোবারক · শুভ নববর্ষ</td></tr>
+          <tr><td>Germans (no migration background)</td><td class="num">≈2.2 M</td><td class="num">–</td><td>Reisfleisch, Hühnerfrikassee mit Reis</td><td>"Feierabend-Biryani", "Sonntagsessen ohne Kochen"</td><td class="native">Guten Appetit! · Frohe Weihnachten!</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">All 38 communities, 107 dishes and 129 greetings are in <code>config/taxonomies/communities.yaml</code>. District and LOR (542 planning areas) breakdowns are in <code>core.community_audience</code>. Turkish Berliners concentrate in Neukölln (38k), Mitte (37k) and Friedrichshain-Kreuzberg (26k).</p>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Occasion calendar, Oct 2026 – Oct 2027</h2>
+      <p>"Start" is when teaser content should begin. Islamic dates are calculated (±1 day). Bangladeshi, Indian and Nigerian communities often celebrate one day after Turkish and Arab ones. The full calendar for 38 communities, with native holiday names, is in <code>marts.occasion_content_calendar</code>.</p>
+    </div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Date</th><th>Occasion</th><th>Who</th><th>Start</th><th>Angle</th></tr></thead>
+        <tbody>
+          <tr><td class="date">17–20 Oct</td><td>Durga Puja</td><td>Bengali Hindus (BD, IN)</td><td class="date">7 Oct</td><td>Navami mutton, family platters; শুভ বিজয়া</td></tr>
+          <tr><td class="date">29 Oct</td><td>Cumhuriyet Bayramı</td><td>Turkish</td><td class="date">26 Oct</td><td>Celebration platter for the evening</td></tr>
+          <tr><td class="date">8 Nov</td><td>Diwali</td><td>Indian, Nepali</td><td class="date">29 Oct</td><td>Gift / party boxes; chicken or veg option</td></tr>
+          <tr><td class="date">26 Nov – 23 Dec</td><td>Christmas market season</td><td>All Berlin</td><td class="date">19 Nov</td><td>Office party catering, cold-evening comfort</td></tr>
+          <tr><td class="date">16 Dec</td><td>Bijoy Dibosh (Victory Day)</td><td>Bangladeshi</td><td class="date">13 Dec</td><td>Pride, red-green plating; বিজয় দিবসের শুভেচ্ছা</td></tr>
+          <tr><td class="date">21 Dec</td><td>Shab-e Yalda</td><td>Iranian, Afghan, Kurdish</td><td class="date">16 Dec</td><td>Longest night, long family dinner</td></tr>
+          <tr><td class="date">24–26 Dec, 31 Dec</td><td>Christmas, Silvester</td><td>All Berlin; Polish 25–26 (Wigilia is meatless)</td><td class="date">3 Dec</td><td>"No-cooking Christmas", party trays</td></tr>
+          <tr><td class="date">6–7 Jan</td><td>Orthodox / Coptic Christmas</td><td>Russian, Serbian, Egyptian, Ethiopian, Armenian</td><td class="date">27 Dec</td><td>С Рождеством Христовым!</td></tr>
+          <tr><td class="date">6 Feb</td><td>Lunar New Year, Tết (Seollal 7 Feb)</td><td>Vietnamese, Chinese, Korean</td><td class="date">27 Jan</td><td>Reunion dinner for the family</td></tr>
+          <tr><td class="date">8 Feb – 8 Mar</td><td>Ramadan · iftar 17:06 → 17:58</td><td>All Muslim communities</td><td class="date">25 Jan</td><td>Iftar boxes ready before sunset; late-night suhoor; daily countdown content</td></tr>
+          <tr><td class="date">21 Feb</td><td>Ekushey (Mother Language Day)</td><td>Bangladeshi</td><td class="date">19 Feb</td><td>Solemn: no sales push</td></tr>
+          <tr><td class="date">9 / 10 Mar</td><td>Eid al-Fitr</td><td>Turkish and Arab on the 9th; Bangladeshi and Indian on the 10th</td><td class="date">27 Feb</td><td>Pre-order Eid platters; greeting in each script</td></tr>
+          <tr><td class="date">21 Mar</td><td>Nowruz / Newroz / Navruz</td><td>Iranian, Afghan, Kurdish, Central Asian, Azerbaijani</td><td class="date">11 Mar</td><td>Spring feast, saffron rice</td></tr>
+          <tr><td class="date">26 Mar</td><td>Bangladesh Independence Day</td><td>Bangladeshi</td><td class="date">23 Mar</td><td>Community pride</td></tr>
+          <tr><td class="date">28 Mar · 2 May</td><td>Easter · Orthodox Easter</td><td>German, Polish · Greek, Russian, Serbian, Ethiopian</td><td class="date">18 Mar</td><td>Holiday family meal without cooking</td></tr>
+          <tr><td class="date">14 Apr</td><td>Pohela Boishakh</td><td>Bangladeshi (Nepali, Sinhala, Tamil, Punjabi new years nearby)</td><td class="date">7 Apr</td><td>শুভ নববর্ষ; festive menu</td></tr>
+          <tr><td class="date">14–17 May</td><td>Karneval der Kulturen + Eid al-Adha (16/17 May)</td><td>All Berlin + all Muslim communities</td><td class="date">2 May</td><td>Biggest weekend of the year: Kreuzberg crowds and Eid on the same days</td></tr>
+          <tr><td class="date">12 / 15 Sep</td><td>Ethiopian New Year · Mid-Autumn / Chuseok</td><td>Ethiopian, Eritrean · Chinese, Korean</td><td class="date">5 Sep</td><td>Smaller, targeted posts</td></tr>
+          <tr><td class="date">30 Sep – 9 Oct</td><td>Dashain / Durga Puja 2027</td><td>Nepali, Bengali Hindus</td><td class="date">20 Sep</td><td>Goat and mutton feast</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>What our own data says so far</h2>
+      <p>The data: 36,324 TikTok videos from 506 Berlin restaurant accounts, 2018–2026. Each video is compared with the same account's median. A lift of +0.40 means about 1.5× that account's typical video; −0.25 means about 0.78×. Only topics with at least 40 videos are shown.</p>
+    </div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Topic or format in the video</th><th class="num">Videos</th><th class="num">Accounts</th><th>Lift vs platform average</th></tr></thead>
+        <tbody>
+          <tr><td>Ramadan / iftar</td><td class="num">168</td><td class="num">32</td><td class="pos"><span class="bar" style="width:84px"></span>+0.42</td></tr>
+          <tr><td>New opening, new menu, "coming soon"</td><td class="num">397</td><td class="num">136</td><td class="pos"><span class="bar" style="width:59px"></span>+0.30</td></tr>
+          <tr><td>Price, deal, value</td><td class="num">919</td><td class="num">205</td><td class="pos"><span class="bar" style="width:55px"></span>+0.28</td></tr>
+          <tr><td>Halal</td><td class="num">134</td><td class="num">24</td><td class="pos"><span class="bar" style="width:39px"></span>+0.20</td></tr>
+          <tr><td>Diaspora / desi pride</td><td class="num">58</td><td class="num">29</td><td class="pos"><span class="bar" style="width:31px"></span>+0.16</td></tr>
+          <tr><td>Street food, market stall</td><td class="num">354</td><td class="num">63</td><td class="pos"><span class="bar" style="width:23px"></span>+0.12</td></tr>
+          <tr><td>6–10 hashtags</td><td class="num">4,659</td><td class="num">267</td><td class="pos"><span class="bar" style="width:22px"></span>+0.11</td></tr>
+          <tr><td>"Best / top 5 / hidden gem"</td><td class="num">1,292</td><td class="num">250</td><td class="pos"><span class="bar" style="width:18px"></span>+0.09</td></tr>
+          <tr><td>15–29 second video</td><td class="num">9,717</td><td class="num">412</td><td class="pos"><span class="bar" style="width:14px"></span>+0.07</td></tr>
+          <tr><td>Under 15 seconds</td><td class="num">12,769</td><td class="num">405</td><td class="neg"><span class="bar n" style="width:10px"></span>−0.05</td></tr>
+          <tr><td>1–3 hashtags</td><td class="num">6,164</td><td class="num">299</td><td class="neg"><span class="bar n" style="width:29px"></span>−0.15</td></tr>
+          <tr><td>Recipe / how to make</td><td class="num">712</td><td class="num">134</td><td class="neg"><span class="bar n" style="width:47px"></span>−0.24</td></tr>
+          <tr><td>Valentine's Day</td><td class="num">148</td><td class="num">80</td><td class="neg"><span class="bar n" style="width:52px"></span>−0.26</td></tr>
+          <tr><td>Football</td><td class="num">258</td><td class="num">56</td><td class="neg"><span class="bar n" style="width:115px"></span>−0.57</td></tr>
+          <tr><td>Mother's Day</td><td class="num">41</td><td class="num">32</td><td class="neg"><span class="bar n" style="width:156px"></span>−0.78</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p class="callout">These are associations from restaurants' own accounts, not proof of cause, and Instagram, YouTube and Reddit are not in yet. The same mart (<code>marts.content_feature_performance</code>) recomputes every week per platform as the data grows. Posting time is covered by <code>marts.posting_time_performance</code>: weekday effects are within ±3 % on TikTok.</p>
+    </div>
+  </section>
+
+  <section class="col">
+    <h2>The dataset behind this</h2>
+    <ul class="plain">
+      <li><b>Posts, every platform</b> (<code>core.post</code>, <code>core.post_metrics_snapshot</code>): TikTok 36k, Reddit 34k and growing (31 subreddits since 2019), YouTube once the key is in, Instagram after Meta review, own posts 417 (Instagram, Facebook, Threads).</li>
+      <li><b>Tags per post</b> (<code>core.content_tag</code>, <code>ops.text_language</code>): the language (42 detected), dishes (107 community dishes plus 952 Wikidata rice dishes in 44 languages), communities, occasions, and 17 format cues (review, price, ranking, ASMR, dum reveal, behind the scenes…).</li>
+      <li><b>Audiences</b> (<code>core.community_audience</code>): 38 communities by Berlin total, district and LOR planning area, half-yearly since Dec 2025.</li>
+      <li><b>Occasions</b> (<code>core.occasion_day</code>): 2015–2030 for 38 communities with greeting, tone, lead time, iftar and suhoor times, plus Berlin festivals and Christmas markets.</li>
+      <li><b>Trends</b> (<code>marts.topic_trends_weekly</code>, <code>core.interest_daily</code>): weekly topic momentum per platform, and daily Wikipedia interest since 2015 for 100+ dishes and occasions in 27 languages.</li>
+      <li><b>ML table</b> (<code>ml.feature_content</code>, exported by <code>mip ml export content_features</code>): 69,898 posts with leakage-free features and three labels (lift vs the account's earlier posts, percentile, viral top 10 %).</li>
+    </ul>
+    <p class="note">Collected from public data and official APIs only: no logins to others' accounts, no private groups, no CAPTCHA tricks. Commenter and author names are stored as salted hashes.</p>
+  </section>
+
+  <section class="col">
+    <h2>What would make it stronger</h2>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Step</th><th>Unlocks</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td>YouTube API key (5 minutes, credentials guide §6)</td><td>Videos, Shorts, channels and comment-language mix for 229 queries, including every community dish in its own script</td><td>Free</td></tr>
+          <tr><td>Meta: ID check for the Ad Library API</td><td>Every food and delivery ad shown in Germany, with reach by age, gender and region</td><td>Free</td></tr>
+          <tr><td>Meta App Review: Instagram Business Discovery, Hashtag Search, Threads keyword search</td><td>Competitor Instagram posts with likes and comments; public Threads posts</td><td>Free, 2–4 weeks</td></tr>
+          <tr><td>TikTok Commercial Content API</td><td>All TikTok ads in the EU</td><td>Free application</td></tr>
+          <tr><td>VPS warehouse access (read-only)</td><td>Your nightly own-post metrics, and orders to link content to sales</td><td>Free</td></tr>
+          <tr><td>X API, pay per use</td><td>Berlin food talk on X</td><td>≈ $50 per 10k posts</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
