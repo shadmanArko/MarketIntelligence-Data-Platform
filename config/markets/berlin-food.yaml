@@ -13,7 +13,7 @@ market:
     foursquare_os:    { enabled: true }
     wolt:             { enabled: true, menus: true }
     lieferando:       { enabled: true, country: de, menus: true, reviews: true, max_reviews: 300 }
-    uber_eats:        { enabled: true, addresses_per_district: 2 }
+    uber_eats:        { enabled: true, via: apify, budget_usd: 10, max_results_per_run: 500 }   # one-time store list
     google_maps:      { enabled: true, mode: scrape, reviews: true, max_reviews: 200 }
     google_places:    { enabled: false, details_tier: enterprise }   # needs API key + billing
     instagram_graph:  { enabled: true }

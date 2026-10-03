@@ -89,6 +89,16 @@ with unioned as (
          case when operating_status in ('permanently_closed', 'closed') then 'closed_permanently'
               when operating_status = 'temporarily_closed' then 'closed_temporarily' end, null
   from {{ ref('stg_overture__place') }}
+  union all
+  -- uber_eats (one-time Apify store list)
+  select 'uber_eats', platform_id, 'store', observation_id, run_id, fetched_at,
+         name, address_line, postcode, 'Berlin', lat, lon, null, null, null, null, null, null,
+         array(select lower(replace(c, '-', ' ')) from jsonb_array_elements_text(ops.jarr(cuisines)) c),
+         case when price_range between 1 and 4 then price_range end, rating_value, 1, 5, rating_count,
+         null, null, null,
+         exists (select 1 from jsonb_array_elements_text(ops.jarr(cuisines)) c where c ilike '%halal%'),
+         null, null, null, null, null, null, share_url
+  from {{ ref('stg_uber_eats__store') }}
 )
 select
   platform || ':' || platform_id                           as listing_key,
