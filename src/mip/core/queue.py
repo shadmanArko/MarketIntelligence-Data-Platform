@@ -85,6 +85,15 @@ def fail(c: psycopg.Connection, task_id: UUID, error: str, delay_s: float, dead:
     )
 
 
+def defer(c: psycopg.Connection, task_id: UUID, reason: str, delay_s: float) -> None:
+    """Back to pending, attempt not counted, not claimable before the delay has passed."""
+    c.execute(
+        "UPDATE ops.tasks SET status='pending', attempts=greatest(attempts-1,0), last_error=%s,"
+        " next_attempt_at=now() + make_interval(secs => %s), updated_at=now() WHERE task_id=%s",
+        (reason[:2000], delay_s, task_id),
+    )
+
+
 def release(c: psycopg.Connection, task_id: UUID) -> None:
     """Give a claimed task back untouched (e.g. breaker opened before we started)."""
     c.execute(

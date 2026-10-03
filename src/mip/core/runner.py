@@ -19,7 +19,7 @@ from mip.core.connector import get_connector_cls
 from mip.core.ratelimit import backoff_delay
 from mip.core.raw_store import RawWriter
 from mip.core.runs import end_run, record_health, start_run
-from mip.core.types import EntityRef, RawRecord, Scope, SourceBlocked, SourceGone
+from mip.core.types import EntityRef, RawRecord, Scope, SourceBlocked, SourceDeferred, SourceGone
 from mip.db import connect
 
 log = structlog.get_logger()
@@ -130,6 +130,11 @@ class _Worker(threading.Thread):
             queue.complete(c, t["task_id"])
             c.commit()
             ctx.count("gone")
+        except SourceDeferred as e:
+            c.rollback()
+            queue.defer(c, t["task_id"], str(e), e.delay_s)
+            c.commit()
+            ctx.count("deferred")
         except SourceBlocked as e:
             c.rollback()
             queue.fail(c, t["task_id"], str(e), backoff_delay(connector.rate_limit, t["attempts"] + 2))

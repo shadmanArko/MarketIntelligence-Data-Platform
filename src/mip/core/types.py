@@ -56,5 +56,13 @@ class SourceBlocked(Exception):
     """The source refused us (403/429/challenge); retry later with backoff."""
 
 
+class SourceDeferred(Exception):
+    """Nothing wrong, but not now (e.g. a daily quota is used up): put the task back without spending an attempt."""
+
+    def __init__(self, message: str, delay_s: float):
+        super().__init__(message)
+        self.delay_s = delay_s
+
+
 class SourceGone(Exception):
     """The entity no longer exists (404 etc.); do not retry."""

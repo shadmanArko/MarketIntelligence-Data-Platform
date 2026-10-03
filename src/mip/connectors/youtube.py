@@ -25,7 +25,7 @@ from pydantic import BaseModel, ConfigDict
 from mip.core.connector import register
 from mip.core.http import HttpClient
 from mip.core.privacy import pseudonym
-from mip.core.types import EntityRef, HealthStatus, RateLimitPolicy, RawRecord, Scope, SourceBlocked
+from mip.core.types import EntityRef, HealthStatus, RateLimitPolicy, RawRecord, Scope, SourceBlocked, SourceDeferred
 from mip.db import connect
 from mip.settings import ROOT
 
@@ -88,6 +88,15 @@ def _oauth_token() -> str:
         body = r.json()
         _TOKEN.update(access_token=body["access_token"], exp=time.time() + int(body.get("expires_in", 3600)))
         return _TOKEN["access_token"]
+
+
+def _until_quota_reset() -> float:
+    """Seconds until YouTube quotas reset (midnight America/Los_Angeles) + 10 minutes."""
+    from zoneinfo import ZoneInfo
+
+    now = datetime.now(ZoneInfo("America/Los_Angeles"))
+    nxt = (now + timedelta(days=1)).replace(hour=0, minute=10, second=0, microsecond=0)
+    return (nxt - now).total_seconds()
 
 
 def _auth() -> tuple[dict, dict]:
@@ -177,7 +186,9 @@ class YouTube:
         body = r.json()
         if r.status == 403:
             reason = ((body.get("error") or {}).get("errors") or [{}])[0].get("reason", "")
-            if reason in ("quotaExceeded", "dailyLimitExceeded", "rateLimitExceeded"):
+            if reason in ("quotaExceeded", "dailyLimitExceeded"):
+                raise SourceDeferred(f"youtube quota: {reason}", _until_quota_reset())
+            if reason == "rateLimitExceeded":
                 raise SourceBlocked(f"youtube quota: {reason}")
             if reason in ("commentsDisabled", "forbidden"):
                 return {"items": [], "disabled": reason}
@@ -194,7 +205,7 @@ class YouTube:
         p = ref.params
         if ref.entity_type == "search":
             if self._searches_today() >= self.search_budget:
-                raise SourceBlocked("youtube search budget for today used; continue tomorrow")
+                raise SourceDeferred("youtube search budget for today used", _until_quota_reset())
             params = {"part": "snippet", "q": p["q"], "type": "video", "maxResults": 50, "order": p["order"],
                       "regionCode": p["region"], "relevanceLanguage": p["lang"], "safeSearch": "none"}
             if p.get("published_after_days"):
