@@ -109,6 +109,13 @@ with unioned as (
          null, null, null, null, null, null, null, null, null,
          case when date_closed is not null then 'closed_permanently' end, null
   from {{ ref('stg_foursquare__place') }}
+  union all
+  -- tripadvisor 2021 baseline (Kaggle)
+  select 'tripadvisor', platform_id, 'baseline_2021', null::uuid, null::uuid, observed_on::timestamptz,
+         name, address_line, postcode, 'Berlin', lat, lon, null, null, null, null, null, null,
+         cuisines, case when price_range between 1 and 4 then price_range end, rating_value, 1, 5, rating_count,
+         null, null, null, 'halal' = any(cuisines), null, null, null, null, null, null, share_url
+  from {{ ref('stg_tripadvisor__restaurant') }}
 )
 select
   platform || ':' || platform_id                           as listing_key,

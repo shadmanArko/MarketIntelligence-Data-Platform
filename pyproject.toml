@@ -33,6 +33,7 @@ dependencies = [
   "lingua-language-detector>=2.0",
   "holidays>=0.105",
   "convertdate>=2.5.1",
+  "kaggle>=2.2.4",
 ]
 
 [dependency-groups]
