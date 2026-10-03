@@ -23,7 +23,7 @@ from mip.db import connect
 from mip.settings import ROOT
 
 MAX_HTML = 600_000
-MAX_PAGES_PER_SITE = 25
+MAX_PAGES_PER_SITE = {"business": 25, "media": 300}  # total per site across the whole crawl
 RELEVANT_PATH = re.compile(
     r"(speise|karte|menu|menü|essen|food|kontakt|contact|impressum|about|ueber|über|bestell|order|liefer|"
     r"delivery|reserv|oeffnung|öffnung|hours|restaurant|berlin|biryani|indisch|halal|imbiss|review|test|guide)",
@@ -113,7 +113,7 @@ def extract(html: str, url: str) -> dict:
 @register
 class WebCrawl:
     source: ClassVar[str] = "web_crawl"
-    version: ClassVar[str] = "1.0.0"
+    version: ClassVar[str] = "1.0.1"
     # global ceiling; politeness is per host (HOST_POLICY): one request every ~1.5 s to any single site
     rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=25, per_seconds=1.0, jitter=(0.0, 0.05),
                                                             backoff_cap=30.0, breaker_failures=10_000)  # many independent sites
@@ -204,26 +204,27 @@ class WebCrawl:
         payload["html_truncated"] = len(html) > MAX_HTML
         payload.update(extract(html, r.url))
         yield RawRecord("web_page", ref.natural_key, payload, {"url": url}, r.status)
-        # follow same-site links that look relevant, up to max depth and a per-site page budget
+        # follow same-site links that look relevant, up to max depth and a per-site page budget for the whole crawl
         if p["depth"] >= self.max_depth:
             return
         site = site_of(r.url)
-        seen = 0
+        budget = MAX_PAGES_PER_SITE.get(p.get("kind", "business"), 25)
+        with connect() as c:
+            used = c.execute("SELECT count(*) n FROM ops.tasks WHERE source='web_crawl' AND params->>'site' = %s",
+                             (p.get("site") or site,)).fetchone()["n"]
+        room = budget - used
         for link in payload.get("outgoing_links", []):
+            if room <= 0:
+                break
             if site_of(link) != site or not link.startswith("http"):
                 continue
-            if re.search(r"\.(pdf|jpe?g|png|gif|webp|svg|zip|mp4|css|js)(\?|$)", link, re.I):
-                if link.lower().endswith(".pdf") and re.search(r"(speise|karte|menu)", link, re.I):
-                    pass  # PDF menus are worth recording as a page entry
-                else:
-                    continue
-            path = urlsplit(link).path
-            if p["kind"] == "business" or RELEVANT_PATH.search(path):
-                seen += 1
+            if re.search(r"\.(pdf|jpe?g|png|gif|webp|svg|zip|mp4|css|js)(\?|$)", link, re.I) and not (
+                    link.lower().endswith(".pdf") and re.search(r"(speise|karte|menu)", link, re.I)):
+                continue
+            if p["kind"] == "business" or RELEVANT_PATH.search(urlsplit(link).path):
+                room -= 1
                 yield EntityRef("web_page", canonical(link), {**p, "url": link, "depth": p["depth"] + 1},
                                 priority=40 + p["depth"])
-                if seen >= MAX_PAGES_PER_SITE:
-                    break
 
     def healthcheck(self) -> HealthStatus:
         r = self.http.get("https://www.berlin.de/", ok_statuses=frozenset(range(200, 400)))
