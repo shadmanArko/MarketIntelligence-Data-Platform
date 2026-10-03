@@ -6,7 +6,7 @@ slot behind the same connector interface) and switches on with a config flag or 
 | Source | What it adds | Status | What is needed |
 |---|---|---|---|
 | **Instagram Graph API** (Business Discovery + Hashtag Search) | Competitor profiles, every post with likes / comments, hashtag top + recent media | Token set (never expires); 4,733 accounts queued | Meta App Review: Advanced Access for `instagram_basic` + `pages_read_engagement` (+ Public Content Access for hashtags) |
-| **Uber Eats** | Stores, menus, prices, fees | Not built: the automated-permission check blocked calling Uber's internal API with a synthetic location cookie | Your decision: allow it, or use the Apify Uber Eats actor (paid) behind the same interface |
+| **Uber Eats** | One-time store list: names, cuisines, ratings, price level, address | Connector built (`uber_eats`, via Apify, $10 cap); direct access is behind a bot challenge | `APIFY_TOKEN` (≈ $9 one time) |
 | **Google organic rankings** | Who ranks for "biryani berlin" in web search | Connector built (`serp` organic); free HTML scraping of search engines is not attempted (bot challenges) | Free tier: `GOOGLE_CSE_KEY` + `GOOGLE_CSE_CX` (100 queries/day) or `BRAVE_API_KEY`; paid: DataForSEO (~$0.0006 / page) |
 | **Keyword search volume** | Monthly demand per keyword, seasonality | Not available free (Trends API is gated alpha, pytrends archived) | DataForSEO keyword volume (paid) or Google Trends API alpha access |
 | **Foursquare OS Places** | A third master-list seed + category tree | ✅ loaded (2026-09-15, 48k Berlin food places) | done |
