@@ -11,10 +11,13 @@ A `--refresh` run re-reads video statistics, which gives metrics snapshots (rule
 """
 
 import os
+import threading
+import time
 from collections.abc import Iterator
 from datetime import UTC, datetime, timedelta
 from typing import ClassVar
 
+import httpx
 import yaml
 from dotenv import dotenv_values
 from pydantic import BaseModel, ConfigDict
@@ -59,8 +62,41 @@ class Comments(_A):
     items: list[dict]
 
 
+def _env(name: str) -> str:
+    return os.environ.get(name) or dotenv_values(ROOT / ".env").get(name) or ""
+
+
 def _key() -> str:
-    return os.environ.get("YOUTUBE_API_KEY") or dotenv_values(ROOT / ".env").get("YOUTUBE_API_KEY") or ""
+    return _env("YOUTUBE_API_KEY")
+
+
+_TOKEN: dict = {}
+_TOKEN_LOCK = threading.Lock()
+
+
+def _oauth_token() -> str:
+    """Access token from the OAuth refresh token (YOUTUBE_CLIENT_ID / _SECRET / _REFRESH_TOKEN), cached until expiry.
+    The connector only ever reads; the token's write scopes are never used."""
+    with _TOKEN_LOCK:
+        if _TOKEN.get("exp", 0) > time.time() + 60:
+            return _TOKEN["access_token"]
+        r = httpx.post("https://oauth2.googleapis.com/token", timeout=30, data={
+            "client_id": _env("YOUTUBE_CLIENT_ID"), "client_secret": _env("YOUTUBE_CLIENT_SECRET"),
+            "refresh_token": _env("YOUTUBE_REFRESH_TOKEN"), "grant_type": "refresh_token"})
+        if r.status_code != 200:
+            raise SourceBlocked(f"youtube oauth refresh failed: HTTP {r.status_code}")
+        body = r.json()
+        _TOKEN.update(access_token=body["access_token"], exp=time.time() + int(body.get("expires_in", 3600)))
+        return _TOKEN["access_token"]
+
+
+def _auth() -> tuple[dict, dict]:
+    """(extra params, extra headers): API key if set, else OAuth bearer token."""
+    if _key():
+        return {"key": _key()}, {}
+    if _env("YOUTUBE_REFRESH_TOKEN"):
+        return {}, {"Authorization": f"Bearer {_oauth_token()}"}
+    raise SourceBlocked("set YOUTUBE_API_KEY or YOUTUBE_CLIENT_ID/_SECRET/_REFRESH_TOKEN in .env")
 
 
 def queries() -> list[dict]:
@@ -86,7 +122,7 @@ def queries() -> list[dict]:
 @register
 class YouTube:
     source: ClassVar[str] = "youtube"
-    version: ClassVar[str] = "1.0.0"
+    version: ClassVar[str] = "1.1.0"
     rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=5, per_seconds=1.0, jitter=(0.05, 0.3),
                                                             breaker_failures=4)
     contracts: ClassVar[dict[str, type[BaseModel]]] = {"search": SearchPage, "videos": Videos, "channels": Channels,
@@ -122,6 +158,9 @@ class YouTube:
             if q["tier"] <= 2:
                 yield EntityRef("search", f"{q['q']}|{q['region']}|recent|{week}", {**base, "order": "date",
                                 "published_after_days": 30}, priority=10 * q["tier"] + 5)
+        if _env("YOUTUBE_CHANNEL_ID"):   # Dhaka Kacchi's own channel: every upload + weekly stats
+            yield EntityRef("channels", f"own:{_env('YOUTUBE_CHANNEL_ID')}",
+                            {"lookup": {"id": _env("YOUTUBE_CHANNEL_ID")}, "origin": "restaurant_website"}, priority=5)
         with connect() as c:   # channels linked from Berlin restaurant websites
             rows = c.execute("select distinct handle from core.social_link_candidate where platform='youtube'"
                              " and handle is not null").fetchall()
@@ -132,10 +171,8 @@ class YouTube:
 
     # ------------------------------------------------------------------ fetch
     def _get(self, path: str, params: dict) -> dict:
-        key = _key()
-        if not key:
-            raise SourceBlocked("YOUTUBE_API_KEY is not set in .env")
-        r = self.http.get(f"{API}/{path}", params={**params, "key": key},
+        auth_params, auth_headers = _auth()
+        r = self.http.get(f"{API}/{path}", params={**params, **auth_params}, headers=auth_headers or None,
                           ok_statuses=frozenset({200, 403, 404}), gone_statuses=frozenset())
         body = r.json()
         if r.status == 403:
@@ -220,8 +257,10 @@ class YouTube:
                                                         "disabled": body.get("disabled")}, {}, 200)
 
     def healthcheck(self) -> HealthStatus:
-        if not _key():
-            return HealthStatus(False, "set YOUTUBE_API_KEY in .env (free key, see docs/credentials-guide.md)")
-        r = self.http.get(f"{API}/videos", params={"part": "id", "id": "dQw4w9WgXcQ", "key": _key()},
-                          ok_statuses=frozenset({200, 400, 403}))
-        return HealthStatus(r.status == 200, f"HTTP {r.status}", r.elapsed_ms)
+        try:
+            auth_params, auth_headers = _auth()
+        except SourceBlocked as e:
+            return HealthStatus(False, str(e))
+        r = self.http.get(f"{API}/videos", params={"part": "id", "id": "dQw4w9WgXcQ", **auth_params},
+                          headers=auth_headers or None, ok_statuses=frozenset({200, 400, 401, 403}))
+        return HealthStatus(r.status == 200, f"HTTP {r.status} ({'api key' if _key() else 'oauth'})", r.elapsed_ms)
