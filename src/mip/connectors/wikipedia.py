@@ -15,11 +15,25 @@ from mip.core.types import EntityRef, HealthStatus, RateLimitPolicy, RawRecord, 
 
 UA = {"User-Agent": "mip-market-intel/0.1 (market research data platform; contact: repository owner)"}
 PV = "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{project}/all-access/user/{title}/daily/{start}/{end}"
-LANGS = ("de", "bn", "ur", "ar", "tr", "hi")
+LANGS = ("de", "bn", "ur", "ar", "tr", "hi", "fa", "ru", "uk", "vi", "zh", "ko", "pl", "es", "it", "fr", "pt",
+         "ps", "uz", "id", "el", "ro", "sq", "he", "ja", "th")
 SEEDS = ["Biryani", "Bangladeshi cuisine", "Haleem", "Mandi (food)", "Kabsa", "Tehari", "Pilaf", "Korma",
          "Butter chicken", "Nihari", "Kebab", "Doner kebab", "Falafel", "Shawarma", "Pizza", "Sushi", "Ramen",
          "Indian cuisine", "Pakistani cuisine", "Afghan cuisine", "Arab cuisine", "Halal", "Ramadan",
-         "Eid al-Fitr", "Eid al-Adha", "Pohela Boishakh", "Lassi", "Samosa", "Food delivery", "Lieferando", "Wolt"]
+         "Eid al-Fitr", "Eid al-Adha", "Pohela Boishakh", "Lassi", "Samosa", "Food delivery", "Lieferando", "Wolt",
+         # every community's meat-and-rice dish (config/taxonomies/communities.yaml) ...
+         "Mansaf", "Maqluba", "Kabuli palaw", "Tahchin", "Chelow kabab", "Zereshk polo", "Plov", "Jollof rice",
+         "Thieboudienne", "Waakye", "Paella", "Arroz con pollo", "Risotto", "Hainanese chicken rice", "Bibimbap",
+         "Gyūdon", "Cơm tấm", "Bánh chưng", "Nasi goreng", "Nasi kebuli", "Fried rice", "Pilaf", "Sarma (food)",
+         "Gołąbki", "Dolma", "Hyderabadi biryani", "Kolkata biryani", "Sindhi biryani", "Tehari", "Khichdi",
+         "Ouzi", "Quzi", "Fatteh", "Zurbian", "Fried chicken", "Hamburger", "Korean fried chicken", "Smash burger",
+         # ... and every community occasion
+         "Ramadan (calendar month)", "Iftar", "Suhur", "Nowruz", "Yalda Night", "Diwali", "Durga Puja", "Dashain",
+         "Holi", "Chinese New Year", "Tết", "Seollal", "Chuseok", "Mid-Autumn Festival", "Songkran (Thailand)",
+         "Christmas", "Christmas market", "New Year's Eve", "Easter", "Eastern Orthodox Christmas",
+         "Karneval der Kulturen", "Mawlid", "Ashura", "Shab-e-barat", "Laylat al-Qadr", "Rosh Hashanah",
+         "Thanksgiving", "Victory Day (Bangladesh)", "International Mother Language Day", "Republic Day (Turkey)",
+         "Halloween", "Valentine's Day", "Black Friday (shopping)", "Mother's Day", "Mukbang", "Street food"]
 
 
 class _A(BaseModel):
@@ -35,7 +49,7 @@ class Pageviews(_A):
 @register
 class Wikipedia:
     source: ClassVar[str] = "wikipedia"
-    version: ClassVar[str] = "1.0.0"
+    version: ClassVar[str] = "1.1.0"
     rate_limit: ClassVar[RateLimitPolicy] = RateLimitPolicy(requests=5, per_seconds=1.0, jitter=(0.05, 0.2))
     contracts: ClassVar[dict[str, type[BaseModel]]] = {"pageviews": Pageviews}
 

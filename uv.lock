@@ -52,6 +52,18 @@ wheels = [
 ]
 
 [[package]]
+name = "astral"
+version = "3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tzdata", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/04/d1/1adbf06a38dc339e41a1666f6c7135924594c20fd46e060fb263248c564d/astral-3.2.tar.gz", hash = "sha256:9b7c3b412e9e69d172cfb24be0e6addcc9f1bd01a28db8bebe66d75ccc533d88", size = 48075, upload-time = "2022-11-05T18:12:02.913Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2d/80/d6edd9c3259913cfe39aff2bea4da65de5ad0235a578405e37aabace5f2c/astral-3.2-py3-none-any.whl", hash = "sha256:cb7b49a3f0d4c64ae666be131276d2a3226134c598db10e672028cf8ff855f83", size = 38325, upload-time = "2022-11-05T18:12:01.164Z" },
+]
+
+[[package]]
 name = "attrs"
 version = "26.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -463,6 +475,15 @@ wheels = [
 ]
 
 [[package]]
+name = "et-xmlfile"
+version = "2.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d3/38/af70d7ab1ae9d4da450eeec1fa3918940a5fafb9055e934af8d6eb0c2313/et_xmlfile-2.0.0.tar.gz", hash = "sha256:dab3f4764309081ce75662649be815c4c9081e88f0837825f90fd28317d4da54", size = 17234, upload-time = "2024-10-25T17:25:40.039Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c1/8b/5fe2cc11fee489817272089c4203e679c63b570a5aaeb18d852ae3cbba6a/et_xmlfile-2.0.0-py3-none-any.whl", hash = "sha256:7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa", size = 18059, upload-time = "2024-10-25T17:25:39.051Z" },
+]
+
+[[package]]
 name = "extruct"
 version = "0.18.0"
 source = { registry = "https://pypi.org/simple" }
@@ -576,6 +597,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ab/5f/311725e2a905534dfee2dcb5b08414f249147f1f12252bfc2bd24caa075c/hf_xet-1.6.0-cp38-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:8fb4f71cba6129110c3374a33f919001ff130488fc23553698e34cc1c2a1198c", size = 4675937, upload-time = "2026-08-03T22:33:08.616Z" },
     { url = "https://files.pythonhosted.org/packages/98/b7/8c59a66d15205024662f1d66968136f13893f96df1ddc5087e2e281fc95f/hf_xet-1.6.0-cp38-abi3-win_amd64.whl", hash = "sha256:fb4fadde1b2b70bf4c0c14a6dccbe7194b1c28947fefd5bbe3fed9d940676c3b", size = 4033128, upload-time = "2026-08-03T22:33:10.171Z" },
     { url = "https://files.pythonhosted.org/packages/73/63/ca511b6f802f28cf3489b280fe77475bcca8de85e81a6299d7916b5b5555/hf_xet-1.6.0-cp38-abi3-win_arm64.whl", hash = "sha256:3dc3e35441ba395006af5aaacc40ef2e603c51ef46c3530b9156185f00935ea3", size = 3859359, upload-time = "2026-08-03T22:33:11.725Z" },
+]
+
+[[package]]
+name = "hijridate"
+version = "2.6.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0e/8a/ddbaee418c78d067832e6d684e52640e19aa04d81d8eee42870b98728205/hijridate-2.6.0.tar.gz", hash = "sha256:afe4644c4d1fe3cfd2aa3c28bfa660405c12e5ba53249ba942ec68c7bb216e00", size = 35791, upload-time = "2026-01-06T19:10:51.073Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/8f/189391314015883f2a1a308d5692fc269ea0675dfcd61fa12be4024b2080/hijridate-2.6.0-py3-none-any.whl", hash = "sha256:290db60c7780acc2a7e2112fada70847e3c11c0030b998606db77ecf126c305b", size = 14456, upload-time = "2026-01-06T19:10:49.77Z" },
 ]
 
 [[package]]
@@ -938,6 +968,15 @@ wheels = [
 ]
 
 [[package]]
+name = "lunardate"
+version = "0.3.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/4a/70/6d4d14313b5d9eab05e37c761164dd572d95386bd6238354b04b989e0eae/lunardate-0.3.0.tar.gz", hash = "sha256:ae1daa9140bb1078b2c8e2a5b1623e6f25cf0443eca9ef2d6df27a4644f25fef", size = 18571, upload-time = "2026-07-07T05:05:39.019Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/65/b0f833b26f932c865efd25790960bb83481098d66ed8b4ceac8a91859433/lunardate-0.3.0-py3-none-any.whl", hash = "sha256:68c1beaf7704c55c8a2c929d14be3ca98da55992d0ec3c0dd57eae2a5d4079fb", size = 18784, upload-time = "2026-07-07T05:05:38.029Z" },
+]
+
+[[package]]
 name = "lxml"
 version = "6.1.3"
 source = { registry = "https://pypi.org/simple" }
@@ -1102,19 +1141,24 @@ name = "mip"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "astral" },
     { name = "convertdate" },
     { name = "curl-cffi" },
     { name = "duckdb" },
     { name = "extruct" },
     { name = "h3" },
+    { name = "hijridate" },
     { name = "holidays" },
     { name = "httpx", extra = ["http2"] },
     { name = "huggingface-hub" },
     { name = "instaloader" },
     { name = "kaggle" },
     { name = "lingua-language-detector" },
+    { name = "lunardate" },
+    { name = "openpyxl" },
     { name = "orjson" },
     { name = "osmium" },
+    { name = "persiantools" },
     { name = "playwright" },
     { name = "polars" },
     { name = "psycopg", extra = ["binary", "pool"] },
@@ -1146,19 +1190,24 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "astral", specifier = ">=3.2" },
     { name = "convertdate", specifier = ">=2.5.1" },
     { name = "curl-cffi", specifier = ">=0.7" },
     { name = "duckdb", specifier = ">=1.1" },
     { name = "extruct", specifier = ">=0.17" },
     { name = "h3", specifier = ">=4.1" },
+    { name = "hijridate", specifier = ">=2.6.0" },
     { name = "holidays", specifier = ">=0.105" },
     { name = "httpx", extras = ["http2"], specifier = ">=0.27" },
     { name = "huggingface-hub", specifier = ">=0.25" },
     { name = "instaloader", specifier = ">=4.13" },
     { name = "kaggle", specifier = ">=2.2.4" },
     { name = "lingua-language-detector", specifier = ">=2.0" },
+    { name = "lunardate", specifier = ">=0.3.0" },
+    { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "orjson", specifier = ">=3.10" },
     { name = "osmium", specifier = ">=4.0" },
+    { name = "persiantools", specifier = ">=6.2.0" },
     { name = "playwright", specifier = ">=1.48" },
     { name = "polars", specifier = ">=1.9" },
     { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.2" },
@@ -1270,6 +1319,18 @@ wheels = [
 ]
 
 [[package]]
+name = "openpyxl"
+version = "3.1.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "et-xmlfile" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3d/f9/88d94a75de065ea32619465d2f77b29a0469500e99012523b91cc4141cd1/openpyxl-3.1.5.tar.gz", hash = "sha256:cf0e3cf56142039133628b5acffe8ef0c12bc902d2aadd3e0fe5878dc08d1050", size = 186464, upload-time = "2024-06-28T14:03:44.161Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c0/da/977ded879c29cbd04de313843e76868e6e13408a94ed6b987245dc7c8506/openpyxl-3.1.5-py2.py3-none-any.whl", hash = "sha256:5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2", size = 250910, upload-time = "2024-06-28T14:03:41.161Z" },
+]
+
+[[package]]
 name = "opentelemetry-api"
 version = "1.45.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1357,6 +1418,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/fa/36/e27608899f9b8d4dff0617b2d9ab17ca5608956ca44461ac14ac48b44015/pathspec-1.0.4.tar.gz", hash = "sha256:0210e2ae8a21a9137c0d470578cb0e595af87edaa6ebf12ff176f14a02e0e645", size = 131200, upload-time = "2026-01-27T03:59:46.938Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ef/3c/2c197d226f9ea224a9ab8d197933f9da0ae0aac5b6e0f884e2b8d9c8e9f7/pathspec-1.0.4-py3-none-any.whl", hash = "sha256:fb6ae2fd4e7c921a165808a552060e722767cfa526f99ca5156ed2ce45a5c723", size = 55206, upload-time = "2026-01-27T03:59:45.137Z" },
+]
+
+[[package]]
+name = "persiantools"
+version = "6.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tzdata", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/de/a2/c8f3930c3f0c50b20098e28160a29d0962eedb93cced89bb366b0262be0b/persiantools-6.2.0.tar.gz", hash = "sha256:21ae1ed27292d8a153946f6b16a660cb84a2d829e0a3a0afefee3e9f83ad41b8", size = 55959, upload-time = "2026-08-05T20:46:45.008Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/81/14/6e5862cc921df714840fda14f7d65fdd52b3630fd83c66d905a3240da775/persiantools-6.2.0-py3-none-any.whl", hash = "sha256:02d0f1c9f8784b20700f23ef96f01706e8cc1b9bf9fe105b3a6c44492f4d61c6", size = 28771, upload-time = "2026-08-05T20:46:43.66Z" },
 ]
 
 [[package]]

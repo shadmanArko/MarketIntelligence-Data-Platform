@@ -67,6 +67,11 @@ class TikTok:
                 from raw.observations o join raw.payloads p using (payload_sha256),
                      jsonb_array_elements_text(ops.jarr(p.payload #> '{social_links,instagram}')) h
                 where o.source = 'web_crawl' and p.payload ->> 'kind' = 'business' group by 1""").fetchall()
+            # creators / collaborators tagged in Berlin restaurant videos (>= 2 tags): the local food-creator scene
+            rows += c.execute("""
+                select lower(m[1]) handle, 'mentioned' as via, null as business_id
+                from core.post, regexp_matches(coalesce(caption, ''), '@([[:alnum:]_.]{3,30})', 'g') m
+                where platform = 'tiktok' group by 1 having count(distinct post_id) >= 2""").fetchall()
         seen = set()
         for r in rows:
             h = r["handle"].lstrip("@")
@@ -74,7 +79,7 @@ class TikTok:
                 continue
             seen.add(h)
             yield EntityRef("profile", h, {"via": r["via"], "business_id": r["business_id"]},
-                            priority=20 if r["via"] == "website" else 35)
+                            priority={"website": 20, "instagram_handle": 35}.get(r["via"], 45))
             if scope.limit and len(seen) >= scope.limit:
                 return
 

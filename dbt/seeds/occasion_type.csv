@@ -1,0 +1,46 @@
+occasion_type,food_role,lead_days,tone,holiday_name_regex
+eid_al_fitr,feast,10,celebratory,Eid al-Fitr|Eid-ul-Fitr|Ramazan Bayram|Hari Raya Puasa|Idul Fitri|Sallah
+eid_al_adha,feast,14,celebratory,Eid al-Adha|Eid-ul-Adha|Kurban Bayram|Idul Adha|Tabaski|Day of Arafah
+ramadan,fasting_evening,14,celebratory,First Day of Ramadan|Ramadan
+laylat_al_qadr,fasting_evening,2,solemn,Laylat al-Qadr|Night of Power|Jumu'atul-Wida
+shab_e_barat,family_meal,3,solemn,Mid-Sha'ban|Shab-e-Barat|Birthday of Mahdi
+mawlid,family_meal,3,celebratory,Prophet's Birthday|Mawlid|Birthday of Muhammad
+islamic_new_year,family_meal,2,solemn,Islamic New Year|Hijri New Year
+ashura,remembrance,0,solemn,Ashura|Tasua|Arbaeen
+isra_miraj,family_meal,1,solemn,Isra' and Mi'raj|Isra and Miraj
+nowruz,feast,10,celebratory,Nowruz|Navruz|Nauryz|Novruz|Newroz
+yalda,family_meal,5,celebratory,Yalda
+bengali_new_year,feast,7,celebratory,Bengali New Year
+south_asian_new_year,feast,5,celebratory,Nepali New Year|Sinhala|Tamil New Year|Vaisakhi|Baisakhi
+mother_language_day,remembrance,2,national_pride,Mother Language Day
+durga_puja,feast,10,celebratory,Durga Puja|Bijaya Dashami|Vijaya Dashami|Dussehra|Maha Navami|Maha Ashtami
+dashain,feast,10,celebratory,Ghatasthapana|Fulpati|Dashain
+diwali,gift_season,10,celebratory,Diwali|Deepavali|Laxmi Pooja|Tihar
+holi,party,5,celebratory,\bHoli\b|Fagu Poornima
+lunar_new_year,feast,10,celebratory,Lunar New Year|Chinese New Year|Korean New Year|Spring Festival|Tet\b|Tết
+mid_autumn,family_meal,7,celebratory,Mid-Autumn|Chuseok
+dragon_boat,family_meal,3,celebratory,Dragon Boat
+songkran,party,5,celebratory,Songkran
+christmas,feast,21,festive_secular,^Christmas Day$|^Christmas$|Christmas Eve|Weihnacht|Boxing Day|Second Day of Christmas
+orthodox_christmas,feast,10,celebratory,Orthodox Christmas|Coptic Christmas|Armenian Orthodox Christmas
+easter,feast,10,festive_secular,Easter|Ostern|Good Friday
+new_year,party,10,festive_secular,^New Year's Day$|New Year's Eve|Neujahr|Silvester
+ethiopian_new_year,feast,5,celebratory,Ethiopian New Year
+jewish_new_year,feast,5,celebratory,Rosh Hashanah
+jewish_holiday,family_meal,3,celebratory,Pesach|Sukkot|Shavuot|Hanukkah|Simchat Torah
+yom_kippur,remembrance,0,solemn,Yom Kippur
+thanksgiving,feast,7,festive_secular,Thanksgiving
+national_day,party,3,national_pride,Independence|National Day|Republic Day|Victory Day|Statehood|Unity Day|Fiestas Patrias|Pakistan Day|Liberation Day|Founding Day|Cumhuriyet|Deutschen Einheit|German Unity
+remembrance_day,remembrance,0,solemn,Martyr|Memorial|Commemoration|Genocide|Death of
+ramadan_period,fasting_evening,14,celebratory,
+iftar_season_peak,fasting_evening,0,celebratory,
+karneval_der_kulturen,party,7,festive_secular,
+christmas_market_season,gift_season,7,festive_secular,
+mothers_day,family_meal,7,festive_secular,
+valentines_day,party,7,festive_secular,
+black_friday,party,5,festive_secular,
+halloween,party,5,festive_secular,
+chaharshanbe_suri,party,3,celebratory,
+martinstag,family_meal,5,festive_secular,
+payday,party,0,festive_secular,
+semester_start,party,5,festive_secular,

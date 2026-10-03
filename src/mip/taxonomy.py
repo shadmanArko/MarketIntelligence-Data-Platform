@@ -50,3 +50,43 @@ def export_seeds(market: Market) -> None:
         w.writeheader()
         w.writerows(drows)
     console.print(f"[green]seeds:[/] {len(uniq)} cuisine tags, {len(drows)} dish patterns")
+
+
+def load_yaml(name: str) -> dict:
+    return yaml.safe_load((ROOT / "config" / "taxonomies" / name).read_text())
+
+
+def _write(name: str, header: list[str], rows: list[dict]) -> None:
+    with (SEEDS / name).open("w", newline="") as f:
+        w = csv.DictWriter(f, header, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(rows)
+
+
+def export_audience_seeds() -> None:
+    """communities.yaml + occasions.yaml -> community, community_country, community_dish, community_greeting,
+    occasion_type seeds. Native scripts are kept as-is (UTF-8)."""
+    com, occ = load_yaml("communities.yaml")["communities"], load_yaml("occasions.yaml")
+    c_rows, cc_rows, d_rows, g_rows = [], [], [], []
+    for cid, c in com.items():
+        c_rows.append({"community_id": cid, "label": c["label"], "languages": "|".join(c.get("languages", [])),
+                       "scripts": "|".join(c.get("scripts", [])), "religion_mix": "|".join(c.get("religion_mix", [])),
+                       "moon_offset": c.get("moon_offset", 0), "afs_citizenship": "|".join(c.get("afs_citizenship", [])),
+                       "afs_origin": "|".join(c.get("afs_origin", [])), "notes": c.get("notes", "")})
+        for cc in c.get("countries", []):
+            cc_rows.append({"community_id": cid, "country": cc})
+        for d in c.get("dishes", []):
+            d_rows.append({"community_id": cid, "dish_id": d["id"], "native_name": d["native"],
+                           "translit": d["translit"], "english": d["en"], "needs_review": bool(d.get("review"))})
+        for occasion, g in (c.get("greetings") or {}).items():
+            g_rows.append({"community_id": cid, "greeting_key": occasion, "text": g["text"],
+                           "translit": g["translit"], "needs_review": bool(g.get("review"))})
+    o_rows = [{"occasion_type": k, "food_role": v["food_role"], "lead_days": v["lead_days"], "tone": v["tone"],
+               "holiday_name_regex": v.get("match", "")} for k, v in occ["types"].items()]
+    _write("community.csv", list(c_rows[0]), c_rows)
+    _write("community_country.csv", ["community_id", "country"], cc_rows)
+    _write("community_dish.csv", list(d_rows[0]), d_rows)
+    _write("community_greeting.csv", list(g_rows[0]), g_rows)
+    _write("occasion_type.csv", list(o_rows[0]), o_rows)
+    console.print(f"[green]audience seeds:[/] {len(c_rows)} communities, {len(cc_rows)} countries, {len(d_rows)} dishes,"
+                  f" {len(g_rows)} greetings, {len(o_rows)} occasion types")

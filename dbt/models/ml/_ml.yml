@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: feature_content
+    description: >
+      One row per mature post (Instagram, TikTok, Reddit, YouTube): features knowable at publish time (format, length,
+      text cues, dishes, communities, occasions, language, Berlin timing, peer's prior track record) and labels
+      (log performance, lift vs the peer's earlier posts, percentile / viral within peer).
+    columns:
+      - name: post_id
+        tests: [unique, not_null]
+      - name: label_pct_in_peer
+        tests: [{between: {min_value: 0, max_value: 1}}]
+      - name: peer_prior_posts
+        tests: [not_null]

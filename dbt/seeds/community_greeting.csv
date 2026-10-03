@@ -1,0 +1,130 @@
+community_id,greeting_key,text,translit,needs_review
+bangladeshi,eid_al_fitr,ঈদ মোবারক,Eid Mubarak,False
+bangladeshi,eid_al_adha,ঈদ মোবারক,Eid Mubarak,False
+bangladeshi,ramadan,রমজান মোবারক,Ramadan Mubarak,False
+bangladeshi,bengali_new_year,শুভ নববর্ষ,Shubho Noboborsho,False
+bangladeshi,national_day,বিজয় দিবসের শুভেচ্ছা,Bijoy Dibosher Shubhechchha,False
+bangladeshi,durga_puja,শুভ বিজয়া,Shubho Bijoya,False
+bangladeshi,mother_language_day,অমর একুশে,Amar Ekushe,False
+indian,diwali,दीपावली की हार्दिक शुभकामनाएँ,Deepavali ki hardik shubhkamnayen,False
+indian,durga_puja,শুভ বিজয়া,Shubho Bijoya,False
+indian,holi,होली की शुभकामनाएँ,Holi ki shubhkamnayen,False
+indian,eid_al_fitr,ईद मुबारक,Eid Mubarak,False
+indian,eid_al_adha,ईद मुबारक,Eid Mubarak,False
+indian,south_asian_new_year,ਵਿਸਾਖੀ ਦੀਆਂ ਲੱਖ ਲੱਖ ਵਧਾਈਆਂ,Vaisakhi diyan lakh lakh vadhaiyan,True
+indian,national_day,स्वतंत्रता दिवस की शुभकामनाएँ,Swatantrata Diwas ki shubhkamnayen,False
+pakistani,eid_al_fitr,عید مبارک,Eid Mubarak,False
+pakistani,eid_al_adha,عید مبارک,Eid Mubarak,False
+pakistani,ramadan,رمضان مبارک,Ramadan Mubarak,False
+pakistani,national_day,جشنِ آزادی مبارک,Jashn-e-Azadi Mubarak,False
+nepali,dashain,विजया दशमीको हार्दिक मंगलमय शुभकामना,Vijaya Dashamiko hardik mangalmaya shubhakamana,False
+nepali,diwali,शुभ दीपावली,Shubha Deepawali,False
+sri_lankan,south_asian_new_year,සුබ අලුත් අවුරුද්දක් වේවා,Suba aluth avuruddak wewa,False
+afghan,eid_al_fitr,عیدتان مبارک,Eidetan mubarak,False
+afghan,eid_al_adha,عیدتان مبارک,Eidetan mubarak,False
+afghan,nowruz,نوروزتان مبارک,Nowruzetan mubarak,False
+afghan,eid_pashto,اختر مو مبارک شه,Akhtar mo mubarak sha,True
+iranian,nowruz,نوروزتان پیروز,Nowruzetan piruz,False
+iranian,yalda,یلدا مبارک,Yalda mobarak,False
+iranian,eid_al_fitr,عید فطر مبارک,Eid-e Fetr mobarak,False
+turkish,eid_al_fitr,Ramazan Bayramınız mübarek olsun,Ramazan Bayramınız mübarek olsun,False
+turkish,eid_al_adha,Kurban Bayramınız kutlu olsun,Kurban Bayramınız kutlu olsun,False
+turkish,ramadan,Hayırlı Ramazanlar,Hayırlı Ramazanlar,False
+turkish,national_day,Cumhuriyet Bayramımız kutlu olsun,Cumhuriyet Bayramımız kutlu olsun,False
+turkish,meal,Afiyet olsun,Afiyet olsun,False
+kurdish,nowruz,Newroz pîroz be,Newroz pîroz be,False
+kurdish,eid_al_fitr,Cejna we pîroz be,Cejna we pîroz be,False
+kurdish,eid_al_adha,Cejna we pîroz be,Cejna we pîroz be,False
+syrian,eid_al_fitr,عيد مبارك,ʿEid mubarak,False
+syrian,eid_al_adha,عيد أضحى مبارك,ʿEid adha mubarak,False
+syrian,ramadan,رمضان كريم,Ramadan karim,False
+syrian,new_year,كل عام وأنتم بخير,Kull ʿam wa-antum bi-khayr,False
+syrian,eid_reply,تقبل الله منا ومنكم,Taqabbal Allahu minna wa minkum,False
+lebanese,eid_al_fitr,عيد مبارك,ʿEid mubarak,False
+lebanese,eid_al_adha,عيد أضحى مبارك,ʿEid adha mubarak,False
+lebanese,ramadan,رمضان كريم,Ramadan karim,False
+lebanese,new_year,كل عام وأنتم بخير,Kull ʿam wa-antum bi-khayr,False
+lebanese,eid_reply,تقبل الله منا ومنكم,Taqabbal Allahu minna wa minkum,False
+lebanese,christmas,ميلاد مجيد,Milad majid,False
+palestinian,eid_al_fitr,عيد مبارك,ʿEid mubarak,False
+palestinian,eid_al_adha,عيد أضحى مبارك,ʿEid adha mubarak,False
+palestinian,ramadan,رمضان كريم,Ramadan karim,False
+palestinian,new_year,كل عام وأنتم بخير,Kull ʿam wa-antum bi-khayr,False
+palestinian,eid_reply,تقبل الله منا ومنكم,Taqabbal Allahu minna wa minkum,False
+iraqi,eid_al_fitr,عيد مبارك,ʿEid mubarak,False
+iraqi,eid_al_adha,عيد أضحى مبارك,ʿEid adha mubarak,False
+iraqi,ramadan,رمضان كريم,Ramadan karim,False
+iraqi,new_year,كل عام وأنتم بخير,Kull ʿam wa-antum bi-khayr,False
+iraqi,eid_reply,تقبل الله منا ومنكم,Taqabbal Allahu minna wa minkum,False
+levant_gulf_yemen,eid_al_fitr,عيد مبارك,ʿEid mubarak,False
+levant_gulf_yemen,eid_al_adha,عيد أضحى مبارك,ʿEid adha mubarak,False
+levant_gulf_yemen,ramadan,رمضان كريم,Ramadan karim,False
+levant_gulf_yemen,new_year,كل عام وأنتم بخير,Kull ʿam wa-antum bi-khayr,False
+levant_gulf_yemen,eid_reply,تقبل الله منا ومنكم,Taqabbal Allahu minna wa minkum,False
+egyptian,eid_al_fitr,كل سنة وانت طيب,Kull sana w-enta tayyeb,False
+egyptian,eid_al_adha,عيد أضحى مبارك,ʿEid adha mubarak,False
+egyptian,ramadan,رمضان كريم,Ramadan karim,False
+egyptian,new_year,كل عام وأنتم بخير,Kull ʿam wa-antum bi-khayr,False
+egyptian,eid_reply,تقبل الله منا ومنكم,Taqabbal Allahu minna wa minkum,False
+maghrebi,eid_al_fitr,عيد مبارك سعيد,ʿEid mubarak saʿid,False
+maghrebi,eid_al_adha,عيد أضحى مبارك,ʿEid adha mubarak,False
+maghrebi,ramadan,رمضان كريم,Ramadan karim,False
+maghrebi,new_year,كل عام وأنتم بخير,Kull ʿam wa-antum bi-khayr,False
+maghrebi,eid_reply,تقبل الله منا ومنكم,Taqabbal Allahu minna wa minkum,False
+maghrebi,amazigh_new_year,ⴰⵙⴳⴳⵯⴰⵙ ⴰⵎⴳⴳⴰⵣ,Asggwas ameggaz,True
+central_asian,nowruz,Navro'z bayramingiz muborak bo'lsin,Navro'z bayramingiz muborak bo'lsin,False
+central_asian,nowruz_kk,Наурыз мейрамы құтты болсын,Nauryz meyramy qutty bolsyn,False
+central_asian,nowruz_ru,С праздником Навруз!,S prazdnikom Navruz,False
+central_asian,eid_al_fitr,Ramazon hayitingiz muborak,Ramazon hayitingiz muborak,True
+azerbaijani,nowruz,Novruz bayramınız mübarək!,Novruz bayramınız mübarək,False
+caucasus_christian,new_year,Շնորհավոր Նոր Տարի,Shnorhavor Nor Tari,False
+caucasus_christian,new_year_ka,გილოცავთ ახალ წელს,Gilotsavt akhal tsels,False
+east_slavic,new_year,С Новым годом!,S Novym godom,False
+east_slavic,new_year_uk,З Новим роком!,Z Novym rokom,False
+east_slavic,orthodox_christmas,С Рождеством Христовым!,S Rozhdestvom Khristovym,False
+east_slavic,christmas_uk,Христос народився!,Khrystos narodyvsia,False
+polish,christmas,Wesołych Świąt!,Wesołych Świąt,False
+polish,meal,Smacznego!,Smacznego,False
+balkan,eid_al_fitr,Bajram šerif mubarek olsun,Bajram šerif mubarek olsun,False
+balkan,eid_al_adha,Gëzuar Bajramin!,Gëzuar Bajramin,False
+balkan,orthodox_christmas,Христос се роди,Hristos se rodi,False
+balkan,christmas,Crăciun fericit!,Crăciun fericit,False
+greek,easter,Χριστός Ανέστη!,Christos Anesti,False
+greek,easter_wish,Καλό Πάσχα!,Kalo Pascha,False
+italian,christmas,Buon Natale!,Buon Natale,False
+italian,meal,Buon appetito!,Buon appetito,False
+iberian,christmas,¡Feliz Navidad!,Feliz Navidad,False
+iberian,meal,¡Buen provecho!,Buen provecho,False
+latin_american,national_day,¡Felices Fiestas Patrias!,Felices Fiestas Patrias,False
+latin_american,christmas,¡Feliz Navidad!,Feliz Navidad,False
+latin_american,christmas_pt,Feliz Natal!,Feliz Natal,False
+anglo,thanksgiving,Happy Thanksgiving!,Happy Thanksgiving,False
+anglo,christmas,Merry Christmas!,Merry Christmas,False
+french,christmas,Joyeux Noël !,Joyeux Noël,False
+french,meal,Bon appétit !,Bon appétit,False
+german,christmas,Frohe Weihnachten!,Frohe Weihnachten,False
+german,new_year,Guten Rutsch!,Guten Rutsch,False
+german,easter,Frohe Ostern!,Frohe Ostern,False
+german,meal,Guten Appetit!,Guten Appetit,False
+vietnamese,lunar_new_year,Chúc mừng năm mới!,Chuc mung nam moi,False
+vietnamese,lunar_new_year_wish,An khang thịnh vượng,An khang thinh vuong,False
+chinese,lunar_new_year,新年快乐,Xinnian kuaile,False
+chinese,lunar_new_year_wish,恭喜发财,Gongxi facai,False
+chinese,mid_autumn,中秋快乐,Zhongqiu kuaile,False
+chinese,dragon_boat,端午安康,Duanwu ankang,False
+korean,lunar_new_year,새해 복 많이 받으세요,Saehae bok mani badeuseyo,False
+korean,mid_autumn,즐거운 추석 보내세요,Jeulgeoun Chuseok bonaeseyo,False
+japanese,new_year,あけましておめでとうございます,Akemashite omedetō gozaimasu,False
+japanese,meal,いただきます,Itadakimasu,False
+thai,songkran,สุขสันต์วันสงกรานต์,Suksan wan Songkran,False
+thai,new_year,สวัสดีปีใหม่,Sawatdi pi mai,False
+malay_indonesian,eid_al_fitr,Selamat Hari Raya Idul Fitri,Selamat Idul Fitri,False
+malay_indonesian,christmas,Maligayang Pasko!,Maligayang Pasko,False
+west_african,eid_al_fitr,Barka da Sallah,Barka da Sallah,False
+west_african,eid_al_adha,Barka da Sallah,Barka da Sallah,False
+west_african,new_year,Afehyia pa,Afehyia pa,False
+east_african,eid_al_fitr,Ciid wanaagsan,Ciid wanaagsan,False
+east_african,ethiopian_new_year,መልካም አዲስ ዓመት,Melkam Addis Amet,False
+east_african,christmas,Heri ya Krismasi,Heri ya Krismasi,False
+jewish_israeli,jewish_new_year,שנה טובה,Shana tova,False
+jewish_israeli,jewish_holiday,חג שמח,Chag sameach,False

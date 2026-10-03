@@ -107,3 +107,55 @@ models:
           - relationships: {to: ref('tenant_social_post'), field: post_id}
       - name: reach
         tests: [{between: {min_value: 0}}]
+
+  # ---------------------------------------------------------------- social content + audiences
+  - name: post
+    description: One post / video across Instagram, TikTok, Reddit and YouTube (immutable attributes).
+    tests:
+      - min_rows: {min_count: 10000}
+    columns:
+      - name: post_id
+        tests: [unique, not_null]
+      - name: platform
+        tests:
+          - not_null
+          - accepted_values: {values: [instagram, tiktok, reddit, youtube]}
+      - name: posted_at
+        tests: [not_null]
+
+  - name: post_metrics_snapshot
+    tests:
+      - unique_combination: {columns: [post_id, observed_at]}
+    columns:
+      - name: post_id
+        tests: [not_null, {relationships: {to: ref('post'), field: post_id}}]
+      - name: views
+        tests: [{between: {min_value: 0}}]
+      - name: comments
+        tests: [{between: {min_value: 0}}]
+
+  - name: content_tag
+    tests:
+      - unique_combination: {columns: [post_id, tag_type, tag_id]}
+    columns:
+      - name: tag_type
+        tests: [{accepted_values: {values: [dish, community, occasion, cue, rice_dish]}}]
+
+  - name: community_audience
+    tests:
+      - unique_combination: {columns: [reference_date, community_id, level, area_code]}
+    columns:
+      - name: residents
+        tests: [not_null, {between: {min_value: 0, max_value: 4000000}}]
+      - name: share
+        tests: [{between: {min_value: 0, max_value: 1}}]
+
+  - name: occasion_day
+    tests:
+      - min_rows: {min_count: 10000}
+      - unique_combination: {columns: [day, community_id, occasion_type]}
+    columns:
+      - name: day
+        tests: [not_null]
+      - name: food_role
+        tests: [not_null]

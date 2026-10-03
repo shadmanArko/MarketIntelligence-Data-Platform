@@ -1,0 +1,117 @@
+# Occasion types: what an occasion means for a meat-and-rice delivery business and how to find its dates.
+#
+# Dates come from three places (the `occasions` dataset loader merges them, 2015-2030):
+#   1. python-holidays for every country in communities.yaml (native + English names); `match` regexes below map
+#      those holiday names to an occasion type. Unmatched holidays are kept as `national_other` / `other`.
+#   2. `rules` here for occasions python-holidays does not have (Ramadan period, Yalda, Berlin events, ...).
+#   3. Islamic dates per community shift by the community's `moon_offset` (moon sighting vs Umm al-Qura).
+#
+#   food_role   feast = a shared big meal is the tradition (best fit for biryani platters)
+#               fasting_evening = daily evening meal (iftar), late night (suhoor)
+#               gift_season / party / family_meal / remembrance (avoid celebratory food content) / meatless
+#   lead_days   when content about it should start (teasers, pre-orders)
+#   tone        celebratory | solemn | festive_secular | national_pride
+
+types:
+  eid_al_fitr:    { food_role: feast, lead_days: 10, tone: celebratory, match: "Eid al-Fitr|Eid-ul-Fitr|Ramazan Bayram|Hari Raya Puasa|Idul Fitri|Sallah" }
+  eid_al_adha:    { food_role: feast, lead_days: 14, tone: celebratory, match: "Eid al-Adha|Eid-ul-Adha|Kurban Bayram|Idul Adha|Tabaski|Day of Arafah" }
+  ramadan:        { food_role: fasting_evening, lead_days: 14, tone: celebratory, match: "First Day of Ramadan|Ramadan" }
+  laylat_al_qadr: { food_role: fasting_evening, lead_days: 2, tone: solemn, match: "Laylat al-Qadr|Night of Power|Jumu'atul-Wida" }
+  shab_e_barat:   { food_role: family_meal, lead_days: 3, tone: solemn, match: "Mid-Sha'ban|Shab-e-Barat|Birthday of Mahdi" }
+  mawlid:         { food_role: family_meal, lead_days: 3, tone: celebratory, match: "Prophet's Birthday|Mawlid|Birthday of Muhammad" }
+  islamic_new_year: { food_role: family_meal, lead_days: 2, tone: solemn, match: "Islamic New Year|Hijri New Year" }
+  ashura:         { food_role: remembrance, lead_days: 0, tone: solemn, match: "Ashura|Tasua|Arbaeen" }
+  isra_miraj:     { food_role: family_meal, lead_days: 1, tone: solemn, match: "Isra' and Mi'raj|Isra and Miraj" }
+  nowruz:         { food_role: feast, lead_days: 10, tone: celebratory, match: "Nowruz|Navruz|Nauryz|Novruz|Newroz" }
+  yalda:          { food_role: family_meal, lead_days: 5, tone: celebratory, match: "Yalda" }
+  bengali_new_year: { food_role: feast, lead_days: 7, tone: celebratory, match: "Bengali New Year" }
+  south_asian_new_year: { food_role: feast, lead_days: 5, tone: celebratory, match: "Nepali New Year|Sinhala|Tamil New Year|Vaisakhi|Baisakhi" }
+  mother_language_day: { food_role: remembrance, lead_days: 2, tone: national_pride, match: "Mother Language Day" }
+  durga_puja:     { food_role: feast, lead_days: 10, tone: celebratory, match: "Durga Puja|Bijaya Dashami|Vijaya Dashami|Dussehra|Maha Navami|Maha Ashtami" }
+  dashain:        { food_role: feast, lead_days: 10, tone: celebratory, match: "Ghatasthapana|Fulpati|Dashain" }
+  diwali:         { food_role: gift_season, lead_days: 10, tone: celebratory, match: "Diwali|Deepavali|Laxmi Pooja|Tihar" }
+  holi:           { food_role: party, lead_days: 5, tone: celebratory, match: "\\bHoli\\b|Fagu Poornima" }
+  lunar_new_year: { food_role: feast, lead_days: 10, tone: celebratory, match: "Lunar New Year|Chinese New Year|Korean New Year|Spring Festival|Tet\\b|Tết" }
+  mid_autumn:     { food_role: family_meal, lead_days: 7, tone: celebratory, match: "Mid-Autumn|Chuseok" }
+  dragon_boat:    { food_role: family_meal, lead_days: 3, tone: celebratory, match: "Dragon Boat" }
+  songkran:       { food_role: party, lead_days: 5, tone: celebratory, match: "Songkran" }
+  christmas:      { food_role: feast, lead_days: 21, tone: festive_secular, match: "^Christmas Day$|^Christmas$|Christmas Eve|Weihnacht|Boxing Day|Second Day of Christmas" }
+  orthodox_christmas: { food_role: feast, lead_days: 10, tone: celebratory, match: "Orthodox Christmas|Coptic Christmas|Armenian Orthodox Christmas" }
+  easter:         { food_role: feast, lead_days: 10, tone: festive_secular, match: "Easter|Ostern|Good Friday" }
+  new_year:       { food_role: party, lead_days: 10, tone: festive_secular, match: "^New Year's Day$|New Year's Eve|Neujahr|Silvester" }
+  ethiopian_new_year: { food_role: feast, lead_days: 5, tone: celebratory, match: "Ethiopian New Year" }
+  jewish_new_year: { food_role: feast, lead_days: 5, tone: celebratory, match: "Rosh Hashanah" }
+  jewish_holiday: { food_role: family_meal, lead_days: 3, tone: celebratory, match: "Pesach|Sukkot|Shavuot|Hanukkah|Simchat Torah" }
+  yom_kippur:     { food_role: remembrance, lead_days: 0, tone: solemn, match: "Yom Kippur" }
+  thanksgiving:   { food_role: feast, lead_days: 7, tone: festive_secular, match: "Thanksgiving" }
+  national_day:   { food_role: party, lead_days: 3, tone: national_pride, match: "Independence|National Day|Republic Day|Victory Day|Statehood|Unity Day|Fiestas Patrias|Pakistan Day|Liberation Day|Founding Day|Cumhuriyet|Deutschen Einheit|German Unity" }
+  remembrance_day: { food_role: remembrance, lead_days: 0, tone: solemn, match: "Martyr|Memorial|Commemoration|Genocide|Death of" }
+  # rule-based (python-holidays does not have these)
+  ramadan_period: { food_role: fasting_evening, lead_days: 14, tone: celebratory }
+  iftar_season_peak: { food_role: fasting_evening, lead_days: 0, tone: celebratory }
+  karneval_der_kulturen: { food_role: party, lead_days: 7, tone: festive_secular }
+  christmas_market_season: { food_role: gift_season, lead_days: 7, tone: festive_secular }
+  mothers_day:    { food_role: family_meal, lead_days: 7, tone: festive_secular }
+  valentines_day: { food_role: party, lead_days: 7, tone: festive_secular }
+  black_friday:   { food_role: party, lead_days: 5, tone: festive_secular }
+  halloween:      { food_role: party, lead_days: 5, tone: festive_secular }
+  chaharshanbe_suri: { food_role: party, lead_days: 3, tone: celebratory }
+  martinstag:     { food_role: family_meal, lead_days: 5, tone: festive_secular }
+  payday:         { food_role: party, lead_days: 0, tone: festive_secular }
+  semester_start: { food_role: party, lead_days: 5, tone: festive_secular }
+
+# Rules for occasions not in python-holidays. kinds:
+#   hijri_range  [month, day_from] .. [month, day_to]  (Umm al-Qura via hijridate)
+#   persian      [month, day]                          (Solar Hijri via persiantools)
+#   fixed        "MM-DD", optional days
+#   easter       offset (days from Western Easter), days
+#   nth_weekday  month, weekday (0=Mon), n (-1 = last), optional offset
+#   advent       first Advent Sunday + offset .. 23 Dec
+#   month_end    last working day of every month (German salary day)
+#   holiday_of   another country's python-holidays date (match regex) + offset, days
+rules:
+  - { type: ramadan_period, kind: hijri_range, from: [9, 1], to: [9, 30], communities: muslim }
+  - { type: iftar_season_peak, kind: hijri_range, from: [9, 21], to: [9, 30], communities: muslim }
+  - { type: yalda, kind: persian, date: [9, 30], communities: [iranian, afghan, kurdish] }
+  - { type: chaharshanbe_suri, kind: nowruz_last_tuesday, communities: [iranian, kurdish, azerbaijani] }
+  - { type: karneval_der_kulturen, kind: easter, offset: 47, days: 4, communities: all }   # Fri before Pentecost .. Whit Monday
+  - { type: christmas_market_season, kind: advent, offset: -3, communities: all }
+  - { type: mothers_day, kind: nth_weekday, month: 5, weekday: 6, n: 2, communities: all }
+  - { type: valentines_day, kind: fixed, date: "02-14", communities: all }
+  - { type: halloween, kind: fixed, date: "10-31", communities: all }
+  - { type: martinstag, kind: fixed, date: "11-11", communities: [german] }
+  - { type: black_friday, kind: nth_weekday, month: 11, weekday: 4, n: 4, communities: all }
+  - { type: bengali_new_year, kind: fixed, date: "04-14", communities: [bangladeshi] }
+  - { type: mother_language_day, kind: fixed, date: "02-21", communities: [bangladeshi] }
+  - { type: semester_start, kind: fixed, date: "10-15", days: 7, communities: all }
+  - { type: semester_start, kind: fixed, date: "04-15", days: 7, communities: all }
+  - { type: payday, kind: month_end, communities: all }
+  # Bengali Hindus in Bangladesh / West Bengal: Durga Puja Saptami..Dashami = the 4 days ending on India's Dussehra
+  - { type: durga_puja, kind: holiday_of, country: IN, match: "^Dussehra$", offset: -3, days: 4, communities: [bangladeshi] }
+
+# Words that tag a post / video / comment as being about an occasion (any language; matched on folded word
+# sequences, and as substrings for scripts written without spaces).
+keywords:
+  eid_al_fitr: [eid al fitr, eid ul fitr, eid mubarak, eid, ईद, ঈদ, عيد الفطر, عيد مبارك, عید, ramazan bayramı, bayram, şeker bayramı, idul fitri, lebaran, hari raya, sallah, ciid, bajram, zuckerfest]
+  eid_al_adha: [eid al adha, eid ul adha, bakra eid, qurbani, কুরবানি, কোরবানি, عيد الأضحى, kurban bayramı, kurban, tabaski, opferfest, idul adha]
+  ramadan: [ramadan, ramazan, ramzan, রমজান, رمضان, iftar, ইফতার, إفطار, افطار, iftaar, sehri, sahur, suhoor, সেহরি, سحور, fastenbrechen, fastenmonat]
+  nowruz: [nowruz, norouz, navruz, nauryz, novruz, newroz, نوروز, наурыз, навруз]
+  yalda: [yalda, یلدا, shab e yalda]
+  bengali_new_year: [pohela boishakh, পহেলা বৈশাখ, noboborsho, নববর্ষ, boishakh]
+  durga_puja: [durga puja, দুর্গা পূজা, dussehra, dashami, navratri, नवरात्रि, दशहरा, bijoya]
+  diwali: [diwali, deepavali, दिवाली, दीपावली, দীপাবলি, tihar]
+  holi: [holi, होली]
+  lunar_new_year: [lunar new year, chinese new year, tet, tết, 春节, 新年快乐, seollal, 설날, chunjie]
+  mid_autumn: [mid autumn, 中秋, chuseok, 추석, trung thu]
+  christmas: [christmas, xmas, weihnachten, weihnacht, heiligabend, noel, noël, navidad, natale, boże narodzenie, рождество, різдво, christmas market, weihnachtsmarkt]
+  new_year: [new year, neujahr, silvester, new years eve, guten rutsch, новый год, yılbaşı]
+  easter: [easter, ostern, pascha, πάσχα, пасха]
+  thanksgiving: [thanksgiving]
+  karneval_der_kulturen: [karneval der kulturen]
+  national_day: [independence day, victory day, bijoy dibosh, বিজয় দিবস, স্বাধীনতা দিবস, cumhuriyet bayramı, tag der deutschen einheit, republic day]
+  mother_language_day: [ekushey, একুশে, mother language day, শহীদ দিবস]
+  valentines_day: [valentine, valentinstag, valentines]
+  halloween: [halloween]
+  black_friday: [black friday]
+  mothers_day: [mothers day, mother's day, muttertag]
+  football: [em 2028, wm 2026, world cup, weltmeisterschaft, europameisterschaft, bundesliga, champions league, public viewing, fußball, fussball, football night]

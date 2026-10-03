@@ -53,7 +53,7 @@ def discover(market: Market, source: str, limit: int | None = None, refresh: boo
     run_id = start_run(market.id, source, "discover", {"limit": limit, "refresh": refresh, **(options or {})})
     try:
         conn = make_connector(market, source)
-        refs = list(conn.discover(Scope(market=market, limit=limit, options=options or {})))
+        refs = list(conn.discover(Scope(market=market, limit=limit, options={**(options or {}), "refresh": refresh})))
         with connect() as c:
             n = queue.enqueue(c, market.id, source, refs, refresh=refresh)
         end_run(run_id, "succeeded", {"discovered": len(refs), "enqueued": n})

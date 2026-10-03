@@ -120,6 +120,29 @@ The connector stops itself at the `$10` cap set in `config/markets/berlin-food.y
 
 ---
 
+## 6. YouTube Data API v3 (free) — videos, Shorts, channels, comments
+
+1. Go to https://console.cloud.google.com/ and create a project (e.g. `dhaka-kacchi-mip`). No billing needed.
+2. **APIs & Services → Library** → search **YouTube Data API v3** → **Enable**.
+3. **APIs & Services → Credentials → Create credentials → API key**.
+4. Click the new key → **API restrictions → Restrict key → YouTube Data API v3** → Save.
+5. Put it in `.env`: `YOUTUBE_API_KEY=...` (do not paste it in chat).
+6. Test: `uv run mip healthcheck -m berlin-food -s youtube`, then `uv run mip fetch -m berlin-food -s youtube -w 2`.
+
+Free quota: ~100 searches/day (the connector uses 90) + 10,000 units/day for video / channel / comment reads.
+The first full pass of 229 search queries takes about 3 days; it resumes by itself.
+
+## 7. Applications worth starting now (free, but reviewed by the platform)
+
+| What | Where | Unlocks | Typical wait |
+|---|---|---|---|
+| **Meta Ad Library API** | Confirm your identity at facebook.com/ID, then add *Ad Library API* to your Meta app | Every ad (all topics) shown in Germany/EU with dates, creatives, reach by age / gender / region | 1–3 days |
+| **Instagram Public Content Access + Business Discovery** (App Review) | developers.facebook.com → your app → App Review | Competitor posts with likes / comments; hashtag top + recent posts | 2–4 weeks |
+| **Threads `threads_keyword_search`** (App Review) | Add the Threads use case to the same Meta app | Public Threads posts by keyword / topic tag | 2–4 weeks |
+| **TikTok Commercial Content API** | developers.tiktok.com/products/commercial-content-api | Every TikTok ad shown in the EU, with reach and targeting | 2 days – 2 weeks |
+| **Google Trends API (alpha)** | developers.google.com/search/apis/trends | Consistently scaled search interest per region, 5 years | allow-list |
+| **Reddit Data API** (optional) | reddit.com/prefs/apps + Responsible Builder approval | Live comments / rising posts (the archive already covers posts) | 2–4 weeks; commercial use is paid |
+
 ## Already handled — nothing needed from you
 OpenStreetMap, Overture, Zensus 2022, LOR, Chrome UX ranks, holidays, DWD weather, Wikidata, Wolt, Lieferando,
 Google Maps, TikTok, restaurant websites. Dhaka Kacchi's own data (orders, Search Console, Business Profile)

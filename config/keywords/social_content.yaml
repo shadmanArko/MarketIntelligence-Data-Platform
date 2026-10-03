@@ -1,0 +1,83 @@
+# Search queries for social-content collection (YouTube search.list today; Threads / Instagram hashtag search and
+# X recent search use the same list once those APIs are approved). Every community's own dish names are added
+# automatically from config/taxonomies/communities.yaml (native + transliteration).
+#
+#   region  YouTube regionCode bias; lang = relevanceLanguage; tier 1 = searched first every cycle
+queries:
+  # Berlin food scene (who wins attention locally)
+  - { q: "Berlin food", region: DE, lang: en, tier: 1 }
+  - { q: "Berlin Essen Tipps", region: DE, lang: de, tier: 1 }
+  - { q: "Berlin street food", region: DE, lang: en, tier: 1 }
+  - { q: "Berlin food tour", region: DE, lang: en, tier: 1 }
+  - { q: "best restaurants Berlin", region: DE, lang: en, tier: 1 }
+  - { q: "Essen bestellen Berlin", region: DE, lang: de, tier: 2 }
+  - { q: "Lieferando Test", region: DE, lang: de, tier: 2 }
+  - { q: "Wolt Berlin", region: DE, lang: de, tier: 2 }
+  - { q: "Halal Essen Berlin", region: DE, lang: de, tier: 1 }
+  - { q: "halal food Berlin", region: DE, lang: en, tier: 1 }
+  - { q: "Döner Berlin", region: DE, lang: de, tier: 1 }
+  - { q: "Kreuzberg Neukölln Essen", region: DE, lang: de, tier: 2 }
+  - { q: "Food Vlog Deutschland", region: DE, lang: de, tier: 2 }
+  - { q: "mukbang deutsch", region: DE, lang: de, tier: 2 }
+  - { q: "Restaurant Test Berlin", region: DE, lang: de, tier: 1 }
+  # biryani everywhere (format + hook learning from the biggest food creators)
+  - { q: "biryani Berlin", region: DE, lang: en, tier: 1 }
+  - { q: "Biryani Deutschland", region: DE, lang: de, tier: 1 }
+  - { q: "kacchi biryani", region: BD, lang: bn, tier: 1 }
+  - { q: "কাচ্চি বিরিয়ানি", region: BD, lang: bn, tier: 1 }
+  - { q: "biryani recipe", region: IN, lang: en, tier: 2 }
+  - { q: "biryani mukbang", region: US, lang: en, tier: 2 }
+  - { q: "biryani street food", region: IN, lang: en, tier: 2 }
+  - { q: "dum biryani opening", region: IN, lang: en, tier: 2 }
+  - { q: "Dhaka food review", region: BD, lang: bn, tier: 2 }
+  - { q: "Bangladeshi food Germany", region: DE, lang: en, tier: 1 }
+  - { q: "Bangladeshi in Germany vlog", region: DE, lang: bn, tier: 1 }
+  - { q: "Indian food Berlin", region: DE, lang: en, tier: 1 }
+  - { q: "Pakistani food Berlin", region: DE, lang: en, tier: 1 }
+  - { q: "Indians in Germany food", region: DE, lang: en, tier: 2 }
+  # occasions
+  - { q: "Ramadan Berlin iftar", region: DE, lang: de, tier: 1 }
+  - { q: "iftar Berlin", region: DE, lang: en, tier: 1 }
+  - { q: "Eid food Germany", region: DE, lang: en, tier: 2 }
+  - { q: "Bayram Berlin", region: DE, lang: tr, tier: 2 }
+  - { q: "Diwali Berlin", region: DE, lang: en, tier: 2 }
+  - { q: "Nowruz Berlin", region: DE, lang: fa, tier: 2 }
+  - { q: "Weihnachten Essen bestellen", region: DE, lang: de, tier: 2 }
+  - { q: "Silvester Essen Berlin", region: DE, lang: de, tier: 2 }
+  - { q: "Karneval der Kulturen Essen", region: DE, lang: de, tier: 2 }
+  - { q: "Tết Berlin", region: DE, lang: vi, tier: 2 }
+  # community meat-and-rice in Germany (bridge content)
+  - { q: "Mansaf Berlin", region: DE, lang: ar, tier: 2 }
+  - { q: "مندي برلين", region: DE, lang: ar, tier: 2 }
+  - { q: "كبسة ألمانيا", region: DE, lang: ar, tier: 2 }
+  - { q: "Plov Berlin", region: DE, lang: ru, tier: 2 }
+  - { q: "плов Германия", region: DE, lang: ru, tier: 2 }
+  - { q: "Etli pilav Almanya", region: DE, lang: tr, tier: 2 }
+  - { q: "Kabuli Palaw Deutschland", region: DE, lang: fa, tier: 2 }
+  - { q: "Jollof rice Germany", region: DE, lang: en, tier: 2 }
+  - { q: "Afghan food Berlin", region: DE, lang: en, tier: 2 }
+  - { q: "Syrian food Berlin", region: DE, lang: en, tier: 2 }
+  - { q: "Arabic food Berlin", region: DE, lang: en, tier: 2 }
+  - { q: "Persian food Berlin", region: DE, lang: en, tier: 2 }
+  - { q: "Vietnamese food Berlin", region: DE, lang: en, tier: 2 }
+
+# Content cues: words in titles / captions that describe the FORMAT or ANGLE of a post (matched case-insensitively
+# on folded word sequences). These become features (cue:*) for the content-performance dataset.
+cues:
+  review_test: [review, test, im test, ehrlich, honest review, rating, bewertung, worth it, lohnt sich, tried, probiert]
+  recipe: [recipe, rezept, how to make, homemade, selbstgemacht, kochen, cooking, step by step, রেসিপি, tarifi, طريقة]
+  mukbang_asmr: [mukbang, asmr, eating show, eating sounds]
+  price_value: [price, preis, euro, eur, cheap, günstig, guenstig, billig, budget, under 10, unter 10, value, deal, angebot, rabatt, discount, gratis, free]
+  ranking_list: [best, beste, besten, top 3, top 5, top 10, ranking, ranked, must try, geheimtipp, hidden gem]
+  challenge_vs: [challenge, vs, versus, battle, spicy challenge, scharf challenge]
+  street_food: [street food, streetfood, food truck, imbiss, market, markt]
+  delivery: [delivery, lieferung, liefern, lieferando, wolt, uber eats, bestellen, order online, takeaway, abholung]
+  halal: [halal, helal, حلال, হালাল]
+  spicy: [spicy, scharf, hot, extra hot, chili, ঝাল, acı]
+  family_sharing: [family, familie, platter, platte, sharing, party, feast, für 4, for 4, group, gruppe, catering]
+  behind_scenes: [behind the scenes, kitchen, küche, chef, making of, how we make, a day in the life, staff, team]
+  opening_news: [new opening, neueröffnung, eröffnung, grand opening, now open, jetzt neu, coming soon, new menu, neu]
+  tour_vlog: [food tour, vlog, day in, walk, rundgang, trying every, i tried]
+  dum_pot_reveal: [dum, handi, degchi, pot opening, seal, opening the pot, rice pull, cheese pull]
+  question_hook: [why, warum, what, was ist, how, wie, who, which, welche]
+  community_pride: [desi, bangladeshi, bengali, deshi, probashi, প্রবাসী, expat, migrant, diaspora, heimat, home taste, wie zuhause, like home]

@@ -258,6 +258,14 @@ def enrich_languages() -> None:
     detect_languages()
 
 
+@enrich_app.command("content")
+def enrich_content() -> None:
+    """Tag posts / videos / comments with dishes, communities, occasions and format cues (ops.content_tag)."""
+    from mip.enrich.content import tag_content
+
+    tag_content()
+
+
 @enrich_app.command("mentions")
 def enrich_mentions() -> None:
     from mip.enrich.text import find_mentions
@@ -288,10 +296,11 @@ def ml_list() -> None:
 
 @app.command()
 def taxonomy(market: Market = "berlin-food") -> None:
-    """Export the taxonomy YAML to dbt seed CSVs (cuisine_map.csv, dish_map.csv)."""
-    from mip.taxonomy import export_seeds
+    """Export the taxonomy YAMLs to dbt seed CSVs (cuisines, dishes, communities, greetings, occasion types)."""
+    from mip.taxonomy import export_audience_seeds, export_seeds
 
     export_seeds(load_market(market))
+    export_audience_seeds()
 
 
 if __name__ == "__main__":

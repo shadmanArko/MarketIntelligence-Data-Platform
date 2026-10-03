@@ -95,13 +95,16 @@ def register(name: str, version: str, source_url: str, raw_table: str, terms: st
 
 def load_dataset(name: str, market: Market, version: str | None = None) -> None:
     from mip.datasets import (  # noqa: F401  (register loaders)
+        afs_population,
         berlin_open,
         calendar,
         crux,
         foursquare,
         kaggle_tripadvisor,
+        occasions,
         osm,
         overture,
+        wikidata_dishes,
         zensus,
     )
 

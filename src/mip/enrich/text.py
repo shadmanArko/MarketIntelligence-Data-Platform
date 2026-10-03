@@ -15,7 +15,12 @@ from mip.db import connect
 console = Console()
 LANGS = [Language.GERMAN, Language.ENGLISH, Language.ARABIC, Language.TURKISH, Language.URDU, Language.BENGALI,
          Language.HINDI, Language.PERSIAN, Language.RUSSIAN, Language.POLISH, Language.ITALIAN, Language.SPANISH,
-         Language.FRENCH, Language.VIETNAMESE, Language.CHINESE, Language.UKRAINIAN, Language.GREEK]
+         Language.FRENCH, Language.VIETNAMESE, Language.CHINESE, Language.UKRAINIAN, Language.GREEK, Language.KOREAN,
+         Language.JAPANESE, Language.THAI, Language.INDONESIAN, Language.MALAY, Language.TAGALOG, Language.ROMANIAN,
+         Language.ALBANIAN, Language.BOSNIAN, Language.CROATIAN, Language.SERBIAN, Language.BULGARIAN,
+         Language.PORTUGUESE, Language.DUTCH, Language.SWAHILI, Language.SOMALI, Language.YORUBA, Language.HEBREW,
+         Language.AZERBAIJANI, Language.KAZAKH, Language.PUNJABI, Language.TAMIL, Language.TELUGU, Language.MARATHI,
+         Language.GUJARATI]
 WORD = re.compile(r"[\w'’&]+", re.UNICODE)
 
 
@@ -23,15 +28,18 @@ def _norm(s: str) -> list[str]:
     return [w.lower().replace("’", "'") for w in WORD.findall(s)]
 
 
-def detect_languages(kinds: tuple[str, ...] = ("review", "page", "post")) -> int:
+def detect_languages(kinds: tuple[str, ...] = ("review", "page", "post", "comment")) -> int:
     det = LanguageDetectorBuilder.from_languages(*LANGS).with_preloaded_language_models().build()
     queries = {
         "review": "select review_id::text id, text from core.review r where text is not null and not exists "
                   "(select 1 from ops.text_language l where l.text_kind='review' and l.text_id=r.review_id::text)",
         "page": "select page_version_id::text id, left(main_text, 3000) text from core.web_page p where not exists "
                 "(select 1 from ops.text_language l where l.text_kind='page' and l.text_id=p.page_version_id::text)",
-        "post": "select post_id::text id, caption text from core.post p where caption is not null and not exists "
-                "(select 1 from ops.text_language l where l.text_kind='post' and l.text_id=p.post_id::text)",
+        "post": "select post_id::text id, left(concat_ws(' ', title, caption), 3000) text from core.post p where"
+                " coalesce(title, caption) is not null and not exists"
+                " (select 1 from ops.text_language l where l.text_kind='post' and l.text_id=p.post_id::text)",
+        "comment": "select comment_id id, text from staging.stg_youtube__comment c where text is not null and not exists"
+                   " (select 1 from ops.text_language l where l.text_kind='comment' and l.text_id=c.comment_id)",
     }
     total = 0
     for kind in kinds:

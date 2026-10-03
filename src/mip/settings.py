@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     google_cse_cx: str = ""
     brave_api_key: str = ""
     apify_token: str = ""
+    youtube_api_key: str = ""
     dataforseo_login: str = ""
     dataforseo_password: str = ""
 

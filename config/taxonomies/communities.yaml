@@ -1,0 +1,686 @@
+# Berlin "meat + rice" audiences: who they are, how many live in Berlin, which language and script reaches them,
+# which of their own meat-and-rice dishes biryani can be tied to, and the greeting for each occasion type.
+# Source of truth for the content / audience datasets (Wikidata only seeds dish names; this file is curated).
+#
+#   countries      ISO-3166 alpha-2; their national + religious holidays come from python-holidays per year
+#   afs_citizenship  exact labels in Amt für Statistik Berlin-Brandenburg A I 5, sheet T10 (citizenship, Berlin)
+#   afs_origin       origin-area codes in A I 16 sheet T4 (migration background per LOR planning area); only 24 exist
+#   moon_offset      days South-Asian / moon-sighting communities usually celebrate Islamic feasts after Umm al-Qura
+#   greetings        occasion_type -> native text | transliteration. review: true = check with a native speaker
+#   religion_mix     rough, for choosing occasions (not a statistic)
+#
+# Occasion types are defined in occasions.yaml; python-holidays names are mapped there.
+
+communities:
+  bangladeshi:
+    label: Bangladeshi
+    countries: [BD]
+    afs_citizenship: [Bangladesch]
+    afs_origin: []
+    languages: [bn, en, de]
+    scripts: [Beng]
+    religion_mix: [muslim, hindu]
+    moon_offset: 1
+    dishes:
+      - { id: kacchi_biryani, native: কাচ্চি বিরিয়ানি, translit: kacchi biriyani, en: kacchi biryani (raw-marinated mutton dum biryani) }
+      - { id: tehari, native: তেহারি, translit: tehari, en: beef tehari }
+      - { id: morog_polao, native: মোরগ পোলাও, translit: morog polao, en: chicken polao }
+      - { id: khichuri, native: খিচুড়ি, translit: khichuri, en: khichuri with beef (rainy days) }
+    greetings:
+      eid_al_fitr: { text: ঈদ মোবারক, translit: Eid Mubarak }
+      eid_al_adha: { text: ঈদ মোবারক, translit: Eid Mubarak }
+      ramadan: { text: রমজান মোবারক, translit: Ramadan Mubarak }
+      bengali_new_year: { text: শুভ নববর্ষ, translit: Shubho Noboborsho }
+      national_day: { text: বিজয় দিবসের শুভেচ্ছা, translit: Bijoy Dibosher Shubhechchha }
+      durga_puja: { text: শুভ বিজয়া, translit: Shubho Bijoya }
+      mother_language_day: { text: অমর একুশে, translit: Amar Ekushe }
+
+  indian:
+    label: Indian
+    countries: [IN]
+    afs_citizenship: [Indien]
+    afs_origin: [IN]
+    languages: [hi, en, bn, ta, te, ml, pa, ur]
+    scripts: [Deva, Latn, Beng, Taml, Telu, Mlym, Guru]
+    religion_mix: [hindu, muslim, sikh, christian]
+    moon_offset: 1
+    dishes:
+      - { id: hyderabadi_biryani, native: हैदराबादी बिरयानी, translit: Hyderabadi dum biryani, en: Hyderabadi dum biryani }
+      - { id: lucknowi_biryani, native: लखनवी बिरयानी, translit: Lucknowi biryani, en: Awadhi biryani }
+      - { id: kolkata_biryani, native: কলকাতা বিরিয়ানি, translit: Kolkata biriyani, en: Kolkata biryani with potato }
+      - { id: malabar_biryani, native: മലബാർ ബിരിയാണി, translit: Malabar biriyani, en: Malabar biryani }
+      - { id: yakhni_pulao, native: यख़नी पुलाव, translit: yakhni pulao, en: yakhni pulao }
+    notes: many Hindu Indians are vegetarian or avoid beef; lead with chicken / mutton and a veg option
+    greetings:
+      diwali: { text: दीपावली की हार्दिक शुभकामनाएँ, translit: Deepavali ki hardik shubhkamnayen }
+      durga_puja: { text: শুভ বিজয়া, translit: Shubho Bijoya }
+      holi: { text: होली की शुभकामनाएँ, translit: Holi ki shubhkamnayen }
+      eid_al_fitr: { text: ईद मुबारक, translit: Eid Mubarak }
+      eid_al_adha: { text: ईद मुबारक, translit: Eid Mubarak }
+      south_asian_new_year: { text: ਵਿਸਾਖੀ ਦੀਆਂ ਲੱਖ ਲੱਖ ਵਧਾਈਆਂ, translit: Vaisakhi diyan lakh lakh vadhaiyan, review: true }
+      national_day: { text: स्वतंत्रता दिवस की शुभकामनाएँ, translit: Swatantrata Diwas ki shubhkamnayen }
+
+  pakistani:
+    label: Pakistani
+    countries: [PK]
+    afs_citizenship: [Pakistan]
+    afs_origin: []
+    languages: [ur, pa, ps, en]
+    scripts: [Arab, Latn]
+    religion_mix: [muslim]
+    moon_offset: 1
+    dishes:
+      - { id: sindhi_biryani, native: سندھی بریانی, translit: Sindhi biryani, en: Sindhi biryani }
+      - { id: karachi_biryani, native: کراچی بریانی, translit: Karachi biryani, en: Karachi biryani }
+      - { id: yakhni_pulao, native: یخنی پلاؤ, translit: yakhni pulao, en: yakhni pulao }
+      - { id: bannu_pulao, native: بنوں پلاؤ, translit: Bannu pulao, en: Bannu beef pulao }
+    greetings:
+      eid_al_fitr: { text: عید مبارک, translit: Eid Mubarak }
+      eid_al_adha: { text: عید مبارک, translit: Eid Mubarak }
+      ramadan: { text: رمضان مبارک, translit: Ramadan Mubarak }
+      national_day: { text: جشنِ آزادی مبارک, translit: Jashn-e-Azadi Mubarak }
+
+  nepali:
+    label: Nepali
+    countries: [NP]
+    afs_citizenship: [Nepal]
+    afs_origin: []
+    languages: [ne, en]
+    scripts: [Deva]
+    religion_mix: [hindu, buddhist]
+    moon_offset: 0
+    dishes:
+      - { id: khasi_masu_bhat, native: खसीको मासु भात, translit: khasi ko masu bhat, en: goat curry with rice (Dashain) }
+    greetings:
+      dashain: { text: विजया दशमीको हार्दिक मंगलमय शुभकामना, translit: Vijaya Dashamiko hardik mangalmaya shubhakamana }
+      diwali: { text: शुभ दीपावली, translit: Shubha Deepawali }
+
+  sri_lankan:
+    label: Sri Lankan
+    countries: [LK]
+    afs_citizenship: [Sri Lanka]
+    afs_origin: []
+    languages: [si, ta, en]
+    scripts: [Sinh, Taml]
+    religion_mix: [buddhist, hindu, muslim, christian]
+    moon_offset: 1
+    dishes:
+      - { id: lamprais, native: ලම්ප්‍රයිස්, translit: lamprais, en: lamprais (rice + meat baked in banana leaf), review: true }
+      - { id: buriyani, native: බුරියානි, translit: buriyani, en: Sri Lankan buriyani, review: true }
+    greetings:
+      south_asian_new_year: { text: සුබ අලුත් අවුරුද්දක් වේවා, translit: Suba aluth avuruddak wewa }
+
+  afghan:
+    label: Afghan
+    countries: [AF]
+    afs_citizenship: [Afghanistan]
+    afs_origin: [AF]
+    languages: [fa-AF, ps]
+    scripts: [Arab]
+    religion_mix: [muslim]
+    moon_offset: 0
+    dishes:
+      - { id: kabuli_palaw, native: قابلی پلو, translit: Qabili / Kabuli palaw, en: Kabuli pulao (lamb, carrots, raisins) }
+      - { id: chalau, native: چلو, translit: chalau, en: chalau rice with korma }
+    greetings:
+      eid_al_fitr: { text: عیدتان مبارک, translit: Eidetan mubarak }
+      eid_al_adha: { text: عیدتان مبارک, translit: Eidetan mubarak }
+      nowruz: { text: نوروزتان مبارک, translit: Nowruzetan mubarak }
+      eid_pashto: { text: اختر مو مبارک شه, translit: Akhtar mo mubarak sha, review: true }
+
+  iranian:
+    label: Iranian
+    countries: [IR]
+    afs_citizenship: [Iran]
+    afs_origin: [IR]
+    languages: [fa]
+    scripts: [Arab]
+    religion_mix: [muslim, secular]
+    moon_offset: 0
+    dishes:
+      - { id: chelow_kabab, native: چلوکباب, translit: chelow kabab, en: chelow kabab }
+      - { id: tahchin, native: ته‌چین, translit: tahchin, en: tahchin (saffron rice cake with chicken) }
+      - { id: zereshk_polo, native: زرشک‌پلو با مرغ, translit: zereshk polo ba morgh, en: barberry rice with chicken }
+      - { id: baghali_polo, native: باقالی‌پلو با ماهیچه, translit: baghali polo ba mahicheh, en: dill-bean rice with lamb shank }
+    greetings:
+      nowruz: { text: نوروزتان پیروز, translit: Nowruzetan piruz }
+      yalda: { text: یلدا مبارک, translit: Yalda mobarak }
+      eid_al_fitr: { text: عید فطر مبارک, translit: Eid-e Fetr mobarak }
+
+  turkish:
+    label: Turkish
+    countries: [TR]
+    afs_citizenship: [Türkei]
+    afs_origin: [TR]
+    languages: [tr, de]
+    scripts: [Latn]
+    religion_mix: [muslim, secular]
+    moon_offset: 0
+    dishes:
+      - { id: etli_pilav, native: etli pilav, translit: etli pilav, en: rice pilaf with meat }
+      - { id: tavuklu_pilav, native: tavuklu pilav, translit: tavuklu pilav, en: chicken pilaf }
+      - { id: perde_pilavi, native: perde pilavı, translit: perde pilavı, en: veiled pilaf }
+      - { id: kuzu_tandir_pilav, native: kuzu tandır pilav üstü, translit: kuzu tandır, en: slow-roast lamb on pilaf }
+      - { id: dugun_pilavi, native: düğün pilavı, translit: düğün pilavı, en: wedding rice with meat and chickpeas }
+    greetings:
+      eid_al_fitr: { text: Ramazan Bayramınız mübarek olsun, translit: Ramazan Bayramınız mübarek olsun }
+      eid_al_adha: { text: Kurban Bayramınız kutlu olsun, translit: Kurban Bayramınız kutlu olsun }
+      ramadan: { text: Hayırlı Ramazanlar, translit: Hayırlı Ramazanlar }
+      national_day: { text: Cumhuriyet Bayramımız kutlu olsun, translit: Cumhuriyet Bayramımız kutlu olsun }
+      meal: { text: Afiyet olsun, translit: Afiyet olsun }
+
+  kurdish:
+    label: Kurdish
+    countries: []          # no citizenship category; inside TR / SY / IQ / IR and "ungeklärt"
+    afs_citizenship: []
+    afs_origin: []
+    languages: [kmr, ckb]
+    scripts: [Latn, Arab]
+    religion_mix: [muslim, yazidi, alevi]
+    moon_offset: 0
+    dishes:
+      - { id: kurdish_brinj, native: birinç bi goşt, translit: birinç, en: rice with lamb }
+    greetings:
+      nowruz: { text: Newroz pîroz be, translit: Newroz pîroz be }
+      eid_al_fitr: { text: Cejna we pîroz be, translit: Cejna we pîroz be }
+      eid_al_adha: { text: Cejna we pîroz be, translit: Cejna we pîroz be }
+
+  syrian:
+    label: Syrian
+    countries: [SY]
+    afs_citizenship: [Syrien]
+    afs_origin: [SY]
+    languages: [ar]
+    scripts: [Arab]
+    religion_mix: [muslim, christian]
+    moon_offset: 0
+    dishes:
+      - { id: maqluba, native: مقلوبة, translit: maqluba, en: upside-down rice with meat and vegetables }
+      - { id: ouzi, native: أوزي, translit: ouzi, en: lamb rice in pastry }
+      - { id: kabsa, native: كبسة, translit: kabsa, en: kabsa }
+      - { id: riz_ala_djej, native: رز على دجاج, translit: riz ʿa djej, en: chicken over spiced rice }
+    greetings: &arabic_greetings
+      eid_al_fitr: { text: عيد مبارك, translit: ʿEid mubarak }
+      eid_al_adha: { text: عيد أضحى مبارك, translit: ʿEid adha mubarak }
+      ramadan: { text: رمضان كريم, translit: Ramadan karim }
+      new_year: { text: كل عام وأنتم بخير, translit: Kull ʿam wa-antum bi-khayr }
+      eid_reply: { text: تقبل الله منا ومنكم, translit: Taqabbal Allahu minna wa minkum }
+
+  lebanese:
+    label: Lebanese
+    countries: [LB]
+    afs_citizenship: [Libanon]
+    afs_origin: [LB]
+    languages: [ar, fr]
+    scripts: [Arab, Latn]
+    religion_mix: [muslim, christian]
+    moon_offset: 0
+    dishes:
+      - { id: riz_ala_djej, native: رز على دجاج, translit: riz ʿa djej, en: chicken over spiced rice }
+      - { id: ouzi, native: أوزي, translit: ouzi, en: lamb rice in pastry }
+    greetings:
+      <<: *arabic_greetings
+      christmas: { text: ميلاد مجيد, translit: Milad majid }
+
+  palestinian:
+    label: Palestinian
+    countries: [PS]
+    afs_citizenship: [Palästinensische Gebiete, ungeklärt, staatenlos]
+    afs_origin: []
+    languages: [ar]
+    scripts: [Arab]
+    religion_mix: [muslim, christian]
+    moon_offset: 0
+    dishes:
+      - { id: maqluba, native: مقلوبة, translit: maqluba, en: maqluba (national dish) }
+      - { id: mansaf, native: منسف, translit: mansaf, en: mansaf }
+    greetings: *arabic_greetings
+
+  iraqi:
+    label: Iraqi
+    countries: [IQ]
+    afs_citizenship: [Irak]
+    afs_origin: [IQ]
+    languages: [ar, ckb, kmr]
+    scripts: [Arab]
+    religion_mix: [muslim, christian, yazidi]
+    moon_offset: 0
+    dishes:
+      - { id: quzi, native: قوزي, translit: quzi, en: whole lamb on rice }
+      - { id: timman_marga, native: تمن ومرق, translit: timman w-marga, en: rice with stew }
+      - { id: iraqi_biryani, native: برياني عراقي, translit: Iraqi biryani, en: Iraqi biryani }
+    greetings: *arabic_greetings
+
+  levant_gulf_yemen:
+    label: Jordanian / Gulf / Yemeni
+    countries: [JO, SA, AE, YE, KW, QA]
+    afs_citizenship: [Jordanien, Saudi-Arabien, Vereinigte Arabische Emirate, Jemen, Kuwait, Katar]
+    afs_origin: []
+    languages: [ar]
+    scripts: [Arab]
+    religion_mix: [muslim]
+    moon_offset: 0
+    dishes:
+      - { id: mansaf, native: منسف, translit: mansaf, en: mansaf (lamb, jameed, rice) }
+      - { id: kabsa, native: كبسة, translit: kabsa, en: kabsa }
+      - { id: mandi, native: مندي, translit: mandi, en: mandi (pit-cooked meat on rice) }
+      - { id: haneeth, native: حنيذ, translit: haneeth, en: haneeth }
+      - { id: zurbian, native: زربيان, translit: zurbian, en: zurbian (Yemeni-Adeni biryani) }
+    greetings: *arabic_greetings
+
+  egyptian:
+    label: Egyptian
+    countries: [EG]
+    afs_citizenship: [Ägypten]
+    afs_origin: []
+    languages: [ar]
+    scripts: [Arab]
+    religion_mix: [muslim, christian]
+    moon_offset: 0
+    dishes:
+      - { id: fattah, native: فتة, translit: fattah, en: fattah (rice, bread, lamb — the Eid al-Adha dish) }
+      - { id: roz_bel_khalta, native: رز بالخلطة, translit: roz bel khalta, en: festive rice with liver and nuts }
+    greetings:
+      <<: *arabic_greetings
+      eid_al_fitr: { text: كل سنة وانت طيب, translit: Kull sana w-enta tayyeb }
+
+  maghrebi:
+    label: Maghrebi
+    countries: [TN, MA, DZ, LY]
+    afs_citizenship: [Tunesien, Marokko, Algerien, Libyen]
+    afs_origin: []
+    languages: [ar, fr, ber]
+    scripts: [Arab, Latn, Tfng]
+    religion_mix: [muslim]
+    moon_offset: 0
+    dishes:
+      - { id: rouz_jerbi, native: رز جربي, translit: rouz jerbi, en: Djerba steamed rice with lamb }
+    notes: couscous culture; rice-meat link is weaker
+    greetings:
+      <<: *arabic_greetings
+      eid_al_fitr: { text: عيد مبارك سعيد, translit: ʿEid mubarak saʿid }
+      amazigh_new_year: { text: ⴰⵙⴳⴳⵯⴰⵙ ⴰⵎⴳⴳⴰⵣ, translit: Asggwas ameggaz, review: true }
+
+  central_asian:
+    label: Central Asian
+    countries: [UZ, TJ, KZ, KG, TM]
+    afs_citizenship: [Usbekistan, Tadschikistan, Kasachstan, Kirgisistan, Turkmenistan]
+    afs_origin: [KZ]
+    languages: [uz, tg, kk, ru]
+    scripts: [Latn, Cyrl]
+    religion_mix: [muslim, orthodox]
+    moon_offset: 0
+    dishes:
+      - { id: plov, native: palov / osh, translit: plov, en: Uzbek plov (lamb, carrots, rice) }
+      - { id: toy_oshi, native: to'y oshi, translit: to'y oshi, en: wedding morning plov }
+      - { id: kazakh_palau, native: палау, translit: palau, en: Kazakh palau }
+    greetings:
+      nowruz: { text: Navro'z bayramingiz muborak bo'lsin, translit: Navro'z bayramingiz muborak bo'lsin }
+      nowruz_kk: { text: Наурыз мейрамы құтты болсын, translit: Nauryz meyramy qutty bolsyn }
+      nowruz_ru: { text: С праздником Навруз!, translit: S prazdnikom Navruz }
+      eid_al_fitr: { text: Ramazon hayitingiz muborak, translit: Ramazon hayitingiz muborak, review: true }
+
+  azerbaijani:
+    label: Azerbaijani
+    countries: [AZ]
+    afs_citizenship: [Aserbaidschan]
+    afs_origin: []
+    languages: [az, ru]
+    scripts: [Latn]
+    religion_mix: [muslim]
+    moon_offset: 0
+    dishes:
+      - { id: shah_plov, native: şah plov, translit: şah plov, en: crown plov in lavash }
+    greetings:
+      nowruz: { text: Novruz bayramınız mübarək!, translit: Novruz bayramınız mübarək }
+
+  caucasus_christian:
+    label: Armenian / Georgian
+    countries: [AM, GE]
+    afs_citizenship: [Armenien, Georgien]
+    afs_origin: []
+    languages: [hy, ka, ru]
+    scripts: [Armn, Geor]
+    religion_mix: [orthodox]
+    moon_offset: 0
+    dishes:
+      - { id: armenian_plav, native: փլավ, translit: plav, en: Armenian New Year plav with dried fruit }
+      - { id: georgian_plovi, native: ფლავი, translit: plovi, en: Georgian plov }
+    greetings:
+      new_year: { text: Շնորհավոր Նոր Տարի, translit: Shnorhavor Nor Tari }
+      new_year_ka: { text: გილოცავთ ახალ წელს, translit: Gilotsavt akhal tsels }
+
+  east_slavic:
+    label: Russian / Ukrainian / Belarusian / Moldovan
+    countries: [RU, UA, BY, MD]
+    afs_citizenship: [Russische Föderation, Ukraine, Belarus, "Moldau, Republik"]
+    afs_origin: [RU, UA]
+    languages: [ru, uk, ro]
+    scripts: [Cyrl, Latn]
+    religion_mix: [orthodox]
+    moon_offset: 0
+    dishes:
+      - { id: plov_ru, native: плов, translit: plov, en: home-style plov }
+      - { id: golubtsy, native: голубцы / голубці, translit: golubtsy / holubtsi, en: cabbage rolls with meat and rice }
+    greetings:
+      new_year: { text: С Новым годом!, translit: S Novym godom }
+      new_year_uk: { text: З Новим роком!, translit: Z Novym rokom }
+      orthodox_christmas: { text: С Рождеством Христовым!, translit: S Rozhdestvom Khristovym }
+      christmas_uk: { text: Христос народився!, translit: Khrystos narodyvsia }
+    notes: Ukraine moved Christmas to 25 Dec in 2023; Russians keep 7 Jan
+
+  polish:
+    label: Polish
+    countries: [PL]
+    afs_citizenship: [Polen]
+    afs_origin: [PL]
+    languages: [pl]
+    scripts: [Latn]
+    religion_mix: [catholic]
+    moon_offset: 0
+    dishes:
+      - { id: golabki, native: gołąbki, translit: gołąbki, en: cabbage rolls with meat and rice }
+    greetings:
+      christmas: { text: Wesołych Świąt!, translit: Wesołych Świąt }
+      meal: { text: Smacznego!, translit: Smacznego }
+    notes: Wigilia (24 Dec) is meatless — target 25/26 Dec
+
+  balkan:
+    label: Balkan / Romanian / Bulgarian
+    countries: [RS, BA, HR, MK, AL, XK, BG, RO]
+    afs_citizenship: [Serbien, Bosnien und Herzegowina, Kroatien, Nordmazedonien, Albanien, Kosovo, Bulgarien, Rumänien]
+    afs_origin: [HR, BG, RO]
+    languages: [sr, bs, hr, mk, sq, bg, ro]
+    scripts: [Latn, Cyrl]
+    religion_mix: [orthodox, muslim, catholic]
+    moon_offset: 0
+    dishes:
+      - { id: sarma, native: sarma / sarmale, translit: sarma, en: cabbage rolls with meat and rice (Christmas) }
+      - { id: punjene_paprike, native: punjene paprike, translit: punjene paprike, en: peppers stuffed with meat and rice }
+      - { id: duvec, native: đuveč, translit: đuveč, en: rice and meat bake }
+    greetings:
+      eid_al_fitr: { text: Bajram šerif mubarek olsun, translit: Bajram šerif mubarek olsun }
+      eid_al_adha: { text: Gëzuar Bajramin!, translit: Gëzuar Bajramin }
+      orthodox_christmas: { text: Христос се роди, translit: Hristos se rodi }
+      christmas: { text: Crăciun fericit!, translit: Crăciun fericit }
+
+  greek:
+    label: Greek / Cypriot
+    countries: [GR, CY]
+    afs_citizenship: [Griechenland, Zypern]
+    afs_origin: [GR]
+    languages: [el]
+    scripts: [Grek]
+    religion_mix: [orthodox]
+    moon_offset: 0
+    dishes:
+      - { id: gemista, native: γεμιστά, translit: gemista, en: vegetables stuffed with rice and mince }
+      - { id: magiritsa, native: μαγειρίτσα, translit: magiritsa, en: Easter-night lamb and rice soup }
+    greetings:
+      easter: { text: Χριστός Ανέστη!, translit: Christos Anesti }
+      easter_wish: { text: Καλό Πάσχα!, translit: Kalo Pascha }
+
+  italian:
+    label: Italian
+    countries: [IT]
+    afs_citizenship: [Italien]
+    afs_origin: [IT]
+    languages: [it]
+    scripts: [Latn]
+    religion_mix: [catholic]
+    moon_offset: 0
+    dishes:
+      - { id: risotto_ossobuco, native: risotto alla milanese con ossobuco, translit: risotto con ossobuco, en: saffron risotto with veal shank }
+      - { id: arancini, native: arancini, translit: arancini, en: rice balls with ragù }
+    greetings:
+      christmas: { text: Buon Natale!, translit: Buon Natale }
+      meal: { text: Buon appetito!, translit: Buon appetito }
+
+  iberian:
+    label: Spanish / Portuguese
+    countries: [ES, PT]
+    afs_citizenship: [Spanien, Portugal]
+    afs_origin: [ES]
+    languages: [es, ca, pt]
+    scripts: [Latn]
+    religion_mix: [catholic]
+    moon_offset: 0
+    dishes:
+      - { id: paella, native: paella valenciana, translit: paella, en: paella with chicken and rabbit }
+      - { id: arroz_al_horno, native: arroz al horno, translit: arroz al horno, en: oven rice with pork }
+      - { id: arroz_de_pato, native: arroz de pato, translit: arroz de pato, en: duck rice }
+    greetings:
+      christmas: { text: ¡Feliz Navidad!, translit: Feliz Navidad }
+      meal: { text: ¡Buen provecho!, translit: Buen provecho }
+
+  latin_american:
+    label: Latin American / Brazilian
+    countries: [BR, MX, CO, CL, AR, PE, VE, CU]
+    afs_citizenship: [Brasilien, Mexiko, Kolumbien, Chile, Argentinien, Peru, Venezuela, Kuba]
+    afs_origin: []
+    languages: [es, pt]
+    scripts: [Latn]
+    religion_mix: [catholic]
+    moon_offset: 0
+    dishes:
+      - { id: arroz_con_pollo, native: arroz con pollo, translit: arroz con pollo, en: chicken with rice }
+      - { id: pabellon_criollo, native: pabellón criollo, translit: pabellón, en: rice, shredded beef, beans }
+      - { id: arroz_chaufa, native: arroz chaufa, translit: chaufa, en: Peruvian fried rice with meat }
+      - { id: feijoada, native: feijoada com arroz, translit: feijoada, en: feijoada with rice }
+      - { id: galinhada, native: galinhada, translit: galinhada, en: chicken rice (Brazil) }
+    greetings:
+      national_day: { text: ¡Felices Fiestas Patrias!, translit: Felices Fiestas Patrias }
+      christmas: { text: ¡Feliz Navidad!, translit: Feliz Navidad }
+      christmas_pt: { text: Feliz Natal!, translit: Feliz Natal }
+
+  anglo:
+    label: American / British
+    countries: [US, GB, IE, CA, AU]
+    afs_citizenship: [Vereinigte Staaten, Vereinigtes Königreich, Irland, Kanada, Australien]
+    afs_origin: [US, UK]
+    languages: [en]
+    scripts: [Latn]
+    religion_mix: [christian, secular]
+    moon_offset: 0
+    dishes:
+      - { id: jambalaya, native: jambalaya, translit: jambalaya, en: jambalaya }
+      - { id: chicken_and_rice, native: chicken and rice, translit: chicken and rice, en: chicken and rice }
+      - { id: curry_house, native: curry and rice, translit: curry, en: British-Indian curry house rice }
+    greetings:
+      thanksgiving: { text: Happy Thanksgiving!, translit: Happy Thanksgiving }
+      christmas: { text: Merry Christmas!, translit: Merry Christmas }
+
+  french:
+    label: French / Belgian
+    countries: [FR, BE]
+    afs_citizenship: [Frankreich, Belgien]
+    afs_origin: [FR]
+    languages: [fr]
+    scripts: [Latn]
+    religion_mix: [catholic, secular, muslim]
+    moon_offset: 0
+    dishes:
+      - { id: blanquette_riz, native: blanquette de veau au riz, translit: blanquette, en: veal blanquette with rice }
+      - { id: poulet_basquaise, native: poulet basquaise et riz, translit: poulet basquaise, en: Basque chicken with rice }
+    greetings:
+      christmas: { text: Joyeux Noël !, translit: Joyeux Noël }
+      meal: { text: Bon appétit !, translit: Bon appétit }
+
+  german:
+    label: German / Austrian / Swiss
+    countries: [DE, AT, CH]
+    afs_citizenship: [Deutschland, Österreich, Schweiz]
+    afs_origin: [AT]
+    languages: [de]
+    scripts: [Latn]
+    religion_mix: [christian, secular]
+    moon_offset: 0
+    dishes:
+      - { id: huehnerfrikassee, native: Hühnerfrikassee mit Reis, translit: Hühnerfrikassee, en: chicken fricassee with rice }
+      - { id: reisfleisch, native: Reisfleisch, translit: Reisfleisch, en: rice with pork / beef stew }
+      - { id: gefuellte_paprika, native: gefüllte Paprika, translit: gefüllte Paprika, en: peppers stuffed with mince and rice }
+    greetings:
+      christmas: { text: Frohe Weihnachten!, translit: Frohe Weihnachten }
+      new_year: { text: Guten Rutsch!, translit: Guten Rutsch }
+      easter: { text: Frohe Ostern!, translit: Frohe Ostern }
+      meal: { text: Guten Appetit!, translit: Guten Appetit }
+
+  vietnamese:
+    label: Vietnamese
+    countries: [VN]
+    afs_citizenship: [Vietnam]
+    afs_origin: [VN]
+    languages: [vi]
+    scripts: [Latn]
+    religion_mix: [buddhist, secular]
+    moon_offset: 0
+    dishes:
+      - { id: com_tam, native: cơm tấm sườn, translit: com tam suon, en: broken rice with grilled pork }
+      - { id: com_ga, native: cơm gà, translit: com ga, en: chicken rice }
+      - { id: banh_chung, native: bánh chưng, translit: banh chung, en: sticky rice cake with pork (Tết) }
+    greetings:
+      lunar_new_year: { text: Chúc mừng năm mới!, translit: Chuc mung nam moi }
+      lunar_new_year_wish: { text: An khang thịnh vượng, translit: An khang thinh vuong }
+
+  chinese:
+    label: Chinese / Taiwanese / Hong Kong
+    countries: [CN, TW, HK]
+    afs_citizenship: [China, Taiwan, Hongkong]
+    afs_origin: [CN]
+    languages: [zh-Hans, zh-Hant, yue]
+    scripts: [Hans, Hant]
+    religion_mix: [secular, buddhist]
+    moon_offset: 0
+    dishes:
+      - { id: hainan_chicken_rice, native: 海南鸡饭, translit: Hainan jifan, en: Hainanese chicken rice }
+      - { id: claypot_rice, native: 煲仔饭, translit: baozaifan, en: claypot rice }
+      - { id: lurou_fan, native: 卤肉饭, translit: lurou fan, en: braised pork rice }
+      - { id: zongzi, native: 粽子, translit: zongzi, en: sticky rice dumplings with pork (Dragon Boat) }
+    greetings:
+      lunar_new_year: { text: 新年快乐, translit: Xinnian kuaile }
+      lunar_new_year_wish: { text: 恭喜发财, translit: Gongxi facai }
+      mid_autumn: { text: 中秋快乐, translit: Zhongqiu kuaile }
+      dragon_boat: { text: 端午安康, translit: Duanwu ankang }
+
+  korean:
+    label: Korean
+    countries: [KR]
+    afs_citizenship: ["Korea, Republik"]
+    afs_origin: []
+    languages: [ko]
+    scripts: [Hang]
+    religion_mix: [christian, buddhist, secular]
+    moon_offset: 0
+    dishes:
+      - { id: bibimbap, native: 비빔밥, translit: bibimbap, en: bibimbap }
+      - { id: bulgogi_deopbap, native: 불고기 덮밥, translit: bulgogi deopbap, en: bulgogi rice bowl }
+      - { id: tteokguk, native: 떡국, translit: tteokguk, en: rice-cake soup with beef (Seollal) }
+    greetings:
+      lunar_new_year: { text: 새해 복 많이 받으세요, translit: Saehae bok mani badeuseyo }
+      mid_autumn: { text: 즐거운 추석 보내세요, translit: Jeulgeoun Chuseok bonaeseyo }
+
+  japanese:
+    label: Japanese
+    countries: [JP]
+    afs_citizenship: [Japan]
+    afs_origin: []
+    languages: [ja]
+    scripts: [Jpan]
+    religion_mix: [secular]
+    moon_offset: 0
+    dishes:
+      - { id: gyudon, native: 牛丼, translit: gyudon, en: beef bowl }
+      - { id: oyakodon, native: 親子丼, translit: oyakodon, en: chicken and egg bowl }
+      - { id: katsudon, native: カツ丼, translit: katsudon, en: pork cutlet bowl }
+    greetings:
+      new_year: { text: あけましておめでとうございます, translit: Akemashite omedetō gozaimasu }
+      meal: { text: いただきます, translit: Itadakimasu }
+
+  thai:
+    label: Thai
+    countries: [TH]
+    afs_citizenship: [Thailand]
+    afs_origin: []
+    languages: [th]
+    scripts: [Thai]
+    religion_mix: [buddhist]
+    moon_offset: 0
+    dishes:
+      - { id: khao_man_gai, native: ข้าวมันไก่, translit: khao man gai, en: Thai chicken rice }
+      - { id: khao_kha_mu, native: ข้าวขาหมู, translit: khao kha mu, en: braised pork leg on rice }
+    greetings:
+      songkran: { text: สุขสันต์วันสงกรานต์, translit: Suksan wan Songkran }
+      new_year: { text: สวัสดีปีใหม่, translit: Sawatdi pi mai }
+
+  malay_indonesian:
+    label: Indonesian / Malaysian / Filipino
+    countries: [ID, MY, PH]
+    afs_citizenship: [Indonesien, Malaysia, Philippinen]
+    afs_origin: []
+    languages: [id, ms, tl]
+    scripts: [Latn]
+    religion_mix: [muslim, catholic]
+    moon_offset: 1
+    dishes:
+      - { id: nasi_kebuli, native: nasi kebuli, translit: nasi kebuli, en: goat rice (Eid) }
+      - { id: nasi_padang_rendang, native: nasi padang dengan rendang, translit: nasi rendang, en: rice with beef rendang }
+      - { id: nasi_goreng, native: nasi goreng, translit: nasi goreng, en: fried rice }
+      - { id: chicken_adobo, native: adobong manok at kanin, translit: adobo, en: chicken adobo with rice }
+    greetings:
+      eid_al_fitr: { text: Selamat Hari Raya Idul Fitri, mohon maaf lahir dan batin, translit: Selamat Idul Fitri }
+      christmas: { text: Maligayang Pasko!, translit: Maligayang Pasko }
+
+  west_african:
+    label: West African
+    countries: [NG, GH, CM, GN, BJ, GM, SN, CI, TG]
+    afs_citizenship: [Nigeria, Ghana, Kamerun, Guinea, Benin, Gambia, Senegal, "Côte d'Ivoire", Togo]
+    afs_origin: []
+    languages: [en, fr, yo, ig, ha, tw, wo]
+    scripts: [Latn]
+    religion_mix: [christian, muslim]
+    moon_offset: 1
+    dishes:
+      - { id: jollof, native: jollof rice, translit: jollof, en: jollof rice (Nigeria vs Ghana) }
+      - { id: party_fried_rice, native: party fried rice, translit: fried rice, en: Nigerian party fried rice }
+      - { id: waakye, native: waakye, translit: waakye, en: rice and beans with meat (Ghana) }
+      - { id: thieboudienne, native: thiéboudienne / thiébou yapp, translit: ceebu jën / ceebu yapp, en: Senegalese rice with fish / lamb }
+      - { id: benachin, native: benachin, translit: benachin, en: Gambian one-pot rice }
+    greetings:
+      eid_al_fitr: { text: Barka da Sallah, translit: Barka da Sallah }
+      eid_al_adha: { text: Barka da Sallah, translit: Barka da Sallah }
+      new_year: { text: Afehyia pa, translit: Afehyia pa }
+
+  east_african:
+    label: Somali / Eritrean / Ethiopian / Kenyan / Sudanese
+    countries: [SO, ER, ET, KE, SD]
+    afs_citizenship: [Somalia, Eritrea, Äthiopien, Kenia, Sudan]
+    afs_origin: []
+    languages: [so, ti, am, sw, ar]
+    scripts: [Latn, Ethi, Arab]
+    religion_mix: [muslim, orthodox]
+    moon_offset: 0
+    dishes:
+      - { id: bariis_iskukaris, native: bariis iskukaris, translit: bariis iskukaris, en: Somali spiced rice with goat }
+      - { id: swahili_pilau, native: pilau, translit: pilau, en: Swahili pilau / biriani }
+    notes: Ethiopian / Eritrean food is injera-based; rice link is weak there
+    greetings:
+      eid_al_fitr: { text: Ciid wanaagsan, translit: Ciid wanaagsan }
+      ethiopian_new_year: { text: መልካም አዲስ ዓመት, translit: Melkam Addis Amet }
+      christmas: { text: Heri ya Krismasi, translit: Heri ya Krismasi }
+
+  jewish_israeli:
+    label: Israeli / Jewish
+    countries: [IL]
+    afs_citizenship: [Israel]
+    afs_origin: []
+    languages: [he, en, de]
+    scripts: [Hebr]
+    religion_mix: [jewish, secular]
+    moon_offset: 0
+    dishes:
+      - { id: tbit, native: תבית, translit: tbit, en: Iraqi-Jewish chicken and rice (Shabbat) }
+      - { id: oshpolov, native: אושפלאו, translit: oshpolov, en: Bukharan plov }
+    notes: kosher != halal; Ashkenazi custom avoids rice at Pesach
+    greetings:
+      jewish_new_year: { text: שנה טובה, translit: Shana tova }
+      jewish_holiday: { text: חג שמח, translit: Chag sameach }

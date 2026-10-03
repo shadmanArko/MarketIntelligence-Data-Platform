@@ -1,0 +1,108 @@
+community_id,dish_id,native_name,translit,english,needs_review
+bangladeshi,kacchi_biryani,কাচ্চি বিরিয়ানি,kacchi biriyani,kacchi biryani (raw-marinated mutton dum biryani),False
+bangladeshi,tehari,তেহারি,tehari,beef tehari,False
+bangladeshi,morog_polao,মোরগ পোলাও,morog polao,chicken polao,False
+bangladeshi,khichuri,খিচুড়ি,khichuri,khichuri with beef (rainy days),False
+indian,hyderabadi_biryani,हैदराबादी बिरयानी,Hyderabadi dum biryani,Hyderabadi dum biryani,False
+indian,lucknowi_biryani,लखनवी बिरयानी,Lucknowi biryani,Awadhi biryani,False
+indian,kolkata_biryani,কলকাতা বিরিয়ানি,Kolkata biriyani,Kolkata biryani with potato,False
+indian,malabar_biryani,മലബാർ ബിരിയാണി,Malabar biriyani,Malabar biryani,False
+indian,yakhni_pulao,यख़नी पुलाव,yakhni pulao,yakhni pulao,False
+pakistani,sindhi_biryani,سندھی بریانی,Sindhi biryani,Sindhi biryani,False
+pakistani,karachi_biryani,کراچی بریانی,Karachi biryani,Karachi biryani,False
+pakistani,yakhni_pulao,یخنی پلاؤ,yakhni pulao,yakhni pulao,False
+pakistani,bannu_pulao,بنوں پلاؤ,Bannu pulao,Bannu beef pulao,False
+nepali,khasi_masu_bhat,खसीको मासु भात,khasi ko masu bhat,goat curry with rice (Dashain),False
+sri_lankan,lamprais,ලම්ප්‍රයිස්,lamprais,lamprais (rice + meat baked in banana leaf),True
+sri_lankan,buriyani,බුරියානි,buriyani,Sri Lankan buriyani,True
+afghan,kabuli_palaw,قابلی پلو,Qabili / Kabuli palaw,Kabuli pulao (lamb,False
+afghan,chalau,چلو,chalau,chalau rice with korma,False
+iranian,chelow_kabab,چلوکباب,chelow kabab,chelow kabab,False
+iranian,tahchin,ته‌چین,tahchin,tahchin (saffron rice cake with chicken),False
+iranian,zereshk_polo,زرشک‌پلو با مرغ,zereshk polo ba morgh,barberry rice with chicken,False
+iranian,baghali_polo,باقالی‌پلو با ماهیچه,baghali polo ba mahicheh,dill-bean rice with lamb shank,False
+turkish,etli_pilav,etli pilav,etli pilav,rice pilaf with meat,False
+turkish,tavuklu_pilav,tavuklu pilav,tavuklu pilav,chicken pilaf,False
+turkish,perde_pilavi,perde pilavı,perde pilavı,veiled pilaf,False
+turkish,kuzu_tandir_pilav,kuzu tandır pilav üstü,kuzu tandır,slow-roast lamb on pilaf,False
+turkish,dugun_pilavi,düğün pilavı,düğün pilavı,wedding rice with meat and chickpeas,False
+kurdish,kurdish_brinj,birinç bi goşt,birinç,rice with lamb,False
+syrian,maqluba,مقلوبة,maqluba,upside-down rice with meat and vegetables,False
+syrian,ouzi,أوزي,ouzi,lamb rice in pastry,False
+syrian,kabsa,كبسة,kabsa,kabsa,False
+syrian,riz_ala_djej,رز على دجاج,riz ʿa djej,chicken over spiced rice,False
+lebanese,riz_ala_djej,رز على دجاج,riz ʿa djej,chicken over spiced rice,False
+lebanese,ouzi,أوزي,ouzi,lamb rice in pastry,False
+palestinian,maqluba,مقلوبة,maqluba,maqluba (national dish),False
+palestinian,mansaf,منسف,mansaf,mansaf,False
+iraqi,quzi,قوزي,quzi,whole lamb on rice,False
+iraqi,timman_marga,تمن ومرق,timman w-marga,rice with stew,False
+iraqi,iraqi_biryani,برياني عراقي,Iraqi biryani,Iraqi biryani,False
+levant_gulf_yemen,mansaf,منسف,mansaf,mansaf (lamb,False
+levant_gulf_yemen,kabsa,كبسة,kabsa,kabsa,False
+levant_gulf_yemen,mandi,مندي,mandi,mandi (pit-cooked meat on rice),False
+levant_gulf_yemen,haneeth,حنيذ,haneeth,haneeth,False
+levant_gulf_yemen,zurbian,زربيان,zurbian,zurbian (Yemeni-Adeni biryani),False
+egyptian,fattah,فتة,fattah,fattah (rice,False
+egyptian,roz_bel_khalta,رز بالخلطة,roz bel khalta,festive rice with liver and nuts,False
+maghrebi,rouz_jerbi,رز جربي,rouz jerbi,Djerba steamed rice with lamb,False
+central_asian,plov,palov / osh,plov,Uzbek plov (lamb,False
+central_asian,toy_oshi,to'y oshi,to'y oshi,wedding morning plov,False
+central_asian,kazakh_palau,палау,palau,Kazakh palau,False
+azerbaijani,shah_plov,şah plov,şah plov,crown plov in lavash,False
+caucasus_christian,armenian_plav,փլավ,plav,Armenian New Year plav with dried fruit,False
+caucasus_christian,georgian_plovi,ფლავი,plovi,Georgian plov,False
+east_slavic,plov_ru,плов,plov,home-style plov,False
+east_slavic,golubtsy,голубцы / голубці,golubtsy / holubtsi,cabbage rolls with meat and rice,False
+polish,golabki,gołąbki,gołąbki,cabbage rolls with meat and rice,False
+balkan,sarma,sarma / sarmale,sarma,cabbage rolls with meat and rice (Christmas),False
+balkan,punjene_paprike,punjene paprike,punjene paprike,peppers stuffed with meat and rice,False
+balkan,duvec,đuveč,đuveč,rice and meat bake,False
+greek,gemista,γεμιστά,gemista,vegetables stuffed with rice and mince,False
+greek,magiritsa,μαγειρίτσα,magiritsa,Easter-night lamb and rice soup,False
+italian,risotto_ossobuco,risotto alla milanese con ossobuco,risotto con ossobuco,saffron risotto with veal shank,False
+italian,arancini,arancini,arancini,rice balls with ragù,False
+iberian,paella,paella valenciana,paella,paella with chicken and rabbit,False
+iberian,arroz_al_horno,arroz al horno,arroz al horno,oven rice with pork,False
+iberian,arroz_de_pato,arroz de pato,arroz de pato,duck rice,False
+latin_american,arroz_con_pollo,arroz con pollo,arroz con pollo,chicken with rice,False
+latin_american,pabellon_criollo,pabellón criollo,pabellón,rice,False
+latin_american,arroz_chaufa,arroz chaufa,chaufa,Peruvian fried rice with meat,False
+latin_american,feijoada,feijoada com arroz,feijoada,feijoada with rice,False
+latin_american,galinhada,galinhada,galinhada,chicken rice (Brazil),False
+anglo,jambalaya,jambalaya,jambalaya,jambalaya,False
+anglo,chicken_and_rice,chicken and rice,chicken and rice,chicken and rice,False
+anglo,curry_house,curry and rice,curry,British-Indian curry house rice,False
+french,blanquette_riz,blanquette de veau au riz,blanquette,veal blanquette with rice,False
+french,poulet_basquaise,poulet basquaise et riz,poulet basquaise,Basque chicken with rice,False
+german,huehnerfrikassee,Hühnerfrikassee mit Reis,Hühnerfrikassee,chicken fricassee with rice,False
+german,reisfleisch,Reisfleisch,Reisfleisch,rice with pork / beef stew,False
+german,gefuellte_paprika,gefüllte Paprika,gefüllte Paprika,peppers stuffed with mince and rice,False
+vietnamese,com_tam,cơm tấm sườn,com tam suon,broken rice with grilled pork,False
+vietnamese,com_ga,cơm gà,com ga,chicken rice,False
+vietnamese,banh_chung,bánh chưng,banh chung,sticky rice cake with pork (Tết),False
+chinese,hainan_chicken_rice,海南鸡饭,Hainan jifan,Hainanese chicken rice,False
+chinese,claypot_rice,煲仔饭,baozaifan,claypot rice,False
+chinese,lurou_fan,卤肉饭,lurou fan,braised pork rice,False
+chinese,zongzi,粽子,zongzi,sticky rice dumplings with pork (Dragon Boat),False
+korean,bibimbap,비빔밥,bibimbap,bibimbap,False
+korean,bulgogi_deopbap,불고기 덮밥,bulgogi deopbap,bulgogi rice bowl,False
+korean,tteokguk,떡국,tteokguk,rice-cake soup with beef (Seollal),False
+japanese,gyudon,牛丼,gyudon,beef bowl,False
+japanese,oyakodon,親子丼,oyakodon,chicken and egg bowl,False
+japanese,katsudon,カツ丼,katsudon,pork cutlet bowl,False
+thai,khao_man_gai,ข้าวมันไก่,khao man gai,Thai chicken rice,False
+thai,khao_kha_mu,ข้าวขาหมู,khao kha mu,braised pork leg on rice,False
+malay_indonesian,nasi_kebuli,nasi kebuli,nasi kebuli,goat rice (Eid),False
+malay_indonesian,nasi_padang_rendang,nasi padang dengan rendang,nasi rendang,rice with beef rendang,False
+malay_indonesian,nasi_goreng,nasi goreng,nasi goreng,fried rice,False
+malay_indonesian,chicken_adobo,adobong manok at kanin,adobo,chicken adobo with rice,False
+west_african,jollof,jollof rice,jollof,jollof rice (Nigeria vs Ghana),False
+west_african,party_fried_rice,party fried rice,fried rice,Nigerian party fried rice,False
+west_african,waakye,waakye,waakye,rice and beans with meat (Ghana),False
+west_african,thieboudienne,thiéboudienne / thiébou yapp,ceebu jën / ceebu yapp,Senegalese rice with fish / lamb,False
+west_african,benachin,benachin,benachin,Gambian one-pot rice,False
+east_african,bariis_iskukaris,bariis iskukaris,bariis iskukaris,Somali spiced rice with goat,False
+east_african,swahili_pilau,pilau,pilau,Swahili pilau / biriani,False
+jewish_israeli,tbit,תבית,tbit,Iraqi-Jewish chicken and rice (Shabbat),False
+jewish_israeli,oshpolov,אושפלאו,oshpolov,Bukharan plov,False

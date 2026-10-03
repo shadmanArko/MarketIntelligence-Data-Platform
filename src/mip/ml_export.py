@@ -19,6 +19,7 @@ SETS = {
     # name: (dbt model, entity key, time column for splits, group column)
     "business_features": ("feature_business", "business_id", "as_of", "business_id"),
     "offering_features": ("feature_offering", "offering_id", "as_of", "business_id"),
+    "content_features": ("feature_content", "post_id", "as_of", "peer_group"),
 }
 
 

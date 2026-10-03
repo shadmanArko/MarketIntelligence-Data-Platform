@@ -3,6 +3,7 @@ services:
     build: ./docker/postgres
     image: mip-postgres:18
     container_name: mip-postgres
+    shm_size: 1gb            # parallel hash joins need more than Docker's 64 MB /dev/shm
     environment:
       POSTGRES_USER: mip
       POSTGRES_PASSWORD: mip

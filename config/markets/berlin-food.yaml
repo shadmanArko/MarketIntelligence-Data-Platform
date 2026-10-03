@@ -27,6 +27,9 @@ market:
     first_party:      { enabled: true }      # tenant own posts + metrics (+ orders) from the AI Harness warehouse
     osm_history:      { enabled: true }      # ohsome: food POI history since 2010 per district
     wikipedia:        { enabled: true }      # daily page views of dishes / cuisines / occasions since 2015
+    reddit_archive:   { enabled: true }      # Arctic Shift: subreddit posts (Berlin life, food, communities) with 36h scores
+    youtube:          { enabled: true, search_budget_per_day: 90 }   # Data API v3 (free key): videos, Shorts, channels, comments
+    berlin_events:    { enabled: true }      # berlin.de open feeds: street festivals, Christmas + weekly markets
     apify:            { enabled: false, fallback_for: [tiktok, instaloader, google_places] }
   discovery:
     hashtags: [berlinfood, berlinfoodie, biryaniberlin, halalberlin, berlinessen, foodberlin,

@@ -17,4 +17,11 @@ slot behind the same connector interface) and switches on with a config flag or 
 | **Apify / xpoz** | Paid fallback for any free connector that breaks | Interface slot (`apify.enabled: false`) | `APIFY_TOKEN` and a budget |
 | **Instaloader** (secondary Instagram) | Personal accounts, comments, carousels | Disabled per the plan | A separate, non-business Instagram login |
 | **Residential proxies** | Only if a source starts blocking the home IP | Not used | Only if needed |
+| **YouTube Data API** | Videos, Shorts, channels, comment language mix for 229 food / community / occasion queries | Connector built (`youtube`), waits for the key | Free `YOUTUBE_API_KEY` (credentials guide §6) |
+| **X (Twitter) API** | Recent / full-archive post search with likes, reposts, impressions | Not built; no free read tier since 2026-02 | Pay per use: $0.005 per post read (10k posts ≈ $50) |
+| **Meta Ad Library API** | All EU ads with reach by age / gender / region (competitor + food-delivery advertising) | Not built yet | ID confirmation (free) |
+| **TikTok Commercial Content API** | All TikTok ads in the EU | Not built yet | Application (free) |
+| **Threads keyword search** | Public Threads posts by keyword / topic | Not built yet | Meta App Review (free) |
+| **TikTok Research API, Meta Content Library** | Full public TikTok / Meta content | Not possible | Academic / non-profit researchers only |
+| **LinkedIn content** | Other companies' posts | Not possible | No public API; own page analytics only |
 | **Dhaka Kacchi first-party** (Search Console, Business Profile, orders DB) | Ground truth for every estimate | Deferred, as agreed | Access via `dhaka-kacchi-connect` / `dhaka_kacchi_ai_harness` later |

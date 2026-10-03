@@ -1,0 +1,57 @@
+platform,dimension,value,evidence_strength,source_url,published_date
+instagram,signal,"Top 3: watch time, likes/reach, sends/reach; sends weigh more for non-followers",official,https://www.socialmediatoday.com/news/instagram-shares-algorithm-insights-2025/738034/,2025-01-22
+instagram,avoid,"Mostly-reposted accounts not recommendable (rolling 30d); watermark/crop/credit != original",official,https://planoly.com/blog/instagram-updates-its-original-content-policy,2026-05-05
+instagram,hashtags,"Max 5 targeted hashtags per post/Reel",official,https://www.socialmediatoday.com/news/instagram-implements-new-limits-on-hashtag-use/808309/,2025-12-18
+instagram,hashtags,"Pro-account posts Google/Bing-indexed; keyword captions + alt text",official,https://ppc.land/instagram-content-becomes-searchable-on-google-starting-july-10/,2025-07-10
+instagram,length,"Reels <=90s for reach; 90s-3min lower non-follower reach; >3min not pushed",official,https://www.lindseygamble.com/blog/instagram-three-minute-reels,2025-01-01
+instagram,format,"Reels +36% reach vs carousel; carousel +12% engagement vs Reels",study,https://buffer.com/resources/instagram-reach-engagement-analysis/,2025-01-01
+instagram,format,"ER: carousel 0.55%, Reels 0.50%, image 0.45% (H1 2025)",study,https://www.socialinsider.io/blog/instagram-hashtag-study/,2025-01-01
+instagram,format,"F&B: ER/views 3.5%, ER/followers 0.4%, 5 posts/wk",study,https://pages.dashsocial.com/hubfs/social-media-benchmark/2025/H2/food-beverage-industry.pdf,2025-07-01
+instagram,time,"Mon-Thu; Tue 13-19, Wed 12-21, Thu 12-14 local; Sun worst",study,https://sproutsocial.com/insights/best-times-to-post-on-social-media/,2026-03-31
+instagram,time,"Thu 09:00 and 18:00; Wed best day",study,https://buffer.com/resources/best-time-to-post-social-media,2026-03-25
+instagram,frequency,"3-5 posts/week",study,https://buffer.com/resources/how-often-to-post-on-instagram/,2025-01-01
+instagram,length,"Hook in first 1.5-3s",anecdotal,https://www.opus.pro/blog/ideal-instagram-reels-length,2025-01-01
+facebook,signal,"Original content prioritised; unoriginal/re-uploads demoted; original Reels views ~2x H2'25",official,https://www.mediapost.com/publications/article/413530/meta-defines-original-content-tests-protection.html,2026-03-16
+facebook,format,"All videos are Reels, no length limit; discovery feed",official,https://techcrunch.com/2025/06/17/facebook-announces-that-all-videos-on-its-platform-will-soon-be-shared-as-reels,2025-06-17
+facebook,format,"ER: status 0.20%, album 0.18%, Reels 0.18%, photo 0.15%, link 0.05%",study,https://socialinsider.io/blog/facebook-benchmarks/,2026-01-01
+facebook,avoid,"Link posts: test caps non-Verified Pages at 2/month; links in comments exempt",official,https://pressgazette.co.uk/news/facebook-tests-charging-creators-and-businesses-to-post-more-than-two-links-per-month/,2025-12-16
+facebook,time,"Mon-Thu 12-14 (Tue/Wed to 20)",study,https://sproutsocial.com/insights/best-times-to-post-on-social-media/,2026-03-31
+facebook,time,"DACH pages: weekdays 10-13, peak 11:00",study,https://www.fanpagekarma.com/insights/de/die-beste-zeit-fur-facebook-posts-finden/,
+facebook,frequency,"3-5/week for single restaurant",anecdotal,https://socialinsider.io/blog/facebook-benchmarks/,2026-01-01
+threads,signal,"Replies/conversation + early velocity; engagement bait demoted",anecdotal,https://posteverywhere.ai/blog/how-the-threads-algorithm-works,2025-01-01
+threads,signal,"Links not penalised (Mosseri)",official,https://www.socialmediatoday.com/news/meta-says-link-posts-ranked-properly-threads-reach/750126/,2025-06-08
+threads,hashtags,"1 topic tag per post",official,https://www.socialmediatoday.com/news/threads-rolls-out-topic-tags-to-all-users-globally/701915/,2025-01-01
+threads,format,"Median ER 6.25% vs X 3.6%",study,https://buffer.com/resources/threads-vs-x,2025-01-01
+threads,time,"Weekdays 07-12; Thu 09:00",study,https://buffer.com/resources/best-time-to-post-social-media,2026-03-25
+x,signal,"Grok transformer predicts likes/replies/reposts; author diversity; blocks/mutes negative",official,https://decrypt.co/355108/elon-musks-x-open-sources-grok-powered-algorithm-driving-for-you-feed,2026-01-20
+x,signal,"Reply-with-author-reply=150x like, repost 20x, bookmark 10x (older code)",anecdotal,https://posteverywhere.ai/blog/how-the-x-twitter-algorithm-works,
+x,avoid,"Link penalty reportedly removed; new in-app link UI",official,https://www.socialmediatoday.com/news/x-formerly-twitter-testing-links-in-app-link-post-penalties/803176/,2025-10-25
+x,time,"Weekdays 08-11; Tue 09:00",study,https://buffer.com/resources/best-time-to-post-social-media,2026-03-25
+x,frequency,"3-7/week (low priority)",anecdotal,https://www.rivaliq.com/blog/social-media-industry-benchmark-report/,2025-01-01
+tiktok,signal,"Completion, replays, shares, comments, follows; captions/sounds/hashtags; follower count not direct",official,https://newsroom.tiktok.com/en-us/how-tiktok-recommends-videos-for-you,2020-06-18
+tiktok,signal,"Rewards: originality, play duration, search value, engagement; >1min videos",official,https://www.engadget.com/tiktok-to-creators-make-longer-videos-get-paid-055013923.html,2024-01-01
+tiktok,format,"ER by views 4.20% (2025); daily post 4.52%; 4+/day -28%",study,https://www.socialinsider.io/social-media-benchmarks/tiktok,2025-01-01
+tiktok,format,"F&B ER 3.2%, 3 posts/wk; ~30% avg watched, 10% finish",study,https://pages.dashsocial.com/hubfs/social-media-benchmark/2025/H2/food-beverage-industry.pdf,2025-07-01
+tiktok,length,"Avg watch 3.75s -> hook <2s",study,https://metricool.com/press-release-metricool-2025-social-media-benchmark-report/,2025-09-01
+tiktok,time,"Sun 09:00; evenings 18-23; Sat best day",study,https://buffer.com/resources/best-time-to-post-social-media,2026-03-25
+tiktok,frequency,"2-5/week (+17% views/post vs 1); 6-10 (+29%)",study,https://buffer.com/resources/how-often-should-you-post-on-tiktok/,2025-01-01
+tiktok,avoid,"Watermarked/reposted/reused clips, low-effort AI; repeated borderline -> account FYF-ineligible",official,https://www.engadget.com/tiktok-to-creators-make-longer-videos-get-paid-055013923.html,2024-01-01
+tiktok,hashtags,"3-5 specific tags + spoken/on-screen keywords",anecdotal,https://blog.hootsuite.com/tiktok-algorithm,2025-01-01
+youtube,signal,"Viewed-vs-swiped-away; satisfaction 'prediction engine'",official,https://vidiq.com/blog/post/youtube-shorts-algorithm/,2025-01-01
+youtube,length,"Shorts up to 3 min; >60s with copyrighted music may be blocked",official,https://gigazine.net/gsc_news/en/20241004-youtube-short-video-length-3-minutes,2024-10-03
+youtube,format,"Long-form ~6x views of Shorts; Shorts higher engagement; Shorts views -20%",study,https://pages.dashsocial.com/hubfs/social-media-benchmark/2025/H2/food-beverage-industry.pdf,2025-07-01
+youtube,time,"Shorts Fri 16:00, Fri-Sat evenings; long-form Sun 10:00",study,https://buffer.com/resources/best-time-to-post-social-media,2026-03-25
+youtube,hashtags,">60 hashtags = all ignored; first 3 shown above title",official,https://support.google.com/youtube/answer/6390658,
+youtube,frequency,"~3 videos/week (F&B average)",study,https://pages.dashsocial.com/hubfs/social-media-benchmark/2025/H2/food-beverage-industry.pdf,2025-07-01
+linkedin,avoid,"Engagement bait, mismatched video/text, pods, comment automation demoted",official,https://news.linkedin.com/2026/ImprovingTheFeed,2026-03-12
+linkedin,signal,"Dwell time; external links up to -60% reach",anecdotal,https://authoredup.com/blog/linkedin-algorithm,
+linkedin,format,"ER: multi-image 6.6%, document 6.1%, video 5.6%, image 4.85%, text 4.0%",study,https://www.socialinsider.io/social-media-benchmarks/linkedin,2025-01-01
+linkedin,time,"Tue-Thu 11-17",study,https://sproutsocial.com/insights/best-times-to-post-on-social-media/,2026-03-31
+linkedin,frequency,"1-2/week",study,https://pages.dashsocial.com/hubfs/social-media-benchmark/2025/H2/food-beverage-industry.pdf,2025-07-01
+reddit,avoid,"Promotion-only accounts = spam; disclose affiliation; no mass cross-posting; subreddit rules override",official,https://support.reddithelp.com/hc/en-us/articles/205926439-Reddiquette,
+reddit,frequency,"<=10% self-promotional activity (informal 9:1)",anecdotal,https://redship.io/blog/reddit-self-promotion-rules,2026-07-02
+all,time,"Delivery dinner peak 18:00 DE (19:00 for ~4 days after spring DST)",study,https://www.tageskarte.io/gastronomie/detail/lieferando-auswertung-zeigt-einfluss-der-zeitumstellung-auf-bestellverhalten.html,2023-03-03
+all,time,"Wolt main order window 18-20; 25% after 20:00 (Munich)",study,https://www.tageskarte.io/gastronomie/detail/wolt-und-burgermeister-auf-erfolgskurs-neue-rekorde-und-weiteres-wachstum.html,
+all,signal,"Germany match days: orders +7% to +22%, AOV +10%",study,https://www.tageskarte.io/gastronomie/detail/was-waehrend-der-deutschlandspiele-bei-lieferando-bestellt-wird.html,2024-06-27
+all,signal,"Rain +20-40% delivery orders",anecdotal,https://www.fooderise.com/en/blog/impact-meteo-commandes-livraison,
+all,signal,"Lieferando 2025: Korean +194%, smash burger +270%, hot honey up to +420%; 30% rely on friends' recommendations",study,https://www.tageskarte.io/gastronomie/detail/lieferando-report-2025-so-hat-deutschland-im-vergangenen-jahr-bestellt.html,2025-12-16

@@ -1,0 +1,39 @@
+community_id,label,languages,scripts,religion_mix,moon_offset,afs_citizenship,afs_origin,notes
+bangladeshi,Bangladeshi,bn|en|de,Beng,muslim|hindu,1,Bangladesch,,
+indian,Indian,hi|en|bn|ta|te|ml|pa|ur,Deva|Latn|Beng|Taml|Telu|Mlym|Guru,hindu|muslim|sikh|christian,1,Indien,IN,many Hindu Indians are vegetarian or avoid beef; lead with chicken / mutton and a veg option
+pakistani,Pakistani,ur|pa|ps|en,Arab|Latn,muslim,1,Pakistan,,
+nepali,Nepali,ne|en,Deva,hindu|buddhist,0,Nepal,,
+sri_lankan,Sri Lankan,si|ta|en,Sinh|Taml,buddhist|hindu|muslim|christian,1,Sri Lanka,,
+afghan,Afghan,fa-AF|ps,Arab,muslim,0,Afghanistan,AF,
+iranian,Iranian,fa,Arab,muslim|secular,0,Iran,IR,
+turkish,Turkish,tr|de,Latn,muslim|secular,0,Türkei,TR,
+kurdish,Kurdish,kmr|ckb,Latn|Arab,muslim|yazidi|alevi,0,,,
+syrian,Syrian,ar,Arab,muslim|christian,0,Syrien,SY,
+lebanese,Lebanese,ar|fr,Arab|Latn,muslim|christian,0,Libanon,LB,
+palestinian,Palestinian,ar,Arab,muslim|christian,0,Palästinensische Gebiete|ungeklärt|staatenlos,,
+iraqi,Iraqi,ar|ckb|kmr,Arab,muslim|christian|yazidi,0,Irak,IQ,
+levant_gulf_yemen,Jordanian / Gulf / Yemeni,ar,Arab,muslim,0,Jordanien|Saudi-Arabien|Vereinigte Arabische Emirate|Jemen|Kuwait|Katar,,
+egyptian,Egyptian,ar,Arab,muslim|christian,0,Ägypten,,
+maghrebi,Maghrebi,ar|fr|ber,Arab|Latn|Tfng,muslim,0,Tunesien|Marokko|Algerien|Libyen,,couscous culture; rice-meat link is weaker
+central_asian,Central Asian,uz|tg|kk|ru,Latn|Cyrl,muslim|orthodox,0,Usbekistan|Tadschikistan|Kasachstan|Kirgisistan|Turkmenistan,KZ,
+azerbaijani,Azerbaijani,az|ru,Latn,muslim,0,Aserbaidschan,,
+caucasus_christian,Armenian / Georgian,hy|ka|ru,Armn|Geor,orthodox,0,Armenien|Georgien,,
+east_slavic,Russian / Ukrainian / Belarusian / Moldovan,ru|uk|ro,Cyrl|Latn,orthodox,0,"Russische Föderation|Ukraine|Belarus|Moldau, Republik",RU|UA,Ukraine moved Christmas to 25 Dec in 2023; Russians keep 7 Jan
+polish,Polish,pl,Latn,catholic,0,Polen,PL,Wigilia (24 Dec) is meatless — target 25/26 Dec
+balkan,Balkan / Romanian / Bulgarian,sr|bs|hr|mk|sq|bg|ro,Latn|Cyrl,orthodox|muslim|catholic,0,Serbien|Bosnien und Herzegowina|Kroatien|Nordmazedonien|Albanien|Kosovo|Bulgarien|Rumänien,HR|BG|RO,
+greek,Greek / Cypriot,el,Grek,orthodox,0,Griechenland|Zypern,GR,
+italian,Italian,it,Latn,catholic,0,Italien,IT,
+iberian,Spanish / Portuguese,es|ca|pt,Latn,catholic,0,Spanien|Portugal,ES,
+latin_american,Latin American / Brazilian,es|pt,Latn,catholic,0,Brasilien|Mexiko|Kolumbien|Chile|Argentinien|Peru|Venezuela|Kuba,,
+anglo,American / British,en,Latn,christian|secular,0,Vereinigte Staaten|Vereinigtes Königreich|Irland|Kanada|Australien,US|UK,
+french,French / Belgian,fr,Latn,catholic|secular|muslim,0,Frankreich|Belgien,FR,
+german,German / Austrian / Swiss,de,Latn,christian|secular,0,Deutschland|Österreich|Schweiz,AT,
+vietnamese,Vietnamese,vi,Latn,buddhist|secular,0,Vietnam,VN,
+chinese,Chinese / Taiwanese / Hong Kong,zh-Hans|zh-Hant|yue,Hans|Hant,secular|buddhist,0,China|Taiwan|Hongkong,CN,
+korean,Korean,ko,Hang,christian|buddhist|secular,0,"Korea, Republik",,
+japanese,Japanese,ja,Jpan,secular,0,Japan,,
+thai,Thai,th,Thai,buddhist,0,Thailand,,
+malay_indonesian,Indonesian / Malaysian / Filipino,id|ms|tl,Latn,muslim|catholic,1,Indonesien|Malaysia|Philippinen,,
+west_african,West African,en|fr|yo|ig|ha|tw|wo,Latn,christian|muslim,1,Nigeria|Ghana|Kamerun|Guinea|Benin|Gambia|Senegal|Côte d'Ivoire|Togo,,
+east_african,Somali / Eritrean / Ethiopian / Kenyan / Sudanese,so|ti|am|sw|ar,Latn|Ethi|Arab,muslim|orthodox,0,Somalia|Eritrea|Äthiopien|Kenia|Sudan,,Ethiopian / Eritrean food is injera-based; rice link is weak there
+jewish_israeli,Israeli / Jewish,he|en|de,Hebr,jewish|secular,0,Israel,,kosher != halal; Ashkenazi custom avoids rice at Pesach
