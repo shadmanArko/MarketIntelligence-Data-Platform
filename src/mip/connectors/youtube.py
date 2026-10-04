@@ -190,7 +190,9 @@ class YouTube:
                 raise SourceDeferred(f"youtube quota: {reason}", _until_quota_reset())
             if reason == "rateLimitExceeded":
                 raise SourceBlocked(f"youtube quota: {reason}")
-            if reason in ("commentsDisabled", "forbidden"):
+            if reason in ("commentsDisabled", "forbidden") or (reason == "insufficientPermissions"
+                                                                and path == "commentThreads"):
+                # commentThreads over OAuth needs the youtube.force-ssl scope; a plain API key reads them without it
                 return {"items": [], "disabled": reason}
             raise SourceBlocked(f"youtube 403: {reason}")
         return body
