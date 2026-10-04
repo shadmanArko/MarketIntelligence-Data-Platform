@@ -63,17 +63,17 @@ a { color: var(--accent); }
 
 <div class="wrap">
   <header class="col">
-    <div class="eyebrow">Dhaka Kacchi · Market Intelligence · 3 Oct 2026</div>
+    <div class="eyebrow">Dhaka Kacchi · Market Intelligence · updated 4 Oct 2026</div>
     <h1>Berlin Biryani Content Playbook</h1>
-    <p class="lede">What to post, on which platform, in which language, for which community and on which day. Built from current platform research and from the platform's own data (36,324 TikTok videos from 506 Berlin restaurants so far, with Reddit and YouTube collection running).</p>
+    <p class="lede">What to post, on which platform, in which language, for which community and on which day. Built from current platform research and from 1.93 million collected posts: 1.53 M Reddit posts from 30 subreddits, 246k TikTok videos from 2,528 Berlin restaurant and food-creator accounts, and 156k YouTube videos from 1,739 channels.</p>
     <p class="meta">Every number here lives in the Postgres platform (<code>marts.*</code>, <code>ml.feature_content</code>) and refreshes weekly. Research sources are stored with each rule in <code>core.content_priors</code>.</p>
   </header>
 
   <section class="col">
     <h2>The short answer</h2>
     <ol class="answer">
-      <li><b>Content beats clock.</b> Across 36k Berlin restaurant TikToks, posting time between 09:00 and 22:00 changes performance by less than ±3 % against the account's own average. Topic, hook and format matter far more. Only 04:00–08:00 is clearly weak.</li>
-      <li><b>Feast moments win.</b> Ramadan content performs about 1.5× an account's usual video (+0.42 log-lift, 168 videos from 32 accounts). Price and value angles (+0.28) and openings or news (+0.30) also lift. Plain recipes underperform (−0.24).</li>
+      <li><b>Content beats clock.</b> On TikTok, YouTube and Reddit alike, the hour of posting changes performance by less than ±4 % against the account's own average (402k TikTok and YouTube videos). Topic, hook and format matter far more. Post when your audience is free, then spend the effort on the video.</li>
+      <li><b>Muslim feasts and halal win; Western holidays don't.</b> On TikTok, Ramadan content performs about 1.5× an account's usual video (+0.39, 397 videos from 104 accounts). Halal (+0.21), new openings (+0.21), street food (+0.15) and price/value (+0.13) also lift. Eid lifts on YouTube (+0.18) and Reddit (+0.38). Christmas (−0.21) and Mother's Day (−0.54) videos do worse than usual.</li>
       <li><b>Speak to each community in its own dish.</b> Berlin has 107k Turkish, 112k East Slavic, 50k Indian, 41k Syrian, 32k Vietnamese and 25k Afghan citizens. Each has its own meat-and-rice feast (etli pilav, plov, biryani, maqluba, cơm tấm, Kabuli palaw). Bridge from their dish to kacchi, with their greeting in their script.</li>
       <li><b>One video, many cuts.</b> Shoot the dum seal breaking and the rice pull once. Cut 15–59 s versions for TikTok, Reels and Shorts, a carousel for Instagram, a text post for Threads, and a long making-of for YouTube. Never repost with another platform's watermark: Instagram, Facebook and TikTok all demote it.</li>
       <li><b>Plan by occasion, not by week.</b> Start teasers 10–14 days before Eid, Ramadan, Nowruz, Diwali, Durga Puja and Lunar New Year. The calendar below has the dates, greetings and lead times.</li>
@@ -89,12 +89,12 @@ a { color: var(--accent); }
       <article class="card">
         <h3>TikTok</h3><div class="role">Discovery engine for under-35s; the main reach channel</div>
         <dl>
-          <dt>Format</dt><dd>Vertical video 15–59 s (best in our data: 15–29 s +0.07, 30–59 s +0.04; under 15 s −0.05). Hook inside 2 s: average watch time is 3.75 s.</dd>
-          <dt>Angles</dt><dd>Ramadan / iftar, price per portion, "new in Berlin", halal, spicy challenge, dum-pot reveal, staff and family story.</dd>
-          <dt>Text</dt><dd>Say the dish and "Berlin" out loud and on screen: TikTok search reads speech and captions. 6–10 hashtags did best (+0.11); 1–3 did worst (−0.15).</dd>
+          <dt>Format</dt><dd>Vertical video 15 s – 3 min (all within ±0.03 in our data; under 15 s is slightly weaker). Hook inside 2 s: average watch time is 3.75 s.</dd>
+          <dt>Angles</dt><dd>Ramadan / iftar (+0.39), halal (+0.21), "new in Berlin" (+0.21), street-food stall (+0.15), ASMR / mukbang (+0.14), price per portion (+0.13).</dd>
+          <dt>Text</dt><dd>Say the dish and "Berlin" out loud and on screen: TikTok search reads speech and captions. Hashtag count barely matters (6–10 at +0.06 was best).</dd>
           <dt>Cadence</dt><dd>3–5 per week; more than 4 a day cuts engagement 28 %.</dd>
-          <dt>Avoid</dt><dd>Watermarked reposts, low-effort AI video, recipe-only clips.</dd>
-          <dt>Data</dt><dd><span class="pill">public profiles ✓</span> 36k videos; food creators being added</dd>
+          <dt>Avoid</dt><dd>Watermarked reposts, low-effort AI video, generic Christmas / Valentine's / Mother's Day posts.</dd>
+          <dt>Data</dt><dd><span class="pill">public profiles ✓</span> 246k videos, 2,528 accounts</dd>
         </dl>
       </article>
       <article class="card">
@@ -122,9 +122,9 @@ a { color: var(--accent); }
         <h3>YouTube</h3><div class="role">Search and long-term proof: Shorts plus one long film a month</div>
         <dl>
           <dt>Format</dt><dd>Shorts with original audio (copyrighted music over 60 s gets blocked). Long-form gets about 6× the views of Shorts: "40 kg of kacchi for Eid", "Old Dhaka recipe in Berlin".</dd>
-          <dt>Text</dt><dd>The title carries the keyword ("Kacchi Biryani Berlin"). The first 3 hashtags show above the title.</dd>
+          <dt>Text</dt><dd>The title carries the keyword ("Kacchi Biryani Berlin"). In our data, delivery (+0.21), halal (+0.17), Eid al-Adha (+0.18), biryani (+0.14) and tehari (+0.16) titles beat the channel's average.</dd>
           <dt>When</dt><dd>Shorts Fri 16:00; long-form Sun 10:00.</dd>
-          <dt>Data</dt><dd><span class="pill warn">connector ready</span> needs a free API key</dd>
+          <dt>Data</dt><dd><span class="pill">API ✓</span> 156k videos, 1,739 channels; searches continue daily</dd>
         </dl>
       </article>
       <article class="card">
@@ -141,7 +141,7 @@ a { color: var(--accent); }
         <dl>
           <dt>Rule</dt><dd>Never advertise. Join "where to eat biryani in Berlin" threads as the owner and say so. Keep at least 9 helpful comments for each mention of your own place.</dd>
           <dt>Works</dt><dd>An honest "we cook Old Dhaka kacchi in Berlin, ask us anything" post, Ramadan iftar tips, photos of the pot.</dd>
-          <dt>Data</dt><dd><span class="pill">archive ✓</span> 31 subreddits since 2019, collecting now</dd>
+          <dt>Data</dt><dd><span class="pill">archive ✓</span> 1.53 M posts, 30 subreddits since 2019</dd>
         </dl>
       </article>
       <article class="card">
@@ -232,45 +232,45 @@ a { color: var(--accent); }
 
   <section>
     <div class="col">
-      <h2>What our own data says so far</h2>
-      <p>The data: 36,324 TikTok videos from 506 Berlin restaurant accounts, 2018–2026. Each video is compared with the same account's median. A lift of +0.40 means about 1.5× that account's typical video; −0.25 means about 0.78×. Only topics with at least 40 videos are shown.</p>
+      <h2>What our own data says</h2>
+      <p>Each post is compared with the same account's (Reddit: subreddit's) usual performance, so large and small accounts count equally. +0.40 means about 1.5× the usual; −0.25 about 0.78×. Only topics with at least 150 posts are shown.</p>
     </div>
     <div class="tablebox">
       <table>
-        <thead><tr><th>Topic or format in the video</th><th class="num">Videos</th><th class="num">Accounts</th><th>Lift vs platform average</th></tr></thead>
+        <thead><tr><th>Topic in the post</th><th class="num">TikTok</th><th class="num">YouTube</th><th class="num">Reddit</th><th>Reading</th></tr></thead>
         <tbody>
-          <tr><td>Ramadan / iftar</td><td class="num">168</td><td class="num">32</td><td class="pos"><span class="bar" style="width:84px"></span>+0.42</td></tr>
-          <tr><td>New opening, new menu, "coming soon"</td><td class="num">397</td><td class="num">136</td><td class="pos"><span class="bar" style="width:59px"></span>+0.30</td></tr>
-          <tr><td>Price, deal, value</td><td class="num">919</td><td class="num">205</td><td class="pos"><span class="bar" style="width:55px"></span>+0.28</td></tr>
-          <tr><td>Halal</td><td class="num">134</td><td class="num">24</td><td class="pos"><span class="bar" style="width:39px"></span>+0.20</td></tr>
-          <tr><td>Diaspora / desi pride</td><td class="num">58</td><td class="num">29</td><td class="pos"><span class="bar" style="width:31px"></span>+0.16</td></tr>
-          <tr><td>Street food, market stall</td><td class="num">354</td><td class="num">63</td><td class="pos"><span class="bar" style="width:23px"></span>+0.12</td></tr>
-          <tr><td>6–10 hashtags</td><td class="num">4,659</td><td class="num">267</td><td class="pos"><span class="bar" style="width:22px"></span>+0.11</td></tr>
-          <tr><td>"Best / top 5 / hidden gem"</td><td class="num">1,292</td><td class="num">250</td><td class="pos"><span class="bar" style="width:18px"></span>+0.09</td></tr>
-          <tr><td>15–29 second video</td><td class="num">9,717</td><td class="num">412</td><td class="pos"><span class="bar" style="width:14px"></span>+0.07</td></tr>
-          <tr><td>Under 15 seconds</td><td class="num">12,769</td><td class="num">405</td><td class="neg"><span class="bar n" style="width:10px"></span>−0.05</td></tr>
-          <tr><td>1–3 hashtags</td><td class="num">6,164</td><td class="num">299</td><td class="neg"><span class="bar n" style="width:29px"></span>−0.15</td></tr>
-          <tr><td>Recipe / how to make</td><td class="num">712</td><td class="num">134</td><td class="neg"><span class="bar n" style="width:47px"></span>−0.24</td></tr>
-          <tr><td>Valentine's Day</td><td class="num">148</td><td class="num">80</td><td class="neg"><span class="bar n" style="width:52px"></span>−0.26</td></tr>
-          <tr><td>Football</td><td class="num">258</td><td class="num">56</td><td class="neg"><span class="bar n" style="width:115px"></span>−0.57</td></tr>
-          <tr><td>Mother's Day</td><td class="num">41</td><td class="num">32</td><td class="neg"><span class="bar n" style="width:156px"></span>−0.78</td></tr>
+          <tr><td>Ramadan / iftar</td><td class="num pos">+0.39</td><td class="num">+0.03</td><td class="num pos">+0.23</td><td>Strongest single topic on TikTok</td></tr>
+          <tr><td>Eid al-Fitr / Eid al-Adha</td><td class="num">–</td><td class="num pos">+0.09 / +0.18</td><td class="num pos">+0.38 / +0.24</td><td>Feast content travels on every platform</td></tr>
+          <tr><td>Halal</td><td class="num pos">+0.21</td><td class="num pos">+0.17</td><td class="num">+0.01</td><td>A trust signal worth saying out loud</td></tr>
+          <tr><td>New opening, new menu</td><td class="num pos">+0.21</td><td class="num">−0.01</td><td class="num pos">+0.26</td><td>News beats evergreen</td></tr>
+          <tr><td>Street food, market stall</td><td class="num pos">+0.15</td><td class="num">+0.06</td><td class="num neg">−0.10</td><td>Show the place, not just the plate</td></tr>
+          <tr><td>ASMR / mukbang</td><td class="num pos">+0.14</td><td class="num">−0.03</td><td class="num neg">−1.40</td><td>TikTok only; Reddit punishes it</td></tr>
+          <tr><td>Price, deal, value</td><td class="num pos">+0.13</td><td class="num">+0.06</td><td class="num">+0.03</td><td>"€ per person" works on TikTok</td></tr>
+          <tr><td>Delivery, Lieferando / Wolt</td><td class="num">−0.02</td><td class="num pos">+0.21</td><td class="num neg">−0.24</td><td>Delivery reviews are a YouTube genre</td></tr>
+          <tr><td>Biryani / tehari / kacchi</td><td class="num">–</td><td class="num pos">+0.14 / +0.16 / +0.07</td><td class="num neg">−0.20</td><td>Search demand on YouTube; Reddit wants discussion, not dishes</td></tr>
+          <tr><td>Family, sharing, platter</td><td class="num">−0.03</td><td class="num">+0.02</td><td class="num pos">+0.25</td><td>Group-order talk lives on Reddit</td></tr>
+          <tr><td>Recipe, how to make</td><td class="num">−0.03</td><td class="num">+0.04</td><td class="num neg">−0.16</td><td>Not a restaurant's strength</td></tr>
+          <tr><td>Christmas</td><td class="num neg">−0.21</td><td class="num">−0.05</td><td class="num">+0.06</td><td>Crowded week; everyone posts the same</td></tr>
+          <tr><td>Football</td><td class="num neg">−0.13</td><td class="num">−0.07</td><td class="num pos">+0.34</td><td>Talk about it on Reddit; don't film it</td></tr>
+          <tr><td>Mother's Day · Valentine's · Halloween</td><td class="num neg">−0.54 · −0.12 · −0.16</td><td class="num">– · – · −0.09</td><td class="num">– · −0.09 · −0.04</td><td>Skip generic Western holiday posts</td></tr>
+          <tr><td>Image or gallery post (Reddit)</td><td class="num">–</td><td class="num">–</td><td class="num pos">+0.11 / +0.20</td><td>Text-only Reddit posts: −0.30</td></tr>
         </tbody>
       </table>
     </div>
     <div class="col">
-      <p class="callout">These are associations from restaurants' own accounts, not proof of cause, and Instagram, YouTube and Reddit are not in yet. The same mart (<code>marts.content_feature_performance</code>) recomputes every week per platform as the data grows. Posting time is covered by <code>marts.posting_time_performance</code>: weekday effects are within ±3 % on TikTok.</p>
+      <p class="callout">These are patterns across hundreds of accounts, not proof of cause. Posting hour changes the result by less than ±4 % on every platform (<code>marts.posting_time_performance</code>). Everything here recomputes weekly in <code>marts.content_feature_performance</code>; Instagram joins once Meta approves access.</p>
     </div>
   </section>
 
   <section class="col">
     <h2>The dataset behind this</h2>
     <ul class="plain">
-      <li><b>Posts, every platform</b> (<code>core.post</code>, <code>core.post_metrics_snapshot</code>): TikTok 36k, Reddit 34k and growing (31 subreddits since 2019), YouTube once the key is in, Instagram after Meta review, own posts 417 (Instagram, Facebook, Threads).</li>
+      <li><b>Posts, every platform</b> (<code>core.post</code>, <code>core.post_metrics_snapshot</code>): Reddit 1.53 M (30 subreddits since 2019), TikTok 246k (2,528 accounts), YouTube 156k (1,739 channels, growing daily), own posts 417 (Instagram, Facebook, Threads); Instagram after Meta review.</li>
       <li><b>Tags per post</b> (<code>core.content_tag</code>, <code>ops.text_language</code>): the language (42 detected), dishes (107 community dishes plus 952 Wikidata rice dishes in 44 languages), communities, occasions, and 17 format cues (review, price, ranking, ASMR, dum reveal, behind the scenes…).</li>
       <li><b>Audiences</b> (<code>core.community_audience</code>): 38 communities by Berlin total, district and LOR planning area, half-yearly since Dec 2025.</li>
       <li><b>Occasions</b> (<code>core.occasion_day</code>): 2015–2030 for 38 communities with greeting, tone, lead time, iftar and suhoor times, plus Berlin festivals and Christmas markets.</li>
       <li><b>Trends</b> (<code>marts.topic_trends_weekly</code>, <code>core.interest_daily</code>): weekly topic momentum per platform, and daily Wikipedia interest since 2015 for 100+ dishes and occasions in 27 languages.</li>
-      <li><b>ML table</b> (<code>ml.feature_content</code>, exported by <code>mip ml export content_features</code>): 69,898 posts with leakage-free features and three labels (lift vs the account's earlier posts, percentile, viral top 10 %).</li>
+      <li><b>ML table</b> (<code>ml.feature_content</code>, exported by <code>mip ml export content_features</code>): 1.84 million posts with leakage-free features and three labels (lift vs the account's earlier posts, percentile, viral top 10 %).</li>
     </ul>
     <p class="note">Collected from public data and official APIs only: no logins to others' accounts, no private groups, no CAPTCHA tricks. Commenter and author names are stored as salted hashes.</p>
   </section>
@@ -281,8 +281,7 @@ a { color: var(--accent); }
       <table>
         <thead><tr><th>Step</th><th>Unlocks</th><th>Cost</th></tr></thead>
         <tbody>
-          <tr><td>YouTube API key (5 minutes, credentials guide §6)</td><td>Videos, Shorts, channels and comment-language mix for 229 queries, including every community dish in its own script</td><td>Free</td></tr>
-          <tr><td>Meta: ID check for the Ad Library API</td><td>Every food and delivery ad shown in Germany, with reach by age, gender and region</td><td>Free</td></tr>
+                    <tr><td>Meta: ID check for the Ad Library API</td><td>Every food and delivery ad shown in Germany, with reach by age, gender and region</td><td>Free</td></tr>
           <tr><td>Meta App Review: Instagram Business Discovery, Hashtag Search, Threads keyword search</td><td>Competitor Instagram posts with likes and comments; public Threads posts</td><td>Free, 2–4 weeks</td></tr>
           <tr><td>TikTok Commercial Content API</td><td>All TikTok ads in the EU</td><td>Free application</td></tr>
           <tr><td>VPS warehouse access (read-only)</td><td>Your nightly own-post metrics, and orders to link content to sales</td><td>Free</td></tr>
