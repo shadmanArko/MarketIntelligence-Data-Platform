@@ -1,6 +1,7 @@
 """mip discover | fetch | transform | report — each taking --market berlin-food --source wolt."""
 
 import subprocess
+from pathlib import Path
 from typing import Annotated
 
 import typer
@@ -292,6 +293,32 @@ def ml_list() -> None:
             t.add_row(r["name"], str(r["version"]), str(r["as_of"])[:19], f"{r['row_count']:,}",
                       str(len(r["feature_list"])), r["git_commit"] or "", r["path"])
         console.print(t)
+
+
+docs_app = typer.Typer(no_args_is_help=True, help="Generated documentation")
+app.add_typer(docs_app, name="docs")
+
+
+@docs_app.command("catalog")
+def docs_catalog() -> None:
+    """Write docs/data/catalog.md + catalog.json: every table, rows, columns, meaning, example row."""
+    from mip.catalog import write_catalog
+
+    write_catalog()
+
+
+export_app = typer.Typer(no_args_is_help=True, help="Portable copies of the data")
+app.add_typer(export_app, name="export")
+
+
+@export_app.command("snapshot")
+def export_snapshot(to: str = typer.Option("data/exports", help="target folder, e.g. /Volumes/MyDrive/dk-data"),
+                    dump: bool = typer.Option(True, help="include the full pg_dump backup"),
+                    parquet: bool = typer.Option(True, help="include Parquet copies of core / marts / ml")) -> None:
+    """Copy everything to a folder / external drive: full DB backup, Parquet tables, training sets, docs."""
+    from mip.export_snapshot import snapshot
+
+    snapshot(Path(to), dump=dump, parquet=parquet)
 
 
 @app.command()
