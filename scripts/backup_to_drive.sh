@@ -15,8 +15,8 @@ git bundle create "$SNAP/source_code.bundle" --all
 (cd "$SNAP" && find . -type f ! -name SHA256SUMS.txt ! -name .DS_Store | sed 's|^\./||' | sort | tr '\n' '\0' \
    | xargs -0 shasum -a 256 > SHA256SUMS.txt)
 mkdir -p "$DEST/snapshots"
-rsync -rt --exclude .DS_Store "$SNAP/" "$DEST/snapshots/$DAY/"
-sync
+COPYFILE_DISABLE=1 rsync -rt --exclude .DS_Store --exclude "._*" "$SNAP/" "$DEST/snapshots/$DAY/"
+sync; find "$DEST" -name "._*" -type f -delete   # macOS metadata files on exFAT
 (cd "$DEST/snapshots/$DAY" && shasum -a 256 -c --quiet SHA256SUMS.txt)
 SIZE=$(du -sh "$DEST/snapshots/$DAY" | cut -f1); FILES=$(wc -l < "$SNAP/SHA256SUMS.txt" | tr -d ' ')
 COMMIT=$(git rev-parse --short HEAD)
