@@ -87,6 +87,8 @@ Hard rules:
 - Every caption contains "Kacchi" and "Berlin".
 - German first.
 - Use the greeting text exactly as given, in its script.
+- Never name a religious ritual or deity (no "puja", "pooja", "Durga" and so on). Speak of the festive season and the
+  food, using occasion.label.
 - Never use anything in brief.do_not.
 - Prices are total prices including VAT.
 - No superlatives you cannot prove.
@@ -119,9 +121,12 @@ Reject the output and send it back to the writer if any check fails:
    - "Werbung" for paid, gifted or discount-code content;
    - people on camera need consent.
 5. **Tone:** if `day_themes.solemn_today` is not empty, no celebratory sales wording.
-6. **Audio:** original audio or the platform's own commercial library, and no single track reused across platforms.
+6. **No religious wording:** none of the `blocked_words` in playbook.yaml (puja, pooja, Durga, Bijoya, Lakshmi and the
+   rest, in any script). Religious festivals are always presented as a festive season (`occasion.label`, e.g. "Indian
+   festive season"), never by their ritual or deity. Use only the greeting the brief gives.
+7. **Audio:** original audio or the platform's own commercial library, and no single track reused across platforms.
    A YouTube Short over 60 s uses only original audio or the YouTube Audio Library.
-7. **Originality:** the plan uses the restaurant's own footage. No other creators' clips and no watermarks.
+8. **Originality:** the plan uses the restaurant's own footage. No other creators' clips and no watermarks.
 
 ## 6. Planning shoots (one shoot, many posts)
 

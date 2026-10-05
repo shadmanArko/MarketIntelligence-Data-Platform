@@ -22,7 +22,6 @@ from mip.settings import ROOT, settings
 
 console = Console()
 PLAYBOOK = ROOT / "config" / "content" / "playbook.yaml"
-HOME_COMMUNITY = "bangladeshi"
 TEXT_FORMATS = {"text_photo", "text_video", "community_post", "multi_image"}
 SKIP_TYPES = {"payday", "other", "semester_start", "national_other"}
 ROLE_WEIGHT = {"feast": 3.0, "fasting_evening": 3.0, "gift_season": 1.6, "family_meal": 1.4, "party": 1.0,
@@ -115,11 +114,12 @@ def _theme(day: date, data: dict, pb: dict) -> dict | None:
             people = sum(known) if known else people * len(o["countries"]) / n_c
         share = ((pb.get("occasion_audience") or {}).get(o["occasion_type"]) or {}).get("share", {})
         people *= share.get(o["community_id"], 1.0)
-        if o["community_id"] == HOME_COMMUNITY:
-            people *= 8                     # the founder's own community: core audience, word of mouth
+        home = pb.get("home_community") or {}
+        if o["community_id"] == home.get("id"):
+            people *= float(home.get("weight", 1.0))
         if o["occasion_type"] == "national_day" and people < 20000:
             continue
-        if people < 5000 and o["community_id"] != HOME_COMMUNITY:
+        if people < 5000:
             continue                        # too few Berliners celebrate it to steer a whole day
         days_to = (o["day"] - day).days
         span = max(1, (o["day"] - o["content_window_start"]).days)
@@ -130,6 +130,45 @@ def _theme(day: date, data: dict, pb: dict) -> dict | None:
         if score > best_score:
             best, best_score = o, score
     return {**best, "score": round(best_score, 2)} if best else None
+
+
+def _scrub(text, blocked: list[str]):
+    """Drop holiday names that contain a blocked (religious) word."""
+    if text is None:
+        return None
+    if isinstance(text, list):
+        kept = [t for t in text if not any(b.lower() in str(t).lower() for b in blocked)]
+        return kept or None
+    return None if any(b.lower() in str(text).lower() for b in blocked) else text
+
+
+def _present(theme: dict | None, pb: dict) -> dict | None:
+    """Apply occasion_presentation: neutral label, target community, greeting, hashtags; scrub religious words."""
+    if not theme:
+        return None
+    blocked = pb.get("blocked_words", [])
+    pres = (pb.get("occasion_presentation") or {}).get(theme["occasion_type"])
+    t = dict(theme)
+    t["label"] = theme["occasion_type"].replace("_", " ")
+    t["public_id"] = theme["occasion_type"]
+    t["holiday_names"] = _scrub(theme["holiday_names"], blocked)
+    t["holiday_names_native"] = _scrub(theme["holiday_names_native"], blocked)
+    if _scrub(t.get("greeting"), blocked) is None:
+        t["greeting"] = t["greeting_translit"] = None
+    if pres:
+        t["label"] = pres["label"]
+        t["public_id"] = pres.get("id", theme["occasion_type"])
+        t["holiday_names"] = [pres["label"]]
+        t["holiday_names_native"] = None
+        if pres.get("community"):
+            t["community_id"] = pres["community"]
+            t["community"] = None
+        g = pres.get("greeting")
+        if g:
+            t["greeting"], t["greeting_translit"] = g["text"], g["translit"]
+            t["greeting_needs_review"] = bool(g.get("review"))
+        t["hashtags_override"] = pres.get("hashtags")
+    return t
 
 
 def _solemn(day: date, data: dict) -> list[dict]:
@@ -149,16 +188,18 @@ def build_plan(start: date, days: int) -> dict:
     for i in range(days):
         d = start + timedelta(days=i)
         wd = d.isoweekday()
-        theme = _theme(d, data, pb)
+        theme = _present(_theme(d, data, pb), pb)
         bridge_com = theme["community_id"] if theme and theme["community_id"] not in (None, "all") else \
             top_coms[i % len(top_coms)]
         com = data["communities"].get(bridge_com)
+        if theme and theme.get("community") is None:
+            theme["community"] = (com or {}).get("label")
         dish = _pick(data["dishes"].get(bridge_com, []), f"{d}{bridge_com}")
         solemn = _solemn(d, data)
         events = [e for e in data["events"] if e["starts_on"] <= d <= e["ends_on"]]
         plan["day_themes"].append({
             "date": d.isoformat(), "weekday": d.strftime("%A"),
-            "theme": theme["occasion_type"] if theme else "evergreen",
+            "theme": theme["label"] if theme else "evergreen",
             "occasion_day": theme["day"].isoformat() if theme else None,
             "community": theme["community"] if theme else (com or {}).get("label"),
             "solemn_today": [f"{s['occasion_type']} ({s['community']})" for s in solemn],
@@ -183,7 +224,7 @@ def build_plan(start: date, days: int) -> dict:
                     recent = set(used_pillar.get(platform, [])[-2:])
                     pillar = _weighted(pb["pillars"], key, recent | {"halal_trust"})
                 used_pillar.setdefault(platform, []).append(pillar)
-                if pillar == "community_bridge" and bridge_com == HOME_COMMUNITY:
+                if pillar == "community_bridge" and bridge_com == (pb.get("home_community") or {}).get("id"):
                     pillar = "dum_reveal"       # our own dish: show it, don't compare it
                 p = pb["pillars"][pillar]
                 f = pb["formats"][fmt]
@@ -201,7 +242,7 @@ def build_plan(start: date, days: int) -> dict:
                 tags = list(pb["hashtags"]["core"][:2])
                 tags += p.get("hashtags", [])
                 if on_theme:
-                    tags += pb["hashtags"]["occasion"].get(theme["occasion_type"], [])
+                    tags += theme.get("hashtags_override") or pb["hashtags"]["occasion"].get(theme["occasion_type"], [])
                 tags += [_pick(pb["hashtags"]["boost"], key)]
                 cap = f.get("hashtags", [0, 5])[1]
                 tags = list(dict.fromkeys(t for t in tags if t))[:cap] if cap else []
@@ -213,7 +254,7 @@ def build_plan(start: date, days: int) -> dict:
                 if on_theme:
                     v = data["lift"].get(("tiktok", "occasion", theme["occasion_type"].replace("_period", "")))
                     if v is not None:
-                        evidence.append(f"occasion {theme['occasion_type']} lift {v:+.2f} (tiktok)")
+                        evidence.append(f"occasion {theme['public_id']} lift {v:+.2f} (tiktok)")
                 item = {
                     "date": d.isoformat(), "weekday": d.strftime("%a"), "platform": platform, "format": fmt,
                     "post_window_berlin": window, "pillar": pillar,
@@ -221,7 +262,7 @@ def build_plan(start: date, days: int) -> dict:
                                  "saves and shares" if fmt in ("carousel", "photo_album", "multi_image") else
                                  "conversation" if fmt in ("text_photo", "text_video", "community_post") else "watch time",
                     "occasion": None if not on_theme else {
-                        "type": theme["occasion_type"], "date": theme["day"].isoformat(),
+                        "type": theme["public_id"], "label": theme["label"], "date": theme["day"].isoformat(),
                         "names": theme["holiday_names"], "names_native": theme["holiday_names_native"],
                         "community": theme["community"], "tone": theme["tone"],
                         "days_until": (theme["day"] - d).days},
@@ -232,7 +273,7 @@ def build_plan(start: date, days: int) -> dict:
                     "greeting": None if not (on_theme and theme["greeting"] and (occ_rule or {}).get("greeting")) else {
                         "text": theme["greeting"], "translit": theme["greeting_translit"],
                         "needs_native_review": bool(theme["greeting_needs_review"])},
-                    "bridge_dish": None if not dish or bridge_com == HOME_COMMUNITY or pillar != "community_bridge" else {"native": dish["native_name"], "translit": dish["translit"],
+                    "bridge_dish": None if not dish or pillar != "community_bridge" else {"native": dish["native_name"], "translit": dish["translit"],
                                                           "english": dish["english"]},
                     "media": {k: v for k, v in f.items() if k not in ("note",)},
                     "idea": p["idea"], "hook": p.get("text_hook", p["hook"]) if text_first else p["hook"],
@@ -330,7 +371,7 @@ h2{font-size:1.25rem}.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;t
             cards.append(f"""<article class="card"><div class="top"><span class="pf">{PLATFORM_LABEL[it['platform']]}</span>
 <span class="fmt">{FORMAT_LABEL.get(it['format'], it['format'])} · {e(it['post_window_berlin'])}</span></div>
 <div class="hook">{e(it['hook'])}</div>
-<div class="kv"><b>{e(it['pillar'].replace('_', ' '))}</b>{' · for ' + e(occ['type'].replace('_', ' ')) + (' in ' + str(occ['days_until']) + ' days' if occ['days_until'] else ' (today)') if occ else ''}</div>
+<div class="kv"><b>{e(it['pillar'].replace('_', ' '))}</b>{' · for ' + e(occ['label']) + (' in ' + str(occ['days_until']) + ' days' if occ['days_until'] else ' (today)') if occ else ''}</div>
 <div class="kv">Languages: <b>{e(', '.join(lg['name'] for lg in it['languages']))}</b></div>
 {f'<div class="greet">{e(g["text"])} <span class="kv">({e(g["translit"])})</span></div>' if g else ''}
 {f'<div class="kv">Bridge dish: <b>{e(it["bridge_dish"]["native"])}</b> ({e(it["bridge_dish"]["english"])})</div>' if it.get('bridge_dish') else ''}

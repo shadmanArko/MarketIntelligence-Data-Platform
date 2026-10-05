@@ -19,7 +19,8 @@ brand:
           "chart music or any track outside the platform's commercial library (business accounts; GEMA)",
           "the same licensed music bed on several platforms (licences are per platform)",
           "people recognisable on camera without written consent (§22 KUG, GDPR)",
-          "celebratory sales posts on solemn days (Ashura, Ekushey, Yom Kippur, remembrance days)"]
+          "celebratory sales posts on solemn days (Ashura, Ekushey, Yom Kippur, remembrance days)",
+          "religious ritual or deity words (see blocked_words): talk about the festive season, never the ritual"]
   paid_partnership_label: "Werbung / Anzeige"   # required for influencer posts, free products, discount codes: first word of the caption + overlay on every video / Story frame
   impressum: "bio link labelled 'Impressum', max 2 clicks (§5 DDG)"
 
@@ -174,17 +175,37 @@ hashtags:
   boost: [tastetest, foodspot, viralfood, asmr]
   german: [berlinessen, angebot, neueröffnung, lieferando, wolt]
   occasion: { ramadan: [ramadan, iftar], eid_al_fitr: [eidmubarak], eid_al_adha: [eidmubarak], diwali: [diwali],
-              durga_puja: [durgapuja], christmas_market_season: [weihnachtsmarkt], nowruz: [nowruz] }
+              christmas_market_season: [weihnachtsmarkt], nowruz: [nowruz] }
 
 # Some occasions belong to part of a community: share of its Berliners who celebrate it, and the language to use.
 occasion_audience:
-  durga_puja: { share: { indian: 0.15, nepali: 0.5 }, language: bn }     # Bengali Hindus
+  durga_puja: { share: { indian: 1.0, bangladeshi: 0.0, nepali: 0.0 }, language: hi }   # shown as "Indian festive season"
   diwali:     { share: { indian: 0.7 }, language: hi }
   holi:       { share: { indian: 0.7 }, language: hi }
   dashain:    { language: ne }
   nowruz:     { language: fa }
   yalda:      { language: fa }
   lunar_new_year: { language: vi }                                       # largest group celebrating in Berlin
+
+# How occasions are SHOWN in content. Religious festivals are never named by their religious name: the content talks
+# about the festive mood, not the ritual. Applies to labels, greetings, hashtags and every holiday name in a brief.
+occasion_presentation:
+  durga_puja: { id: indian_festive_season, label: "Indian festive season", community: indian, language: hi,
+                greeting: { text: "त्योहारों की हार्दिक शुभकामनाएँ", translit: "Tyoharon ki hardik shubhkamnayen", meaning: "warm festive wishes" },
+                hashtags: [festiveseason, indianfoodberlin] }
+  dashain:    { id: nepali_festive_season, label: "Nepali festive season", community: nepali,
+                greeting: { text: "चाडपर्वको शुभकामना", translit: "Chadparvako shubhakamana", meaning: "festive wishes", review: true },
+                hashtags: [festiveseason] }
+  diwali:     { id: diwali_festive_season, label: "Diwali festive season", community: indian, language: hi,
+                greeting: { text: "दीपावली की हार्दिक शुभकामनाएँ", translit: "Deepavali ki hardik shubhkamnayen", meaning: "happy Diwali" },
+                hashtags: [diwali, festiveseason] }
+
+# Never used in any caption, hashtag, greeting or label (religious ritual and deity words).
+blocked_words: [puja, pooja, poojo, durga, পূজা, পুজো, पूजा, bijoya, vijaya, বিজয়া, विजया, dashami, navami, ashtami,
+                saptami, lakshmi, laxmi, ghatasthapana, fulpati, mahalaya]
+
+# Extra weight for one community (1.0 = none: every community counts by its size in Berlin)
+home_community: { id: bangladeshi, weight: 1.0 }
 
 # Platforms that never carry occasion promotions (community rules / tone)
 no_occasion_platforms: [reddit, linkedin]
