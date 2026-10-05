@@ -113,10 +113,11 @@ def build_dictionary() -> Dictionary:
 QUERIES = {
     "post": "select post_id::text id, concat_ws(' ', title, caption, array_to_string(tags, ' ')) text from core.post",
     "comment": "select comment_id id, text from staging.stg_youtube__comment where text is not null",
+    "own_post": "select post_id::text id, caption text from core.tenant_social_post where caption is not null",
 }
 
 
-def tag_content(kinds: tuple[str, ...] = ("post", "comment")) -> int:
+def tag_content(kinds: tuple[str, ...] = ("post", "comment", "own_post")) -> int:
     d = build_dictionary()
     console.print(f"dictionary: {sum(len(v) for v in d.needles.values()):,} phrases, {len(d.substr):,} substrings")
     total = 0

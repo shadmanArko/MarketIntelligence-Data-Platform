@@ -28,7 +28,7 @@ def _norm(s: str) -> list[str]:
     return [w.lower().replace("’", "'") for w in WORD.findall(s)]
 
 
-def detect_languages(kinds: tuple[str, ...] = ("review", "page", "post", "comment")) -> int:
+def detect_languages(kinds: tuple[str, ...] = ("review", "page", "post", "comment", "own_post")) -> int:
     det = LanguageDetectorBuilder.from_languages(*LANGS).with_preloaded_language_models().build()
     queries = {
         "review": "select review_id::text id, text from core.review r where text is not null and not exists "
@@ -38,6 +38,9 @@ def detect_languages(kinds: tuple[str, ...] = ("review", "page", "post", "commen
         "post": "select post_id::text id, left(concat_ws(' ', title, caption), 3000) text from core.post p where"
                 " coalesce(title, caption) is not null and not exists"
                 " (select 1 from ops.text_language l where l.text_kind='post' and l.text_id=p.post_id::text)",
+        "own_post": "select post_id::text id, caption text from core.tenant_social_post p where caption is not null"
+                    " and not exists (select 1 from ops.text_language l where l.text_kind='own_post'"
+                    " and l.text_id=p.post_id::text)",
         "comment": "select comment_id id, text from staging.stg_youtube__comment c where text is not null and not exists"
                    " (select 1 from ops.text_language l where l.text_kind='comment' and l.text_id=c.comment_id)",
     }

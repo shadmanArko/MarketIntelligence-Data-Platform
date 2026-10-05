@@ -159,3 +159,10 @@ models:
         tests: [not_null]
       - name: food_role
         tests: [not_null]
+
+  - name: tenant_social_metrics_snapshot
+    columns:
+      - name: post_id
+        tests: [not_null]
+      - name: impressions
+        tests: [{accepted_values: {values: [], config: {where: "platform = 'instagram' and impressions is not null"}}}]

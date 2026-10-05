@@ -130,6 +130,7 @@ each text is in `core.review_language` and `ops.text_language`. Google review te
 | `ops.text_language` | 2.26 M | detected language of posts, reviews and pages, with confidence |
 | `core.social_account`, `core.social_account_snapshot` | 7,628 / 2,601 | accounts and follower counts |
 | `core.tenant_social_post`, `core.tenant_social_metrics_snapshot` | 417 / 417 | Dhaka Kacchi's own Instagram, Facebook and Threads posts with reach, saves and shares (row-level security) |
+| `marts.tenant_content_performance` | 417 | own posts with latest metrics, tags, language, engagement rate and percentile within the account (RLS). Sources: the warehouse connector and delivered XLSX exports (`raw.ds_first_party_social_export_*`). Instagram reports no impressions, Threads no reach, and only Facebook reports clicks: those are NULL, not 0. |
 | `marts.content_performance` | – | each post scored against its own peer group: `perf_pct_in_peer`, `perf_lift_vs_peer`, `is_viral_in_peer` |
 | `marts.content_feature_performance` | – | per platform × tag: mean lift against the platform baseline, with standard error |
 | `marts.posting_time_performance` | – | platform × format × weekday × Berlin hour |
