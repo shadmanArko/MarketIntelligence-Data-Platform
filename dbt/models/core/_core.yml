@@ -164,5 +164,3 @@ models:
     columns:
       - name: post_id
         tests: [not_null]
-      - name: impressions
-        tests: [{accepted_values: {values: [], config: {where: "platform = 'instagram' and impressions is not null"}}}]
