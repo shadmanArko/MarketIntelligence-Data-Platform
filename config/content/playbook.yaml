@@ -1,0 +1,172 @@
+# Content playbook: the rules the daily brief generator (`mip brief content`) follows.
+# Evidence: research of 2026-10 (core.content_priors) + our own data (marts.content_feature_performance,
+# marts.posting_time_performance, TikTok audio analysis). Lift = ln(perf / peer median); +0.4 ~ 1.5x usual.
+# Edit freely: the generator re-reads this file every run.
+
+brand:
+  name: Dhaka Kacchi
+  city: Berlin
+  signature: "Kacchi biryani — raw-marinated mutton and aromatic rice, slow-cooked together under a sealed lid (dum), the Old Dhaka way"
+  always_say: [Kacchi, Berlin]            # own the word: only 1 of 310 Berlin biryani sellers says "kacchi"
+  base_languages: [de, en]                # every caption has German; English second line where it fits
+  voice: "warm, proud, generous host; food-first; honest prices; never mocking other cuisines"
+  never: ["claim halal unless certified", "fake reviews or fake scarcity", "copy other creators' videos",
+          "other platforms' watermarks", "price claims without the real price (UWG)",
+          "celebratory sales posts on solemn days (Ashura, Ekushey, Yom Kippur, remembrance days)"]
+  paid_partnership_label: "Werbung / Anzeige"   # German law for creator collaborations
+
+# Posting windows in Berlin time. Delivery orders peak at 18:00 (19:00 for ~4 days after spring DST):
+# publish before the decision moment. Own data: hour changes performance by < 4 %, so these are practical windows.
+windows:
+  lunch: "11:00-12:00"
+  pre_dinner: "16:30-17:30"
+  evening: "19:30-21:00"
+  ramadan_pre_iftar: "60-90 min before iftar"      # iftar time comes from core.occasion_day
+  ramadan_suhoor: "22:30-23:30"
+
+# What a day looks like per platform. weekdays: 1=Mon .. 7=Sun. Each slot = one piece of content.
+platforms:
+  instagram:
+    daily:
+      - { format: reel, weekdays: [1, 2, 3, 4, 5, 6, 7], window: pre_dinner }
+      - { format: carousel, weekdays: [2, 4, 6], window: lunch }
+      - { format: stories, weekdays: [1, 2, 3, 4, 5, 6, 7], window: lunch, note: "3-5 frames: today's pot, poll, link sticker" }
+  tiktok:
+    daily:
+      - { format: short_video, weekdays: [1, 2, 3, 4, 5, 6, 7], window: pre_dinner }
+      - { format: short_video, weekdays: [5, 6], window: evening, note: "second weekend video" }
+  youtube:
+    daily:
+      - { format: short, weekdays: [1, 2, 3, 4, 5, 6, 7], window: pre_dinner }
+      - { format: long_video, weekdays: [7], every_n_weeks: 2, window: lunch }
+  facebook:
+    daily:
+      - { format: reel, weekdays: [1, 3, 5, 6], window: pre_dinner }
+      - { format: photo_album, weekdays: [2, 7], window: lunch }
+  threads:
+    daily:
+      - { format: text_photo, weekdays: [1, 2, 3, 4, 5, 6, 7], window: lunch }
+  x:
+    daily:
+      - { format: text_video, weekdays: [1, 2, 3, 4, 5], window: lunch }
+  linkedin:
+    daily:
+      - { format: multi_image, weekdays: [2, 4], window: lunch }
+  reddit:
+    daily:
+      - { format: community_post, weekdays: [6], window: evening,
+          note: "participate, don't advertise; disclose you are the owner; at most 1 self-mention per 10 contributions" }
+
+# Format specifications (what the media must look like).
+formats:
+  reel:          { ratio: "9:16", resolution: "1080x1920", length_s: [15, 45], cover: "4:5 crop safe", captions_on_screen: true,
+                   safe_zone: "keep text out of the bottom 20 % and right 15 %", hashtags: [3, 5] }
+  short_video:   { ratio: "9:16", resolution: "1080x1920", length_s: [15, 59], captions_on_screen: true, hashtags: [4, 8],
+                   note: "own data: 15-59 s all fine, under 15 s slightly weaker; spoken + on-screen keywords feed TikTok search" }
+  short:         { ratio: "9:16", resolution: "1080x1920", length_s: [15, 29], captions_on_screen: true, hashtags: [3, 3],
+                   note: "own data: 15-29 s Shorts best (+0.12); title carries the keyword" }
+  long_video:    { ratio: "16:9", resolution: "1920x1080", length_s: [360, 900], chapters: true, thumbnail: "face + pot + 3-word text",
+                   note: "long-form gets ~6x the views of Shorts; storytelling, retention" }
+  carousel:      { ratio: "4:5", resolution: "1080x1350", slides: [5, 8], first_slide: "hook headline over the hero shot",
+                   last_slide: "CTA: order link in bio / Lieferando / Wolt", hashtags: [3, 5] }
+  stories:       { ratio: "9:16", frames: [3, 5], stickers: [poll, link, countdown] }
+  photo_album:   { ratio: "4:5", images: [3, 5], caption_language: "German + community language" }
+  text_photo:    { ratio: "4:5", images: [0, 1], text_chars: [80, 280], topic_tags: 1, note: "ask a question; reply to every answer in the first hour" }
+  text_video:    { ratio: "16:9 or 9:16", text_chars: [70, 200], hashtags: [0, 2] }
+  multi_image:   { ratio: "4:5", images: [3, 6], text_chars: [600, 1300], hashtags: [3, 3],
+                   note: "multi-image posts 6.6 % engagement; no engagement bait; link in comments" }
+  community_post: { ratio: "4:3 photo or text", text_chars: [300, 1200], hashtags: [0, 0], note: "useful first, no marketing tone" }
+
+# Content pillars: what a post is about. cue / occasion links to the data (content_tag ids).
+# weight = how often it is picked when no occasion is active; lift = own data, TikTok unless noted.
+pillars:
+  dum_reveal:      { weight: 3, cues: [dum_pot_reveal, mukbang_asmr], lift: "+0.14 ASMR",
+                     idea: "The sealed pot opening: steam, the first scoop, the rice and meat layers",
+                     shots: ["macro of dough-sealed lid", "knife breaks the seal (sound!)", "steam burst", "slow first scoop", "plate close-up with raita"],
+                     hook: "Open on the seal breaking — no intro",
+                     text_hook: "Wie lange dauert eine Kacchi? 6 Stunden, ein versiegelter Topf. Wer hat schon mal probiert?" }
+  price_value:     { weight: 2, cues: [price_value], lift: "+0.13", hashtags: [angebot],
+                     idea: "What €X gets you: portion size reveal, family platter per person price",
+                     shots: ["platter top-down", "hand reveals price card", "portion vs plate", "4 people sharing"],
+                     hook: "On-screen: '€X for 4 people?'",
+                     text_hook: "Kacchi für 4 Personen — was würdet ihr dafür zahlen?" }
+  halal_trust:     { weight: 1, cues: [halal], lift: "+0.21 TikTok, +0.17 YouTube", requires: certified_halal,
+                     idea: "Where the meat comes from, how it is prepared, certificate on the wall",
+                     shots: ["butcher delivery", "certificate", "marinating by hand"], hook: "'Is it really halal? Let's check.'",
+                     text_hook: "Woher kommt unser Fleisch? Fragt uns alles." }
+  news_menu:       { weight: 1, cues: [opening_news], lift: "+0.21 TikTok, +0.26 Reddit", hashtags: [neueröffnung],
+                     idea: "Something new: dish, platter, delivery area, opening hours, collaboration",
+                     shots: ["new dish hero", "staff tasting", "map of new area"], hook: "'NEU in Berlin:'",
+                     text_hook: "NEU bei uns in Berlin: … Was sollen wir als Nächstes kochen?" }
+  street_place:    { weight: 1, cues: [street_food], lift: "+0.15",
+                     idea: "The place and the street: kitchen window, Berlin backdrop, delivery rider leaving",
+                     shots: ["street wide shot", "kitchen through window", "rider departs"], hook: "'Berlin's only Old-Dhaka kacchi kitchen'",
+                     text_hook: "Berlins einzige Old-Dhaka-Kacchi-Küche: wo esst ihr am liebsten in eurem Kiez?" }
+  taste_test:      { weight: 2, cues: [review_test], lift: "#tastetest +0.68",
+                     idea: "Someone tries kacchi for the first time (German neighbour, Turkish friend, creator)",
+                     shots: ["first bite reaction", "honest verdict on camera", "rating card"], hook: "'First time eating kacchi biryani'",
+                     text_hook: "Wer hat noch nie Kacchi Biryani gegessen? Wir suchen Testesser." }
+  community_bridge: { weight: 2, cues: [community_pride], lift: "community dish tags vary; see bridge table",
+                     idea: "Your mansaf / pilav / plov / jollof has a cousin from Dhaka: compare and invite",
+                     shots: ["split screen their dish vs kacchi", "shared table", "greeting in their script"], hook: "'If you love <their dish>, try this'",
+                     text_hook: "Mansaf, Plov, Pilav, Jollof … welches Reisgericht mit Fleisch ist eure Heimat?" }
+  behind_scenes:   { weight: 1, cues: [behind_scenes], lift: "-0.06 TikTok (use sparingly), good on LinkedIn",
+                     idea: "Staff and family story, 5 a.m. prep, the founder's Dhaka memory",
+                     shots: ["early prep", "hands layering rice", "founder talking to camera"], hook: "'We start at 5 a.m. for this pot'",
+                     text_hook: "Unser Tag beginnt um 5 Uhr mit diesem Topf." }
+  kacchi_explainer: { weight: 1, cues: [question_hook], lift: "question hooks +0.03..+0.08",
+                     idea: "What makes kacchi different from other biryani (raw meat + rice cooked together, potato, aloo bukhara)",
+                     shots: ["raw layers", "cut to finished pot", "3 facts on screen"], hook: "'Kacchi vs biryani: what's the difference?'",
+                     text_hook: "Kacchi vs. Biryani — kennt ihr den Unterschied?" }
+  giveaway:        { weight: 0.5, cues: [], lift: "#gewinnspiel +0.50 across 82 accounts", hashtags: [gewinnspiel],
+                     idea: "Win a family platter: follow + tag a friend (follow German giveaway rules: conditions, end date, no purchase)",
+                     shots: ["platter hero", "rules on screen"], hook: "'Gewinnspiel: Kacchi für 4'",
+                     text_hook: "Gewinnspiel: Kacchi für 4. Wer soll mitessen?" }
+
+# Occasion handling: which pillar to use when an occasion is in its content window.
+occasions:
+  feast:            { pillars: [dum_reveal, price_value, community_bridge], tone: celebratory, greeting: true,
+                      cta: "pre-order the family platter" }
+  fasting_evening:  { pillars: [dum_reveal, price_value], tone: warm, greeting: true,
+                      cta: "iftar box delivered before sunset", window: ramadan_pre_iftar }
+  family_meal:      { pillars: [community_bridge, dum_reveal], tone: warm, greeting: true }
+  gift_season:      { pillars: [price_value, news_menu], tone: festive, greeting: true, cta: "office / party catering" }
+  party:            { pillars: [price_value, taste_test], tone: festive, greeting: false }
+  remembrance:      { pillars: [], tone: solemn, greeting: true, note: "post a respectful message only, no food sale" }
+
+# Audio and vibe per platform. Own data: TikTok original sound +0.24 vs licensed tracks +0.16 (244k videos);
+# business accounts may only use the platforms' commercial libraries. marts.audio_performance lists tracks.
+audio:
+  tiktok:    { default: "original sound: sizzle, seal break, spoon, kitchen; short voiceover in German or English",
+               music: "TikTok Commercial Music Library only (business account)", energy: "high, 110-130 BPM feel, cut every 1-2 s",
+               vibe: [energetic, curious, playful] }
+  instagram: { default: "original sound or Meta Sound Collection; ASMR for dum reveal", energy: "medium-high, cut every 1.5-3 s",
+               vibe: [aesthetic, warm, appetising, shareable] }
+  youtube:   { default: "Shorts: original sound + voice; long-form: calm narrator, YouTube Audio Library background",
+               energy: "Shorts medium-high; long-form slow, story arc", vibe: [storytelling, documentary, proud] }
+  facebook:  { default: "voiceover + burned-in subtitles (most watch muted)", energy: "medium, slower cuts", vibe: [family, community, nostalgic] }
+  linkedin:  { default: "no music or soft instrumental; founder voice", energy: "calm", vibe: [story, craft, team, reliable] }
+  threads:   { default: "text-first", vibe: [conversational, local, witty] }
+  x:         { default: "text-first, short clip optional", vibe: [punchy, local] }
+  reddit:    { default: "no video needed", vibe: [authentic, helpful, transparent] }
+
+# Hashtag bank (Instagram max 5). Data-backed tags first; rotate, never stuff.
+hashtags:
+  core: [kacchibiryani, berlinfood, foodberlin, biryaniberlin]
+  boost: [tastetest, foodspot, viralfood, asmr]
+  german: [berlinessen, angebot, neueröffnung, lieferando, wolt]
+  occasion: { ramadan: [ramadan, iftar], eid_al_fitr: [eidmubarak], eid_al_adha: [eidmubarak], diwali: [diwali],
+              durga_puja: [durgapuja], christmas_market_season: [weihnachtsmarkt], nowruz: [nowruz] }
+
+# Some occasions belong to part of a community: share of its Berliners who celebrate it, and the language to use.
+occasion_audience:
+  durga_puja: { share: { indian: 0.15, nepali: 0.5 }, language: bn }     # Bengali Hindus
+  diwali:     { share: { indian: 0.7 }, language: hi }
+  holi:       { share: { indian: 0.7 }, language: hi }
+  dashain:    { language: ne }
+  nowruz:     { language: fa }
+  yalda:      { language: fa }
+  lunar_new_year: { language: vi }                                       # largest group celebrating in Berlin
+
+# Platforms that never carry occasion promotions (community rules / tone)
+no_occasion_platforms: [reddit, linkedin]

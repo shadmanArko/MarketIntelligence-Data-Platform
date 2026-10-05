@@ -307,6 +307,21 @@ def docs_catalog() -> None:
     write_catalog()
 
 
+brief_app = typer.Typer(no_args_is_help=True, help="Content briefs for the content app / agents")
+app.add_typer(brief_app, name="brief")
+
+
+@brief_app.command("content")
+def brief_content(days: int = typer.Option(10, help="number of days"),
+                  start: str | None = typer.Option(None, help="first day YYYY-MM-DD (default tomorrow)")) -> None:
+    """Day x platform content briefs (format, hook, language, greeting, audio, hashtags, timing) -> data/briefs."""
+    from datetime import date, timedelta
+
+    from mip.briefs import write_plan
+
+    write_plan(date.fromisoformat(start) if start else date.today() + timedelta(days=1), days)
+
+
 export_app = typer.Typer(no_args_is_help=True, help="Portable copies of the data")
 app.add_typer(export_app, name="export")
 
