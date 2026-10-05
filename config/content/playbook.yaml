@@ -10,10 +10,18 @@ brand:
   always_say: [Kacchi, Berlin]            # own the word: only 1 of 310 Berlin biryani sellers says "kacchi"
   base_languages: [de, en]                # every caption has German; English second line where it fits
   voice: "warm, proud, generous host; food-first; honest prices; never mocking other cuisines"
-  never: ["claim halal unless certified", "fake reviews or fake scarcity", "copy other creators' videos",
-          "other platforms' watermarks", "price claims without the real price (UWG)",
+  never: ["say 'halal' unless certified — then name the certifier (halal is not legally protected; §5 UWG)",
+          "fake reviews, fake scarcity, sockpuppet accounts (UWG)",
+          "copy other creators' videos; reuse other platforms' exports with watermarks (originality ranking)",
+          "prices that are not the total price incl. MwSt (PAngV); strike-through / % off without the 30-day lowest price",
+          "'der beste' / 'Nr. 1 in Berlin' without proof (§5 UWG) — 'Berlins einziges Old-Dhaka-Kacchi' only while true",
+          "health claims like 'gesund', 'proteinreich' (EU 1924/2006)",
+          "chart music or any track outside the platform's commercial library (business accounts; GEMA)",
+          "the same licensed music bed on several platforms (licences are per platform)",
+          "people recognisable on camera without written consent (§22 KUG, GDPR)",
           "celebratory sales posts on solemn days (Ashura, Ekushey, Yom Kippur, remembrance days)"]
-  paid_partnership_label: "Werbung / Anzeige"   # German law for creator collaborations
+  paid_partnership_label: "Werbung / Anzeige"   # required for influencer posts, free products, discount codes: first word of the caption + overlay on every video / Story frame
+  impressum: "bio link labelled 'Impressum', max 2 clicks (§5 DDG)"
 
 # Posting windows in Berlin time. Delivery orders peak at 18:00 (19:00 for ~4 days after spring DST):
 # publish before the decision moment. Own data: hour changes performance by < 4 %, so these are practical windows.
@@ -59,22 +67,27 @@ platforms:
 
 # Format specifications (what the media must look like).
 formats:
-  reel:          { ratio: "9:16", resolution: "1080x1920", length_s: [15, 45], cover: "4:5 crop safe", captions_on_screen: true,
-                   safe_zone: "keep text out of the bottom 20 % and right 15 %", hashtags: [3, 5] }
-  short_video:   { ratio: "9:16", resolution: "1080x1920", length_s: [15, 59], captions_on_screen: true, hashtags: [4, 8],
-                   note: "own data: 15-59 s all fine, under 15 s slightly weaker; spoken + on-screen keywords feed TikTok search" }
-  short:         { ratio: "9:16", resolution: "1080x1920", length_s: [15, 29], captions_on_screen: true, hashtags: [3, 3],
-                   note: "own data: 15-29 s Shorts best (+0.12); title carries the keyword" }
+  reel:          { ratio: "9:16", resolution: "1080x1920", length_s: [15, 60], cover: "3:4 crop safe", captions_on_screen: true,
+                   safe_zone: "keep text clear of top 14 %, bottom 35 %, 6 % each side (Meta)", hashtags: [3, 5],
+                   note: "Instagram engagement peaks at 45-60 s (Socialinsider 2026); never over 180 s (no non-follower reach); Facebook copy may run 60-180 s" }
+  short_video:   { ratio: "9:16", resolution: "1080x1920", length_s: [15, 30], captions_on_screen: true, hashtags: [3, 5],
+                   safe_zone: "clear ~130 px top, 484 px bottom, 140 px right, 44 px left",
+                   note: "engagement peaks 15-30 s; once a week a 60-180 s version (views, search, Creator Rewards); say 'Kacchi Biryani Berlin' out loud — speech and on-screen text are indexed" }
+  short:         { ratio: "9:16", resolution: "1080x1920", length_s: [15, 29], captions_on_screen: true, hashtags: [1, 3],
+                   safe_zone: "clear ~180 px top, 390 px bottom, 120 px right",
+                   note: "own data: 15-29 s Shorts best (+0.12); title <= 60 chars with the keyword; loopable ending; over 60 s ONLY with own audio or YouTube Audio Library (claimed music blocks the Short worldwide)" }
   long_video:    { ratio: "16:9", resolution: "1920x1080", length_s: [360, 900], chapters: true, thumbnail: "face + pot + 3-word text",
                    note: "long-form gets ~6x the views of Shorts; storytelling, retention" }
-  carousel:      { ratio: "4:5", resolution: "1080x1350", slides: [5, 8], first_slide: "hook headline over the hero shot",
+  carousel:      { ratio: "3:4", resolution: "1080x1440", slides: [5, 10], first_slide: "hook headline over the hero shot",
+                   audio: "add a Meta Sound Collection track: carousels with music can appear in the Reels tab",
                    last_slide: "CTA: order link in bio / Lieferando / Wolt", hashtags: [3, 5] }
   stories:       { ratio: "9:16", frames: [3, 5], stickers: [poll, link, countdown] }
-  photo_album:   { ratio: "4:5", images: [3, 5], caption_language: "German + community language" }
-  text_photo:    { ratio: "4:5", images: [0, 1], text_chars: [80, 280], topic_tags: 1, note: "ask a question; reply to every answer in the first hour" }
+  photo_album:   { ratio: "4:5", images: [3, 5], caption_language: "German + community language", text_chars: [40, 150] }
+  text_photo:    { ratio: "4:5", images: [0, 1], text_chars: [80, 500], hashtags: [0, 1],
+                   note: "Threads: exactly 1 topic tag, written without '#', may contain spaces ('Berlin Food'); ask a question; reply to every answer in the first hour; links are fine" }
   text_video:    { ratio: "16:9 or 9:16", text_chars: [70, 200], hashtags: [0, 2] }
-  multi_image:   { ratio: "4:5", images: [3, 6], text_chars: [600, 1300], hashtags: [3, 3],
-                   note: "multi-image posts 6.6 % engagement; no engagement bait; link in comments" }
+  multi_image:   { ratio: "4:5", images: [3, 6], text_chars: [800, 1500], hashtags: [0, 3],
+                   note: "post from the FOUNDER's profile (12-18 % reach vs ~1.6 % for company pages), company page reshares; hook in first 140 chars; no external links (~-60 % reach); no engagement bait" }
   community_post: { ratio: "4:3 photo or text", text_chars: [300, 1200], hashtags: [0, 0], note: "useful first, no marketing tone" }
 
 # Content pillars: what a post is about. cue / occasion links to the data (content_tag ids).
@@ -137,20 +150,25 @@ occasions:
 # Audio and vibe per platform. Own data: TikTok original sound +0.24 vs licensed tracks +0.16 (244k videos);
 # business accounts may only use the platforms' commercial libraries. marts.audio_performance lists tracks.
 audio:
-  tiktok:    { default: "original sound: sizzle, seal break, spoon, kitchen; short voiceover in German or English",
-               music: "TikTok Commercial Music Library only (business account)", energy: "high, 110-130 BPM feel, cut every 1-2 s",
-               vibe: [energetic, curious, playful] }
-  instagram: { default: "original sound or Meta Sound Collection; ASMR for dum reveal", energy: "medium-high, cut every 1.5-3 s",
-               vibe: [aesthetic, warm, appetising, shareable] }
-  youtube:   { default: "Shorts: original sound + voice; long-form: calm narrator, YouTube Audio Library background",
-               energy: "Shorts medium-high; long-form slow, story arc", vibe: [storytelling, documentary, proud] }
-  facebook:  { default: "voiceover + burned-in subtitles (most watch muted)", energy: "medium, slower cuts", vibe: [family, community, nostalgic] }
-  linkedin:  { default: "no music or soft instrumental; founder voice", energy: "calm", vibe: [story, craft, team, reliable] }
-  threads:   { default: "text-first", vibe: [conversational, local, witty] }
+  tiktok:    { default: "original sound: sizzle, seal break, spoon, kitchen; short voiceover in German or English (own data: original sound +0.24 vs licensed +0.16)",
+               music: "TikTok Commercial Music Library only, filter 'Approved for business use', country DE; marts.audio_performance = what works for Berlin food accounts (check CML before use)",
+               energy: "fastest of all platforms; hook <= 3 s, no harsh audio in the first 3 s; dynamic cuts, text pops; ~100-125 BPM feel (hypothesis)",
+               cta: "comment / 'Teil 2?'; no hard sell", vibe: [energetic, personal, playful, POV, price-reveal] }
+  instagram: { default: "original sound (seal break, sizzle, voice) or Meta Sound Collection only — never chart music on a business account",
+               energy: "medium-high, cut on the beat, pattern change every 2-4 s", light: "warm (~2700 K), true saffron and rice colours",
+               cta: "send-to-a-friend / save ('Schick das deinem Biryani-Buddy')", vibe: [steam, dum-reveal, golden-saffron, shareable] }
+  youtube:   { default: "Shorts: original sound + voice, or YouTube Audio Library (no Content ID claims); long-form: calm narrator over natural sound",
+               energy: "Shorts: hook at frame 1, loopable end; long-form: payoff-first intro, chapters, B-roll every 5-15 s",
+               cta: "Shorts: related-video link to the long film; long-form: order link in description", vibe: [process, reveal, storytelling, documentary] }
+  facebook:  { default: "voiceover + large burned-in subtitles; Meta Sound Collection only", energy: "slower than TikTok, clear narrative; 60-180 s performs best",
+               audience: "oldest platform in Germany (average age 45): families, diaspora groups", cta: "direct: 'Jetzt bestellen – Lieferung in Berlin', price incl. MwSt",
+               vibe: [family, community, nostalgic] }
+  linkedin:  { default: "founder's own voice or natural sound, no hype music", energy: "calm, few cuts", vibe: [founder-led, craft, team, numbers, immigrant-entrepreneur] }
+  threads:   { default: "text-first", vibe: [conversational, opinionated, witty, food-debate] }
   x:         { default: "text-first, short clip optional", vibe: [punchy, local] }
-  reddit:    { default: "no video needed", vibe: [authentic, helpful, transparent] }
+  reddit:    { default: "no video needed; never auto-post: the owner writes it, disclosed, following each subreddit's rules", vibe: [authentic, helpful, transparent] }
 
-# Hashtag bank (Instagram max 5). Data-backed tags first; rotate, never stuff.
+# Hashtag bank (Instagram hard max 5; YouTube shows 3 above the title; LinkedIn / X 0-3; Threads 1 topic tag, Reddit none).
 hashtags:
   core: [kacchibiryani, berlinfood, foodberlin, biryaniberlin]
   boost: [tastetest, foodspot, viralfood, asmr]

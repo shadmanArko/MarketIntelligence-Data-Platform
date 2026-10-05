@@ -285,5 +285,69 @@ def write_plan(start: date, days: int) -> tuple:
     stem = f"{start.isoformat()}_{days}d"
     (out / f"{stem}.json").write_text(json.dumps(plan, indent=1, ensure_ascii=False, default=str))
     (out / f"{stem}.md").write_text(_md(plan))
+    (out / f"{stem}.html").write_text(_html(plan))
     console.print(f"[green]content plan[/]: {len(plan['items'])} briefs over {days} days -> {out / stem}.json / .md")
     return out / f"{stem}.json", out / f"{stem}.md"
+
+
+PLATFORM_LABEL = {"instagram": "Instagram", "tiktok": "TikTok", "youtube": "YouTube", "facebook": "Facebook",
+                  "threads": "Threads", "x": "X", "linkedin": "LinkedIn", "reddit": "Reddit"}
+FORMAT_LABEL = {"reel": "Reel", "short_video": "Video", "short": "Short", "long_video": "Long video", "carousel": "Carousel",
+                "stories": "Stories", "photo_album": "Photo album", "text_photo": "Text + photo", "text_video": "Post",
+                "multi_image": "Multi-image post", "community_post": "Community post"}
+
+
+def _html(plan: dict) -> str:
+    from html import escape as e
+
+    css = """
+:root{--bg:#f5f6f3;--surface:#fff;--fg:#1d2420;--muted:#5b6660;--line:#dfe3dd;--accent:#0e5a45;--saffron:#b9770e;--chip:#e8efe9;
+--display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;--body:"IBM Plex Sans","Noto Sans","Noto Sans Bengali","Noto Naskh Arabic",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131714;--surface:#1a201c;--fg:#e6ebe7;--muted:#9aa69f;--line:#2c342f;--accent:#5cc39d;--saffron:#e3a945;--chip:#223029;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#131714;--surface:#1a201c;--fg:#e6ebe7;--muted:#9aa69f;--line:#2c342f;--accent:#5cc39d;--saffron:#e3a945;--chip:#223029;color-scheme:dark}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font:14px/1.55 var(--body);margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:18px;padding-block:36px 64px}
+h1,h2{font-family:var(--display);margin:0;text-wrap:balance}h1{font-size:clamp(1.9rem,4.5vw,2.8rem);letter-spacing:-.02em}
+h2{font-size:1.25rem}.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--saffron)}
+.lede{max-width:72ch;font-size:1.05rem;margin:12px 0 0}.meta{color:var(--muted);font-size:13px;max-width:80ch}
+.day{margin-top:34px;padding-top:14px;border-top:2px solid var(--fg)}.dayhead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline}
+.theme{font:500 12px/1 var(--mono);padding:5px 8px;border-radius:3px;background:var(--chip);color:var(--accent)}
+.solemn{color:var(--saffron);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-top:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;min-width:0;display:grid;gap:6px}
+.top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.pf{font-weight:600}.fmt{font:12px var(--mono);color:var(--muted)}
+.hook{font-size:15px;font-weight:500}.kv{font-size:12.5px;color:var(--muted)}.kv b{color:var(--fg);font-weight:500}
+.greet{font-size:15px}.tags{font:12px var(--mono);color:var(--accent);word-break:break-word}
+.pill{font:500 11px/1 var(--mono);padding:3px 6px;border-radius:3px;background:var(--chip);color:var(--accent)}
+"""
+    days = []
+    for t in plan["day_themes"]:
+        items = [x for x in plan["items"] if x["date"] == t["date"]]
+        cards = []
+        for it in items:
+            g = it.get("greeting")
+            occ = it.get("occasion")
+            cards.append(f"""<article class="card"><div class="top"><span class="pf">{PLATFORM_LABEL[it['platform']]}</span>
+<span class="fmt">{FORMAT_LABEL.get(it['format'], it['format'])} · {e(it['post_window_berlin'])}</span></div>
+<div class="hook">{e(it['hook'])}</div>
+<div class="kv"><b>{e(it['pillar'].replace('_', ' '))}</b>{' · for ' + e(occ['type'].replace('_', ' ')) + (' in ' + str(occ['days_until']) + ' days' if occ['days_until'] else ' (today)') if occ else ''}</div>
+<div class="kv">Languages: <b>{e(', '.join(lg['name'] for lg in it['languages']))}</b></div>
+{f'<div class="greet">{e(g["text"])} <span class="kv">({e(g["translit"])})</span></div>' if g else ''}
+{f'<div class="kv">Bridge dish: <b>{e(it["bridge_dish"]["native"])}</b> ({e(it["bridge_dish"]["english"])})</div>' if it.get('bridge_dish') else ''}
+<div class="kv">Media: <b>{e(str(it['media'].get('ratio', '')))}</b>{', ' + '–'.join(map(str, it['media']['length_s'])) + ' s' if it['media'].get('length_s') else ''}{', ' + '–'.join(map(str, it['media']['slides'])) + ' slides' if it['media'].get('slides') else ''}</div>
+<div class="kv">Audio: {e(str(it['audio'].get('default', '')))[:140]}</div>
+<div class="tags">{' '.join('#' + e(h) for h in it['hashtags'])}</div></article>""")
+        head = (f"<h2>{e(t['weekday'])} {e(t['date'])}</h2><span class=\"theme\">"
+                + (e(t['theme'].replace('_', ' ')) + ' · ' + e(t['community'] or '') + ' · ' + e(t['occasion_day'] or '')
+                   if t['occasion_day'] else 'evergreen · bridge: ' + e(t['community'] or '')) + "</span>")
+        sol = f"<span class=\"solemn\">Solemn today: {e(', '.join(t['solemn_today']))}</span>" if t["solemn_today"] else ""
+        days.append(f'<section class="day"><div class="dayhead">{head}{sol}</div><div class="grid">{"".join(cards)}</div></section>')
+    n = len(plan["items"])
+    return f"""<title>Dhaka Kacchi Content Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>{css}</style>
+<div class="wrap"><div class="eyebrow">Dhaka Kacchi · content plan · {e(plan['start'])} · {plan['days']} days</div>
+<h1>Dhaka Kacchi Content Plan</h1>
+<p class="lede">{n} posts across Instagram, TikTok, YouTube, Facebook, Threads, X, LinkedIn and Reddit. Each card is one brief: what to film, which hook, in which language, for whom, when to post and with what sound.</p>
+<p class="meta">Generated by <code>mip brief content</code> from the occasion calendar, Berlin community sizes and the performance of 1.9 M posts. Rules: <code>config/content/playbook.yaml</code>. Full briefs for the content app: <code>data/briefs/{e(plan['start'])}_{plan['days']}d.json</code>. Greetings marked for review need a native speaker before posting.</p>
+{''.join(days)}</div>"""

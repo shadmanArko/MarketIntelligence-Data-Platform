@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dhakakacchi.local/schemas/content-plan.json",
+  "title": "Dhaka Kacchi content plan",
+  "description": "Output of `mip brief content`: one brief per piece of content (day x platform x slot). A content app or LLM agent turns each brief into the final caption, script, image prompts and video edit. See docs/content-agent-guide.md.",
+  "type": "object",
+  "required": ["brand", "start", "days", "items", "day_themes"],
+  "properties": {
+    "brand": {
+      "type": "object",
+      "description": "Brand facts and hard rules that apply to every item (name, signature dish, voice, always_say, never).",
+      "properties": {
+        "name": {"type": "string"}, "city": {"type": "string"}, "signature": {"type": "string"},
+        "always_say": {"type": "array", "items": {"type": "string"}},
+        "base_languages": {"type": "array", "items": {"type": "string"}},
+        "voice": {"type": "string"}, "never": {"type": "array", "items": {"type": "string"}},
+        "paid_partnership_label": {"type": "string"}
+      }
+    },
+    "start": {"type": "string", "format": "date"},
+    "days": {"type": "integer", "minimum": 1},
+    "playbook": {"type": "string", "description": "Path of the rules file the plan was generated from."},
+    "day_themes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {"type": "string", "format": "date"}, "weekday": {"type": "string"},
+          "theme": {"type": "string", "description": "occasion type in its content window, or 'evergreen'"},
+          "occasion_day": {"type": ["string", "null"], "format": "date"},
+          "community": {"type": ["string", "null"]},
+          "solemn_today": {"type": "array", "items": {"type": "string"}, "description": "communities with a solemn day: no celebratory sales tone"},
+          "berlin_events": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "platform", "format", "pillar", "hook", "languages", "media", "caption_rules"],
+        "properties": {
+          "date": {"type": "string", "format": "date"},
+          "weekday": {"type": "string"},
+          "platform": {"enum": ["instagram", "tiktok", "youtube", "facebook", "threads", "x", "linkedin", "reddit"]},
+          "format": {"enum": ["reel", "short_video", "short", "long_video", "carousel", "stories", "photo_album", "text_photo", "text_video", "multi_image", "community_post"]},
+          "post_window_berlin": {"type": "string", "description": "publish window, Europe/Berlin clock time"},
+          "pillar": {"type": "string", "description": "content pillar id from playbook.yaml (dum_reveal, price_value, taste_test, community_bridge, ...)"},
+          "objective": {"enum": ["reach new people", "saves and shares", "conversation", "watch time"]},
+          "occasion": {
+            "type": ["object", "null"],
+            "properties": {
+              "type": {"type": "string"}, "date": {"type": "string", "format": "date"},
+              "names": {"type": "array", "items": {"type": "string"}},
+              "names_native": {"type": ["array", "null"], "items": {"type": "string"}},
+              "community": {"type": "string"}, "tone": {"type": "string"},
+              "days_until": {"type": "integer", "description": "0 = the day itself; > 0 = teaser / pre-order phase"}
+            }
+          },
+          "target_community": {
+            "type": "object",
+            "properties": {"id": {"type": "string"}, "label": {"type": ["string", "null"]},
+                           "berlin_residents": {"type": ["integer", "null"]}, "top_districts": {}}
+          },
+          "languages": {
+            "type": "array", "description": "caption languages in order of use",
+            "items": {"type": "object", "properties": {"code": {"type": "string"}, "name": {"type": "string"}}}
+          },
+          "greeting": {
+            "type": ["object", "null"],
+            "properties": {"text": {"type": "string", "description": "native script, use exactly"},
+                           "translit": {"type": "string"},
+                           "needs_native_review": {"type": "boolean", "description": "true = a native speaker must approve before publishing"}}
+          },
+          "bridge_dish": {
+            "type": ["object", "null"], "description": "the target community's own meat-and-rice dish to compare kacchi with",
+            "properties": {"native": {"type": "string"}, "translit": {"type": "string"}, "english": {"type": "string"}}
+          },
+          "media": {"type": "object", "description": "ratio, resolution, length_s [min,max], slides / images / frames, captions_on_screen, safe_zone, hashtags [min,max], first_slide, last_slide"},
+          "idea": {"type": "string"},
+          "hook": {"type": "string", "description": "the first 1-2 seconds / first line"},
+          "shot_list": {"type": "array", "items": {"type": "string"}},
+          "caption_rules": {
+            "type": "object",
+            "properties": {"first_line": {"type": "string"}, "languages": {"type": "string"},
+                           "must_include": {"type": "array", "items": {"type": "string"}},
+                           "cta": {"type": "string"}, "length": {"type": "array", "items": {"type": "integer"}}}
+          },
+          "hashtags": {"type": "array", "items": {"type": "string"}, "description": "without '#'; already within the platform limit"},
+          "audio": {"type": "object", "description": "default audio, music source rules, energy / pacing, vibe keywords"},
+          "notes": {"type": "array", "items": {"type": "string"}},
+          "evidence": {"type": "array", "items": {"type": "string"}, "description": "why: lift numbers from the data and research"},
+          "do_not": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}
