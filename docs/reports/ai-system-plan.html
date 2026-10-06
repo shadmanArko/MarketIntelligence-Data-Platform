@@ -1,0 +1,232 @@
+<title>Dhaka Kacchi AI System Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; diagrams and tables get the full width inside their own scroll frames. */
+:root {
+  --bg: #f5f6f3; --surface: #ffffff; --fg: #1d2420; --muted: #5b6660; --line: #dfe3dd;
+  --accent: #0e5a45; --saffron: #b9770e; --chip: #e8efe9; --done: #1f7a4d; --next: #b9770e;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "IBM Plex Sans", "Noto Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #131714; --surface: #1a201c; --fg: #e6ebe7; --muted: #9aa69f; --line: #2c342f;
+  --accent: #5cc39d; --saffron: #e3a945; --chip: #223029; --done: #6fd19f; --next: #e3a945; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #131714; --surface: #1a201c; --fg: #e6ebe7; --muted: #9aa69f; --line: #2c342f;
+  --accent: #5cc39d; --saffron: #e3a945; --chip: #223029; --done: #6fd19f; --next: #e3a945; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--body); margin: 0; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; }
+.col { max-width: 70ch; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.02em; }
+h2 { font-size: 1.5rem; margin-top: 52px; padding-top: 16px; border-top: 2px solid var(--fg); }
+h3 { font-size: 1.05rem; }
+p { margin: 10px 0; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--saffron); }
+.lede { font-size: 1.15rem; margin-top: 14px; }
+.chain { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; align-items: center; }
+.chain span { font: 600 14px/1 var(--body); padding: 9px 12px; border: 1.5px solid var(--accent); border-radius: 4px; color: var(--accent); background: var(--surface); }
+.chain i { color: var(--muted); font-style: normal; }
+.diagram { overflow-x: auto; margin-top: 16px; padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.diagram pre.mermaid { margin: 0; background: transparent; text-align: center; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; min-width: 0; }
+.card p { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+.tag { font: 500 11px/1 var(--mono); padding: 4px 7px; border-radius: 3px; background: var(--chip); letter-spacing: .03em; }
+.tag.done { color: var(--done); } .tag.next { color: var(--next); }
+.tablebox { overflow-x: auto; margin-top: 16px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+td.when { font-family: var(--mono); white-space: nowrap; font-size: 13px; }
+ul { padding-left: 20px; margin: 10px 0; } li { margin: 4px 0; }
+code { font: 13px var(--mono); background: var(--chip); padding: 1px 5px; border-radius: 3px; }
+</style>
+
+<div class="wrap">
+  <header class="col">
+    <div class="eyebrow">Dhaka Kacchi · system plan · October 2026</div>
+    <h1>Dhaka Kacchi AI System Plan</h1>
+    <p class="lede">One loop that runs by itself: collect what happens in Berlin's food market, understand it, predict what works, act on it through AI agents, and learn from the results.</p>
+    <div class="chain"><span>1 Collect</span><i>→</i><span>2 Understand</span><i>→</i><span>3 Predict</span><i>→</i><span>4 Act</span><i>→</i><span>5 Learn</span><i>↺</i></div>
+  </header>
+
+  <section>
+    <div class="col">
+      <h2>The idea in one picture</h2>
+      <p>Each step feeds the next, and the results of what we post and sell flow back to the start. The system gets smarter every week without anyone rebuilding it.</p>
+    </div>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  A["1 · COLLECT<br/>restaurants, menus, prices,<br/>reviews, 1.9 M social posts,<br/>communities, occasions,<br/>our own posts + orders"]
+  B["2 · UNDERSTAND<br/>clean, link, tag,<br/>tables with ready answers"]
+  C["3 · PREDICT<br/>small trained models:<br/>what will work, fair price,<br/>best area, expected orders"]
+  D["4 · ACT<br/>AI agents plan content,<br/>write captions, answer<br/>questions; people approve"]
+  E["5 · LEARN<br/>measure every post and<br/>order, retrain the models"]
+  A --> B --> C --> D --> E --> A
+    </pre></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Brain map</h2>
+      <p>Everything the system knows and does, on one map.</p>
+    </div>
+    <div class="diagram"><pre class="mermaid">
+mindmap
+  root((Dhaka Kacchi<br/>AI system))
+    Data platform
+      Market
+        restaurants and menus
+        prices and reviews
+        competitors
+      Social
+        TikTok YouTube Reddit
+        Instagram after approval
+        our own posts
+      People and time
+        38 communities in Berlin
+        occasion calendar
+        weather and events
+      Our business
+        orders
+        own post results
+    Models
+      Content scorer
+      Price advisor
+      Area opportunity
+      Review analyser
+      Similar post finder
+      Demand forecast
+    MCP server
+      calendar and content plan
+      score a post idea
+      market and prices
+      reviews and areas
+      our results
+    Agents
+      Content planner
+      Caption and script writer
+      Quality and law checker
+      Business assistant
+    Automation
+      daily and weekly runs
+      tests and checks
+      retrain and compare
+      alerts
+    People
+      approve content
+      film real food
+      decide and cook
+    </pre></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>How it is built</h2>
+      <p>Three separate parts with clear jobs. The data platform already exists. The two new parts live in a new project, <code>dk-intelligence</code>, and only read the data, never change it.</p>
+    </div>
+    <div class="diagram"><pre class="mermaid">
+flowchart TB
+  subgraph P1["DATA PLATFORM · built"]
+    direction LR
+    S["Sources<br/>Wolt · Lieferando · Google · TikTok<br/>YouTube · Reddit · statistics · own data"] --> R["Raw store<br/>never changed"] --> Cl["Clean tables<br/>ready answers"] --> F["Training tables<br/>features + labels"]
+  end
+  subgraph P2["INTELLIGENCE · next"]
+    direction LR
+    T["Training pipeline"] --> Ev["Evaluation<br/>new vs current model"] --> Reg["Model registry<br/>versions, scores, rollback"]
+  end
+  subgraph P3["ACTION · next"]
+    direction LR
+    M["MCP server<br/>15 small tools"] --> Ag["AI agents<br/>planner · writer · checker · assistant"] --> H["You and the team<br/>approve · film · post · cook"]
+  end
+  F --> T
+  Cl --> M
+  Reg --> M
+  H -- "posts, results, orders" --> S
+    </pre></div>
+    <div class="grid">
+      <div class="card"><h3>Data platform</h3><p>Collects, cleans and connects everything. Already running: 22 GB, refreshed every Sunday, backed up on ARKO HDD.</p><p><span class="tag done">built</span></p></div>
+      <div class="card"><h3>Intelligence</h3><p>Small, fast models trained on your data. Each new version must beat the current one on unseen recent data before it is used.</p><p><span class="tag next">next</span></p></div>
+      <div class="card"><h3>Action</h3><p>An MCP server gives agents short, exact answers instead of raw data, so each question costs a few hundred tokens. People always approve what goes out.</p><p><span class="tag next">next</span></p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Why it is cheap to run</h2>
+      <ul>
+        <li><b>Heavy work happens on your Mac, for free:</b> collecting, cleaning, training and scoring.</li>
+        <li><b>Agents never read the data.</b> They call a tool such as <code>score_post</code> or <code>next_occasions</code> and get a short answer back.</li>
+        <li><b>A paid AI model is used only for creative writing</b>: captions and scripts. Routing and checking use a cheap or local model.</li>
+        <li><b>Answers are cached.</b> The same question asked twice costs nothing the second time.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>How it runs by itself</h2>
+      <p>Every job is scheduled, checked and logged. If something fails, the last good version stays in use and you get an alert.</p>
+    </div>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  N["New data<br/>every week"] --> Q{"Data checks<br/>pass?"}
+  Q -- no --> Al["Alert · keep<br/>last good data"]
+  Q -- yes --> Tr["Retrain models"]
+  Tr --> Cmp{"Better than the<br/>current model on<br/>the newest weeks?"}
+  Cmp -- no --> Keep["Keep current model"]
+  Cmp -- yes --> Prom["Promote new model<br/>(old one kept for rollback)"]
+  Prom --> Serve["MCP server uses it"]
+  Keep --> Serve
+  Serve --> Mon["Monitor: drift, errors,<br/>prediction vs real result"]
+  Mon --> N
+    </pre></div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>When</th><th>What runs automatically</th></tr></thead>
+        <tbody>
+          <tr><td class="when">Every night</td><td>Own posts, metrics and orders from the warehouse; YouTube searches; health checks</td></tr>
+          <tr><td class="when">Every Sunday</td><td>Market refresh (prices, menus, reviews, social), rebuild and test all tables, new training sets, retrain and compare models, new 15-day content plan, backup reminder</td></tr>
+          <tr><td class="when">Every morning</td><td>Agents prepare the day's drafts from the plan; you approve them</td></tr>
+          <tr><td class="when">Every month</td><td>Model report: what each model predicted versus what really happened; drift check</td></tr>
+          <tr><td class="when">On an event</td><td>A source breaks, data looks wrong, a model gets worse, a key expires: alert, then automatic fallback to the last good version</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Safety rules</h2>
+      <ul>
+        <li><b>People approve</b> every post, price change and message before it goes out. Agents draft; they never publish alone.</li>
+        <li><b>Agents can only read.</b> They use the read-only database login, and the content rules (German law, no religious ritual words, no fake claims) are checked automatically.</li>
+        <li><b>Every model version is kept</b> with its scores and the exact data it learned from, so any change can be undone in one step.</li>
+        <li><b>Private data stays private:</b> customer and reviewer identities are hashed, and your own data is only visible to your business.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>Roadmap</h2>
+      <p>Each phase is useful on its own.</p>
+    </div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Phase</th><th>What gets built</th><th>What you get</th><th>Needs from you</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag done">0 · done</span></td><td>Data platform, content playbook, daily content briefs, backups</td><td>Clean data and a 10–30 day content plan</td><td>–</td></tr>
+          <tr><td><span class="tag next">1</span></td><td>Content scorer + MCP server (content and market tools) + automatic retraining</td><td>Agents that plan and write content cheaply, and pick the strongest idea</td><td>Your content app connects to the MCP server</td></tr>
+          <tr><td><span class="tag next">2</span></td><td>Review analyser, price advisor, area opportunity</td><td>What customers love or hate, fair prices, where to deliver and promote</td><td>–</td></tr>
+          <tr><td><span class="tag next">3</span></td><td>Live warehouse connection, demand forecast, "which post brought orders"</td><td>Decisions measured in sales, not likes; how much to cook</td><td>VPS access (read-only)</td></tr>
+          <tr><td><span class="tag next">4</span></td><td>Instagram and ad-library data, business assistant agent, monthly model report</td><td>Full competitor view and a daily business brief</td><td>Meta approval (after business verification)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
