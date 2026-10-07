@@ -47,39 +47,54 @@ code { font: 12.5px var(--mono); background: var(--chip); padding: 1px 4px; bord
   <header class="col">
     <div class="eyebrow">Dhaka Kacchi · models · October 2026</div>
     <h1>Dhaka Kacchi Model Blueprint</h1>
-    <p class="lede">The data comes in by itself. The models learn from it every week. Agents ask the models short questions and get short answers. After every post, the system checks its own prediction and corrects itself.</p>
+    <p class="lede">The data comes in by itself. The Mac trains the models every Sunday; after your approval they run on the VPS around the clock. Agents ask the models short questions and get short answers. After every post, the system checks its own prediction and corrects itself.</p>
   </header>
 
   <section>
-    <div class="col"><h2>The whole picture</h2></div>
+    <div class="col">
+      <h2>The whole picture</h2>
+      <p>Heavy work happens on the Mac on Sundays. Everything that must answer at any time runs on the VPS, so the Mac can be switched off.</p>
+    </div>
     <div class="diagram"><pre class="mermaid">
 flowchart LR
-  subgraph IN["DATA COMES IN · automatic"]
+  subgraph MAC["MAC · heavy work, Sundays"]
     direction TB
-    M["Market<br/>restaurants, menus,<br/>reviews, 1.9 M posts"]
-    S["Your social posts<br/>+ metrics"]
-    W["Your website<br/>visits, clicks, carts"]
-    O["Your orders<br/>+ customers (hashed)"]
+    MS["Full market sweep<br/>maps, menus, reviews"]
+    DP["Data platform<br/>clean · link · test"]
+    TR["Train + judge models<br/>build RAG index"]
+    MS --> DP --> TR
   end
-  subgraph BRAIN["THE BRAIN · your Mac"]
+  subgraph VPS["VPS · always on, light work"]
     direction TB
-    P["Data platform<br/>clean · link · test"]
-    F["Model factory<br/>train · judge · promote"]
-    L["Prediction ledger<br/>predicted vs real"]
-    P --> F
-    F <--> L
+    DS["Daily light scrapers<br/>+ your social, website, orders"]
+    AP["Approval<br/>Telegram + web page"]
+    MSTORE["Model store<br/>current + previous"]
+    MCP["MCP server<br/>short answers"]
+    LED["Prediction ledger<br/>24 h · 72 h · 7 d"]
+    AP --> MSTORE --> MCP
+    MCP --> LED
   end
-  MCP["MCP server<br/>short answers<br/>for agents"]
-  AG["Agents<br/>(next phase)"]
-  M --> P
-  S --> P
-  W --> P
-  O --> P
-  F --> MCP
-  MCP --> AG
-  AG -. "posts, campaigns" .-> S
-  AG -. "results" .-> L
+  AG["Agents + content<br/>+ publish tools"]
+  DS -- "weekly pull (read-only)" --> DP
+  LED -- "results to learn from" --> DP
+  TR -- "candidate package" --> AP
+  MCP <--> AG
+  AG -. "published posts" .-> DS
     </pre></div>
+    <div class="two">
+      <div class="list"><h3>Mac · Sundays</h3><ol>
+        <li>Pulls the week's data from the VPS.</li>
+        <li>Full market sweep, data platform, all training and RAG building.</li>
+        <li>Judges every new model against the current one and writes the justification report.</li>
+        <li>Uploads candidate packages to the VPS.</li>
+      </ol></div>
+      <div class="list"><h3>VPS · 24/7 (4 cores, 8 GB)</h3><ol>
+        <li>Daily light scrapers and your first-party data.</li>
+        <li>Telegram + web approval: you approve, then shadow mode, then live; automatic rollback if results drop.</li>
+        <li>MCP server, model scoring, prediction ledger, monitoring and alerts.</li>
+        <li>Private link to the Mac over Tailscale; every part in its own Docker container with memory limits.</li>
+      </ol></div>
+    </div>
   </section>
 
   <section>
@@ -143,8 +158,8 @@ flowchart LR
     <div class="two">
       <div class="list"><h3>Automatic rhythm</h3><ol>
         <li><b>Every night:</b> new posts, metrics, website visits and orders arrive from the VPS; data checks run.</li>
-        <li><b>Every morning:</b> drafts are scored; the experiment engine updates.</li>
-        <li><b>Every Sunday:</b> all models retrain, are judged, and are promoted or kept; a weekly "predicted vs real" report.</li>
+        <li><b>Every morning (VPS):</b> drafts are scored; the experiment engine updates.</li>
+        <li><b>Every Sunday (Mac):</b> all models retrain and are judged; Telegram asks for your approval; a weekly "predicted vs real" report.</li>
         <li><b>Always:</b> if results drop, automatic rollback and an alert to you.</li>
       </ol></div>
       <div class="list"><h3>Safety built in</h3><ol>
@@ -179,7 +194,7 @@ flowchart LR
     </div>
     <div class="list" style="margin-top:16px"><h3>What I build</h3><ol>
       <li>The nightly read-only connection to the VPS warehouse, inside the data platform.</li>
-      <li>The <code>dk-intelligence</code> project: scheduler (Dagster), model registry (MLflow), the plug-in model factory, the prediction ledger, monitoring.</li>
+      <li>The <code>dk-intelligence</code> project: training on the Mac (Dagster, MLflow, plug-in model factory) and serving on the VPS (model store, MCP server, prediction ledger, Telegram + web approval, monitoring), linked over Tailscale.</li>
       <li>The models above, starting with the five that have data ready.</li>
       <li>The MCP server with one tool per model, plus the brand and rules knowledge base.</li>
     </ol></div>
