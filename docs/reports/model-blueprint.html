@@ -1,0 +1,187 @@
+<title>Dhaka Kacchi Model Blueprint</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column of short sections; each diagram sits in its own full-width scroll frame. */
+:root {
+  --bg: #f5f6f3; --surface: #ffffff; --fg: #1d2420; --muted: #5b6660; --line: #dfe3dd;
+  --accent: #0e5a45; --saffron: #b9770e; --chip: #e8efe9; --ok: #1f7a4d; --wait: #b9770e; --later: #6b6f8a;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "IBM Plex Sans", "Noto Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #131714; --surface: #1a201c; --fg: #e6ebe7; --muted: #9aa69f; --line: #2c342f;
+  --accent: #5cc39d; --saffron: #e3a945; --chip: #223029; --ok: #6fd19f; --wait: #e3a945; --later: #a9adc9; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #131714; --surface: #1a201c; --fg: #e6ebe7; --muted: #9aa69f; --line: #2c342f;
+  --accent: #5cc39d; --saffron: #e3a945; --chip: #223029; --ok: #6fd19f; --wait: #e3a945; --later: #a9adc9; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--body); margin: 0; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; }
+.col { max-width: 68ch; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -0.02em; }
+h2 { font-size: 1.45rem; margin-top: 48px; padding-top: 16px; border-top: 2px solid var(--fg); }
+h3 { font-size: 1rem; }
+p { margin: 8px 0; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--saffron); }
+.lede { font-size: 1.12rem; margin-top: 12px; }
+.diagram { overflow-x: auto; margin-top: 14px; padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.diagram pre.mermaid { margin: 0; background: transparent; text-align: center; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-top: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; min-width: 0; display: grid; gap: 4px; align-content: start; }
+.card p { margin: 0; font-size: 13.5px; color: var(--muted); }
+.card .tool { font: 12px var(--mono); color: var(--accent); }
+.pill { justify-self: start; font: 500 11px/1 var(--mono); padding: 4px 7px; border-radius: 3px; background: var(--chip); }
+.pill.ok { color: var(--ok); } .pill.wait { color: var(--wait); } .pill.later { color: var(--later); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 14px; }
+.list { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; min-width: 0; }
+.list h3 { margin-bottom: 6px; }
+.list ol { margin: 0; padding-left: 20px; } .list li { margin: 7px 0; font-size: 14px; }
+.list li b { font-weight: 600; }
+.small { font-size: 13px; color: var(--muted); }
+code { font: 12.5px var(--mono); background: var(--chip); padding: 1px 4px; border-radius: 3px; }
+</style>
+
+<div class="wrap">
+  <header class="col">
+    <div class="eyebrow">Dhaka Kacchi · models · October 2026</div>
+    <h1>Dhaka Kacchi Model Blueprint</h1>
+    <p class="lede">The data comes in by itself. The models learn from it every week. Agents ask the models short questions and get short answers. After every post, the system checks its own prediction and corrects itself.</p>
+  </header>
+
+  <section>
+    <div class="col"><h2>The whole picture</h2></div>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  subgraph IN["DATA COMES IN · automatic"]
+    direction TB
+    M["Market<br/>restaurants, menus,<br/>reviews, 1.9 M posts"]
+    S["Your social posts<br/>+ metrics"]
+    W["Your website<br/>visits, clicks, carts"]
+    O["Your orders<br/>+ customers (hashed)"]
+  end
+  subgraph BRAIN["THE BRAIN · your Mac"]
+    direction TB
+    P["Data platform<br/>clean · link · test"]
+    F["Model factory<br/>train · judge · promote"]
+    L["Prediction ledger<br/>predicted vs real"]
+    P --> F
+    F <--> L
+  end
+  MCP["MCP server<br/>short answers<br/>for agents"]
+  AG["Agents<br/>(next phase)"]
+  M --> P
+  S --> P
+  W --> P
+  O --> P
+  F --> MCP
+  MCP --> AG
+  AG -. "posts, campaigns" .-> S
+  AG -. "results" .-> L
+    </pre></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>The models</h2>
+      <p>Each one answers one sales or marketing question and appears to agents as one tool.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>Community map</h3><p>Which communities to reach, where they live, which language and platform they use, their feast dishes and occasions.</p><span class="tool">who_to_target()</span><span class="pill ok">data ready</span></div>
+      <div class="card"><h3>Creator matcher</h3><p>Which Berlin creators really reach Turkish, Arab, Indian, Pakistani or German food lovers, ranked by engagement and fit.</p><span class="tool">find_creators()</span><span class="pill ok">data ready</span></div>
+      <div class="card"><h3>Competitor weakness miner</h3><p>What competitors' customers love and hate. Becomes your proof points and hooks.</p><span class="tool">customer_pains()</span><span class="pill ok">data ready</span></div>
+      <div class="card"><h3>Content-that-sells scorer</h3><p>Scores a draft before posting, predicts a range at 24 h, 72 h and 7 days, and says what to fix.</p><span class="tool">score_post()</span><span class="pill ok">data ready</span></div>
+      <div class="card"><h3>Timing &amp; offer planner</h3><p>Best days, hours, occasions and offers for each audience. Sunday evening is Berlin's biggest biryani moment.</p><span class="tool">when_and_what()</span><span class="pill ok">data ready</span></div>
+      <div class="card"><h3>Experiment engine</h3><p>Tries hooks, languages and offers, then shifts effort to what converts, while keeping a small learning share.</p><span class="tool">next_test()</span><span class="pill wait">needs website + order data</span></div>
+      <div class="card"><h3>Funnel model</h3><p>Which posts, creators and communities bring visitors who order, and where people drop off.</p><span class="tool">what_sells()</span><span class="pill wait">needs website + order data</span></div>
+      <div class="card"><h3>Repeat &amp; referral engine</h3><p>Who will order again, who is drifting away, which ambassadors bring orders. Only customers who agreed to messages.</p><span class="tool">who_to_remind()</span><span class="pill later">when orders grow</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>How the MCP server gets its answers</h2>
+      <p>Heavy work happens before the agent asks. The agent only receives a few lines, so each question costs very few tokens.</p>
+    </div>
+    <div class="diagram"><pre class="mermaid">
+sequenceDiagram
+  participant A as Agent
+  participant M as MCP server
+  participant R as Model registry
+  participant D as Database
+  Note over R,D: Every Sunday: models retrained, rankings and scores pre-computed into the database
+  A->>M: score_post(platform, format, hook, language, caption)
+  M->>R: load current champion model
+  M->>D: read features (audience, timing, history)
+  M-->>A: "72 h reach 180 to 420 · shorten caption · add a German line"
+  M->>D: log prediction ID + model version (ledger)
+  A->>M: who_to_target()
+  M->>D: read this week's pre-computed ranking
+  M-->>A: top 5 audiences with language, platform and message
+    </pre></div>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2>How it teaches itself</h2>
+      <p>Every prediction is written down before posting and checked against the real numbers afterwards.</p>
+    </div>
+    <div class="diagram"><pre class="mermaid">
+flowchart LR
+  A["1 · Predict<br/>score + range<br/>logged with ID"] --> B["2 · Publish<br/>post linked<br/>to its ID"]
+  B --> C["3 · Measure<br/>real numbers at<br/>24 h · 72 h · 7 d"]
+  C --> D["4 · Compare<br/>error · bias ·<br/>was the range right?"]
+  D --> E["5 · Correct fast<br/>small weekly<br/>adjustment"]
+  D --> F["6 · Retrain Sunday<br/>new model must beat<br/>the current one"]
+  F -- "passes the gates" --> G["Promote<br/>(old kept for rollback)"]
+  F -- "fails" --> H["Keep current model"]
+  E --> A
+  G --> A
+  H --> A
+    </pre></div>
+    <div class="two">
+      <div class="list"><h3>Automatic rhythm</h3><ol>
+        <li><b>Every night:</b> new posts, metrics, website visits and orders arrive from the VPS; data checks run.</li>
+        <li><b>Every morning:</b> drafts are scored; the experiment engine updates.</li>
+        <li><b>Every Sunday:</b> all models retrain, are judged, and are promoted or kept; a weekly "predicted vs real" report.</li>
+        <li><b>Always:</b> if results drop, automatic rollback and an alert to you.</li>
+      </ol></div>
+      <div class="list"><h3>Safety built in</h3><ol>
+        <li>A prediction can't be changed after publishing.</li>
+        <li>A model is never judged on posts it learned from.</li>
+        <li>New models run in shadow mode for 2 weeks first.</li>
+        <li>10–20% of posts are deliberate experiments, so the system keeps learning instead of repeating itself.</li>
+      </ol></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="col"><h2>What is needed</h2></div>
+    <div class="two">
+      <div class="list"><h3>Access I need from you</h3><ol>
+        <li><b>VPS:</b> the host or IP and an SSH user (key login preferred).</li>
+        <li><b>A read-only database user</b> on the VPS warehouse. You put it in <code>.env</code> as <code>DK_WAREHOUSE_DSN</code>.</li>
+        <li><b>Permission to read</b> orders, order lines, customers (hashed), website events, campaigns, channels, ad spend, social posts and metrics, menu items.</li>
+        <li><b>PostHog:</b> confirm website events land in the warehouse table <code>event</code>. If not, a read-only PostHog API key and project ID.</li>
+        <li><span class="small">Optional:</span> a YouTube API key, for reading comments.</li>
+      </ol></div>
+      <div class="list"><h3>What you set up (tracking)</h3><ol>
+        <li><b>A tagged link for every post, creator and community</b> (UTM tags). The variant tag carries the post's prediction ID.</li>
+        <li><b>WhatsApp links with a prefilled code</b>, e.g. <code>Hi! [TR-07]</code>, so chats can be traced.</li>
+        <li><b>Website events firing:</b> social_click, menu_view, add_to_cart, begin_checkout, purchase, contact (WhatsApp tap), each keeping the UTM tags.</li>
+        <li><b>"How did you hear about us?"</b> at checkout and in the WhatsApp order flow.</li>
+        <li><b>Your content app saves</b> the prediction ID with the platform post ID when it publishes.</li>
+        <li><b>Mark paid boosts</b> so they are judged separately.</li>
+        <li><b>Marketing consent</b> captured before any reminder message.</li>
+        <li><span class="small">High value:</span> a Google Business Profile, so people searching "biryani Berlin" can find you.</li>
+      </ol></div>
+    </div>
+    <div class="list" style="margin-top:16px"><h3>What I build</h3><ol>
+      <li>The nightly read-only connection to the VPS warehouse, inside the data platform.</li>
+      <li>The <code>dk-intelligence</code> project: scheduler (Dagster), model registry (MLflow), the plug-in model factory, the prediction ledger, monitoring.</li>
+      <li>The models above, starting with the five that have data ready.</li>
+      <li>The MCP server with one tool per model, plus the brand and rules knowledge base.</li>
+    </ol></div>
+  </section>
+</div>
