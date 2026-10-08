@@ -104,6 +104,7 @@ models:
     columns:
       - name: post_id
         tests:
+          - not_null
           - relationships: {to: ref('tenant_social_post'), field: post_id}
       - name: reach
         tests: [{between: {min_value: 0}}]
@@ -158,9 +159,4 @@ models:
       - name: day
         tests: [not_null]
       - name: food_role
-        tests: [not_null]
-
-  - name: tenant_social_metrics_snapshot
-    columns:
-      - name: post_id
         tests: [not_null]
