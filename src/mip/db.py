@@ -56,6 +56,9 @@ def migrate() -> list[str]:
             "CREATE TABLE IF NOT EXISTS public.schema_migrations ("
             " name text PRIMARY KEY, checksum text NOT NULL, applied_at timestamptz NOT NULL DEFAULT now())"
         )
+        # dbt owns these schemas, but migration 0010 grants on them: a fresh database needs them to exist first
+        for schema in ("staging", "core", "marts", "ml"):
+            c.execute(f"CREATE SCHEMA IF NOT EXISTS {schema}")
         done = {r["name"]: r["checksum"] for r in c.execute("SELECT name, checksum FROM public.schema_migrations")}
         for path in sorted(MIGRATIONS_DIR.glob("*.sql")):
             sql = path.read_text()
