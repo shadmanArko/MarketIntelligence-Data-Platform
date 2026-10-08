@@ -12,6 +12,7 @@ cit as (
   select c.reference_date, com.community_id, 'berlin_citizens' as level, '11' as area_code,
          sum(c.residents) as residents, null::float8 as share
   from {{ ref('stg_afs__citizenship') }} c join com on c.citizenship = any(com.cits)
+  where not c.is_aggregate                  -- subtotals ("Insgesamt", "Asien zusammen") never count as a community
   group by 1, 2
 ),
 o as (

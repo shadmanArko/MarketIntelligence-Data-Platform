@@ -80,7 +80,7 @@ def _load(start: date, end: date) -> dict:
             where ends_on >= %s and starts_on <= %s order by event_id, fetched_at desc""", (start, end)).fetchall()
         cit = {r["citizenship"]: r["residents"] for r in c.execute(
             "select citizenship, residents from staging.stg_afs__citizenship"
-            " where reference_date = (select max(reference_date) from staging.stg_afs__citizenship)")}
+            " where not is_aggregate and reference_date = (select max(reference_date) from staging.stg_afs__citizenship)")}
     country_people: dict = {}
     for cid, cy in yaml.safe_load((ROOT / "config" / "taxonomies" / "communities.yaml").read_text())["communities"].items():
         cs, labels = cy.get("countries") or [], cy.get("afs_citizenship") or []

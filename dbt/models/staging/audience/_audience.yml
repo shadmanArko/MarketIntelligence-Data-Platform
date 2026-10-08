@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_afs__citizenship
+    description: >
+      Foreign residents of Berlin by citizenship (AfS A I 5, T10), one row per release and label. Subtotal rows of the
+      sheet (region / EU / Nicht-EU / continent "zusammen", grand total "Insgesamt") are kept with is_aggregate = true;
+      sum only where not is_aggregate. Leaves reconcile exactly with "Insgesamt" (tests/afs_citizenship_reconciles.sql).
+    tests:
+      - unique_combination: {columns: [reference_date, citizenship]}
+    columns:
+      - name: citizenship
+        tests: [not_null]
+      - name: is_aggregate
+        tests: [not_null]
+      - name: residents
+        tests: [not_null, {between: {min_value: 0}}]
