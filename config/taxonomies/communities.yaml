@@ -3,7 +3,9 @@
 # Source of truth for the content / audience datasets (Wikidata only seeds dish names; this file is curated).
 #
 #   countries      ISO-3166 alpha-2; their national + religious holidays come from python-holidays per year
-#   afs_citizenship  exact labels in Amt für Statistik Berlin-Brandenburg A I 5, sheet T10 (citizenship, Berlin)
+#   afs_citizenship  exact labels in Amt für Statistik Berlin-Brandenburg A I 5, sheet T10 (foreign citizens, Berlin),
+#                    latest-release spelling; older spellings are mapped in dbt/seeds/afs_citizenship_alias.csv.
+#                    Positional with `countries` (country i -> label i); extra labels after that only add to the total
 #   afs_origin       origin-area codes in A I 16 sheet T4 (migration background per LOR planning area); only 24 exist
 #   moon_offset      days South-Asian / moon-sighting communities usually celebrate Islamic feasts after Umm al-Qura
 #   greetings        occasion_type -> native text | transliteration. review: true = check with a native speaker
@@ -353,7 +355,7 @@ communities:
   east_slavic:
     label: Russian / Ukrainian / Belarusian / Moldovan
     countries: [RU, UA, BY, MD]
-    afs_citizenship: [Russische Föderation, Ukraine, Belarus, "Moldau, Republik"]
+    afs_citizenship: [Russische Föderation, Ukraine, Belarus, Moldau]
     afs_origin: [RU, UA]
     languages: [ru, uk, ro]
     scripts: [Cyrl, Latn]
@@ -388,7 +390,9 @@ communities:
   balkan:
     label: Balkan / Romanian / Bulgarian
     countries: [RS, BA, HR, MK, AL, XK, BG, RO]
-    afs_citizenship: [Serbien, Bosnien und Herzegowina, Kroatien, Nordmazedonien, Albanien, Kosovo, Bulgarien, Rumänien]
+    # 2025h2 "Serbien" includes both former Serbian states; 2026h1 lists them separately
+    afs_citizenship: [Serbien, Bosnien und Herzegowina, Kroatien, Nordmazedonien, Albanien, Kosovo, Bulgarien, Rumänien,
+                      Serbien und Montenegro – ehemaliger Staat, Serbien (einschließlich Kosovo) – ehemaliger Staat]
     afs_origin: [HR, BG, RO]
     languages: [sr, bs, hr, mk, sq, bg, ro]
     scripts: [Latn, Cyrl]
@@ -509,7 +513,7 @@ communities:
   german:
     label: German / Austrian / Swiss
     countries: [DE, AT, CH]
-    afs_citizenship: [Deutschland, Österreich, Schweiz]
+    afs_citizenship: [Deutschland, Österreich, Schweiz]   # Deutschland never matches: T10 counts foreign citizens only
     afs_origin: [AT]
     languages: [de]
     scripts: [Latn]
@@ -545,7 +549,8 @@ communities:
   chinese:
     label: Chinese / Taiwanese / Hong Kong
     countries: [CN, TW, HK]
-    afs_citizenship: [China, Taiwan, Hongkong]
+    # 2025h2 "China" includes Hongkong, Macau and Taiwan; 2026h1 lists them separately ("– eigener Pass")
+    afs_citizenship: [China, Taiwan – eigener Pass, Hongkong – eigener Pass, Macau – eigener Pass]
     afs_origin: [CN]
     languages: [zh-Hans, zh-Hant, yue]
     scripts: [Hans, Hant]
@@ -653,7 +658,7 @@ communities:
   east_african:
     label: Somali / Eritrean / Ethiopian / Kenyan / Sudanese
     countries: [SO, ER, ET, KE, SD]
-    afs_citizenship: [Somalia, Eritrea, Äthiopien, Kenia, Sudan]
+    afs_citizenship: [Somalia, Eritrea, Äthiopien, Kenia, Sudan, Sudan (einschließlich Südsudan) – ehemaliger Staat]
     afs_origin: []
     languages: [so, ti, am, sw, ar]
     scripts: [Latn, Ethi, Arab]

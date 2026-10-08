@@ -3,6 +3,8 @@
 -- continent ("Afrika zusammen") and the grand total ("Insgesamt"). is_aggregate marks the subtotals; sum residents
 -- only where not is_aggregate. Layout differs by release (2025h2 has sub-regions, 2026h1 only continents), and the
 -- loader's section path is "<continent> / <region>" (2025h2) or "Europa / <continent>" (2026h1, stale first level).
+-- Scope also differs: in 2025h2 "China" includes Hongkong, Macau and Taiwan and "Serbien" includes the former
+-- "Serbien und Montenegro" / "Serbien (einschließlich Kosovo)"; 2026h1 lists those separately.
 with c as (
   select reference_date, row_no, column_label, value,
          split_part(section, ' / ', 1) as s1, split_part(section, ' / ', 2) as s2,
@@ -36,24 +38,21 @@ g as (
   from r
 ),
 k as (
-  select reference_date, row_no, source_label,
+  select g.reference_date, g.row_no, g.source_label,
     case
-      when label = 'Insgesamt' then null
-      when label ~* '^(.+) zusammen$' then substring(label from '^(.+) zusammen$')   -- "Europa zusammen"
-      else continent end as continent,
-    case when label ~* '(^|\s)(zusammen|insgesamt)$' and label !~* '^zusammen$' then null else region end as region,
+      when g.label = 'Insgesamt' then null
+      when g.label ~* '^(.+) zusammen$' then substring(g.label from '^(.+) zusammen$')   -- "Europa zusammen"
+      else g.continent end as continent,
+    case when g.label ~* '(^|\s)(zusammen|insgesamt)$' and g.label !~* '^zusammen$' then null else g.region end
+      as region,
     case
       -- a bare "Zusammen" is the subtotal of its section ...
-      when label ~* '^zusammen$' and section_members > 0 then coalesce(region, continent) || ' zusammen'
+      when g.label ~* '^zusammen$' and g.section_members > 0 then coalesce(g.region, g.continent) || ' zusammen'
       -- ... unless the section has no member rows ("Sonstiges Afrika" in 2025h2): then it is the category itself
-      when label ~* '^zusammen$' then coalesce(region, continent)
-      -- one spelling per residual category across releases (the 2026h1 one; communities.yaml uses it)
-      when label ~* '^staatenlos$' then 'staatenlos'
-      when label ~* '^ungeklärt' then 'ungeklärt'
-      when label ~* '^ohne Angabe' then 'ohne Angabe (Staatsangehörigkeit)'
-      when label ~* '^Paläst' then 'Palästinensische Gebiete'
-      else label end as citizenship
-  from g
+      when g.label ~* '^zusammen$' then coalesce(g.region, g.continent)
+      -- labels renamed between releases -> one spelling (the 2026h1 one, which communities.yaml uses)
+      else coalesce(a.citizenship, g.label) end as citizenship
+  from g left join {{ ref('afs_citizenship_alias') }} a on a.source_label = g.label
 ),
 l as (
   select k.*, citizenship ~* '(^|\s)(zusammen|insgesamt)$' as is_aggregate from k
