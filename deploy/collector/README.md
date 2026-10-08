@@ -52,7 +52,7 @@ observations (keyed by uuid) are copied ON CONFLICT DO NOTHING: repeatable, neve
 6. **On the Mac,** put into the data platform's `.env` (the password is `MIP_SYNC_PASSWORD` from step 2):
    ```
    MIP_COLLECTOR_DSN=postgresql://mip_sync:<MIP_SYNC_PASSWORD>@127.0.0.1:5436/collector
-   MIP_COLLECTOR_SSH=intel@100.92.213.30
+   MIP_COLLECTOR_SSH=intel@<vps-tailscale-ip>   # `tailscale ip -4` on the VPS
    MIP_COLLECTOR_SSH_KEY=~/.ssh/dk_intel_tunnel
    ```
    Then run `uv run mip collector import`.

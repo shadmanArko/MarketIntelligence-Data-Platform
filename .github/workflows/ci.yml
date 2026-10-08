@@ -1,17 +1,47 @@
 name: ci
-on: [push, pull_request]
+# Supply chain: actions pinned to commit SHAs, a fixed runner image, least-privilege token; Dependabot proposes
+# updates. A failure on main sends a Telegram alert (the 4-day red streak of 2026-10-04 went unnoticed).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       CI: "1"
       MIP_DATABASE_URL: postgresql://mip:mip@localhost:5434/mip
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7  # v10.2.0
       - run: docker compose up -d --build --wait
-      - run: uv sync
+      - run: uv sync --locked
       - run: uv run ruff check src tests
       - run: uv run mip db migrate
       - run: uv run pytest -q
       - run: uv run dbt parse --project-dir dbt --profiles-dir dbt   # full build needs data; runs locally
+
+  alert:
+    needs: [test]
+    if: failure() && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - env:
+          TOKEN: ${{ secrets.CI_TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.CI_TELEGRAM_CHAT_ID }}
+          MSG: ${{ github.event.head_commit.message }}
+          URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          [ -n "$TOKEN" ] && [ -n "$CHAT" ] || { echo "::notice::CI_TELEGRAM_* not set: no alert sent"; exit 0; }
+          text="🔴 Data platform CI failed on ${GITHUB_REF_NAME} (${GITHUB_SHA:0:7})
+          ${MSG%%$'\n'*}
+          ${URL}"
+          curl -fsS -o /dev/null "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${CHAT}" --data-urlencode "text=${text}" --data-urlencode "disable_web_page_preview=true"
