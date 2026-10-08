@@ -34,7 +34,9 @@ observations (keyed by uuid) are copied ON CONFLICT DO NOTHING: repeatable, neve
    ( umask 077; { echo "COLLECTOR_DB_PASSWORD=$(openssl rand -hex 24)"; echo "MIP_SYNC_PASSWORD=$(openssl rand -hex 24)"; } > .env )
    nano .env    # add MIP_HASH_SALT=..., YOUTUBE_CLIENT_ID=..., YOUTUBE_CLIENT_SECRET=..., YOUTUBE_REFRESH_TOKEN=..., YOUTUBE_CHANNEL_ID=...
    ```
-3. **Build and first run** (the build takes a few minutes the first time):
+3. **Build and first run** (the build takes a few minutes the first time). Installed before 2026-10-08? Run once:
+   `docker compose exec collector-db createdb -U mip mip` (an empty database the platform's reader-role migration
+   expects; nothing is stored in it).
    ```bash
    docker compose build collector && ./run.sh daily
    ```

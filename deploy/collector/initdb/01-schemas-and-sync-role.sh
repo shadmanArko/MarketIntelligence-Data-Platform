@@ -2,7 +2,10 @@
 # Runs once, when the collector database is first created.
 # - empty core/marts/ml/staging schemas: the platform's reader-role migration grants on them (nothing else lives there)
 # - mip_sync: the read-only login the Mac's `mip collector import` uses (raw.* and ops.runs only)
+# - an EMPTY database named "mip": migration 0010 grants CONNECT ON DATABASE mip (written for the Mac), and applied
+#   migrations can never change. Nothing is ever stored in it.
 set -e
+psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE DATABASE mip"
 psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" <<SQL
 CREATE SCHEMA IF NOT EXISTS raw; CREATE SCHEMA IF NOT EXISTS ops;
 CREATE SCHEMA IF NOT EXISTS core; CREATE SCHEMA IF NOT EXISTS marts;
