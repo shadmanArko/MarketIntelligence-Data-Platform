@@ -9,7 +9,7 @@ changing_facts: docs/brand/facts.yaml   # prices, deadlines, fees, pickup point:
 
 ## 1. Who we are
 
-**Dhaka Kacchi Berlin** is a small, homemade online kitchen in Berlin. We cook one dish the way Old Dhaka cooks it
+**Dhaka Kacchi Berlin** is a small, online kitchen in Berlin. We cook one dish the way Old Dhaka cooks it
 for weddings and celebrations: **kacchi biryani**, together with its traditional companion, **Borhani**.
 
 **One line:** *The real Old Dhaka kacchi, cooked fresh every Saturday in Berlin.*
@@ -45,7 +45,6 @@ before.
 | **Mutton Kacchi Biryani** (signature) | Raw marinated young mutton and long-grain basmati, layered and sealed in a dum pot and slow-cooked together for 6+ hours. Saffron, kewra, ghee, crispy fried onions (beresta) and the signature **dum potato (aloo)**. | Our regular dish since September 2026. Earlier we made Lamb Kacchi ("Smokey Lamb Kacchi"). [CONFIRM: is lamb still offered?] |
 | **Shahi Borhani** | Chilled spiced yoghurt drink: yoghurt, fresh mint, coriander, green chilli, black salt, a hand-blended spice mix. Made from scratch, no ready-made mix. | The traditional drink served with kacchi at Dhaka weddings. German guests often discover it with us. |
 | **Tok-Jhal-Mishti Chutney** | Sweet, sour and spicy chutney: raw mango, coriander, mint, spices. The founder learned it from her mother. | Served with the kacchi. [CONFIRM: included or sold separately?] |
-| **Specials** (occasional) | Spicy Lamb Kacchi; Deshi Mutton Kacchi day (22 Aug 2026); Eid menus; for Eid we polled Beef Kacchi and Beef Bhuna Khichuri. | One-day specials, announced in advance. |
 | **Sizes** | Regular box 1000 ml; Taster Box 750 ml (introduced July 2026). | Prices: see facts.yaml. |
 
 **How we cook it:**
@@ -79,8 +78,7 @@ Write the official allergen list here.
 - **Authentic, not fusion:** the Old Dhaka wedding kacchi, as it is cooked at home.
 - **No shortcuts:** hand-blended spices, overnight marinade, hours on dum.
 - **Care and hygiene:** prepared with a physician's precision and cleanliness.
-- **Halal and fresh:** halal mutton, cooked fresh for each Saturday. [CONFIRM the halal source: butcher or
-  certifier name]
+- **Halal and fresh:** halal mutton, cooked fresh for each Saturday. 
 - **Food brings people together:** whether you are from Bangladesh, India, Pakistan, Turkey, Lebanon, Iraq, Germany
   or anywhere else, you are welcome at our table.
 - **Small and personal:** you message the people who cook.
@@ -101,7 +99,7 @@ It's aromatic and rich, not fiery. [CONFIRM: say "medium"?] Specials like the Sp
 labelled.
 
 **Is it halal?**
-We use halal mutton. [CONFIRM: supplier or certifier name before saying "certified".]
+We use halal mutton.
 
 **When can I get it?**
 Saturdays only. Order by the Friday deadline.
@@ -112,7 +110,7 @@ Yes, within Berlin, for a distance-based fee. Pickup in Wedding is free.
 **How do I reheat it?** [CONFIRM the recommended method]
 For example: cover, and warm gently in the oven or a pan on low heat with a splash of water.
 
-**How long does it keep?** [CONFIRM]
+**How long does it keep?** 3 days in refrigerator
 
 **Can I order for an event?**
 Yes. Contact us for catering and large orders.
@@ -126,4 +124,4 @@ We are an online kitchen in Berlin-Wedding, with no dine-in. The pickup point is
 - WhatsApp: see facts.yaml
 - Email: hello@dhakakacchi.com
 - Instagram: @dhakakacchi · Facebook: Dhaka Kacchi · Threads: @dhakakacchi · YouTube: Dhaka Kacchi
-- Impressum: [CONFIRM: link it in every profile bio, required by §5 DDG]
+
