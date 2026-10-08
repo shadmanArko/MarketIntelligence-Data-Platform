@@ -1210,7 +1210,7 @@ requires-dist = [
     { name = "persiantools", specifier = ">=6.2.0" },
     { name = "playwright", specifier = ">=1.48" },
     { name = "polars", specifier = ">=1.9" },
-    { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.2" },
+    { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.3.6" },
     { name = "pyarrow", specifier = ">=17" },
     { name = "pydantic", specifier = ">=2.9" },
     { name = "pydantic-settings", specifier = ">=2.6" },
