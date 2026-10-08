@@ -18,6 +18,7 @@ from datetime import UTC, datetime, timedelta
 from typing import ClassVar
 
 import httpx
+import psycopg
 import yaml
 from dotenv import dotenv_values
 from pydantic import BaseModel, ConfigDict
@@ -145,7 +146,11 @@ class YouTube:
 
     # ------------------------------------------------------------------ discovery
     def discover(self, scope: Scope) -> Iterator[EntityRef]:
+        """MIP_YOUTUBE_SEARCHES splits the work between machines (same code, same raw format):
+        all (default, everything) | recent (only this week's recent-upload searches: the VPS collector, daily) |
+        none (no searches: the Mac's weekly statistics refresh when the VPS does the searching)."""
         week = datetime.now(UTC).strftime("%G-W%V")
+        mode = (_env("MIP_YOUTUBE_SEARCHES") or "all").lower()
         if scope.options.get("refresh"):
             # weekly statistics snapshot of every known video (1 unit per 50) + this week's recent searches only
             with connect() as c:
@@ -156,12 +161,12 @@ class YouTube:
             for i in range(0, len(ids), 50):
                 batch = ids[i:i + 50]
                 yield EntityRef("videos", ",".join(batch), {"ids": batch, "tier": 3}, priority=25)
-        for q in queries():
-            if scope.options.get("refresh") and q["tier"] > 2:
+        for q in queries() if mode != "none" else []:
+            if (scope.options.get("refresh") or mode == "recent") and q["tier"] > 2:
                 continue
             base = {"q": q["q"], "region": q["region"], "lang": q["lang"], "tier": q["tier"], "origin": q["source"]}
             # all-time most viewed: once; recent uploads: once per ISO week (the trend signal)
-            if not scope.options.get("refresh"):
+            if not scope.options.get("refresh") and mode == "all":
                 yield EntityRef("search", f"{q['q']}|{q['region']}|viewCount", {**base, "order": "viewCount"},
                                 priority=10 * q["tier"])
             if q["tier"] <= 2:
@@ -170,9 +175,12 @@ class YouTube:
         if _env("YOUTUBE_CHANNEL_ID"):   # Dhaka Kacchi's own channel: every upload + weekly stats
             yield EntityRef("channels", f"own:{_env('YOUTUBE_CHANNEL_ID')}",
                             {"lookup": {"id": _env("YOUTUBE_CHANNEL_ID")}, "origin": "restaurant_website"}, priority=5)
-        with connect() as c:   # channels linked from Berlin restaurant websites
-            rows = c.execute("select distinct handle from core.social_link_candidate where platform='youtube'"
-                             " and handle is not null").fetchall()
+        try:
+            with connect() as c:   # channels linked from Berlin restaurant websites (core exists only on the Mac)
+                rows = c.execute("select distinct handle from core.social_link_candidate where platform='youtube'"
+                                 " and handle is not null").fetchall()
+        except psycopg.errors.UndefinedTable:
+            rows = []                        # VPS collector: raw + ops only
         for r in rows:
             h = r["handle"]
             param = {"id": h} if h.startswith("UC") and len(h) == 24 else {"forHandle": "@" + h.lstrip("@")}

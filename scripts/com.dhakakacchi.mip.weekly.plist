@@ -4,9 +4,13 @@
 <dict>
   <key>Label</key><string>com.dhakakacchi.mip.weekly</string>
   <key>ProgramArguments</key>
-  <array><string>/bin/bash</string><string>/Users/shadman.arko/Documents/Work_DoNotTouch/Dhaka Kacchi/MarketIntelligence Data Platform/scripts/weekly_refresh.sh</string></array>
+  <array><string>/bin/bash</string><string>/Users/shadman.arko/Documents/Work_DoNotTouch/Dhaka Kacchi/MarketIntelligence Data Platform/scripts/weekly_if_due.sh</string></array>
+  <!-- Sundays 01:00, plus every hour and at login: the refresh itself only starts when this week's has not finished
+       yet, so a Sunday with the Mac switched off is made up within an hour of switching it on. -->
   <key>StartCalendarInterval</key>
   <dict><key>Weekday</key><integer>0</integer><key>Hour</key><integer>1</integer><key>Minute</key><integer>0</integer></dict>
+  <key>StartInterval</key><integer>3600</integer>
+  <key>RunAtLoad</key><true/>
   <key>StandardOutPath</key><string>/Users/shadman.arko/Documents/Work_DoNotTouch/Dhaka Kacchi/MarketIntelligence Data Platform/data/logs/weekly_launchd.log</string>
   <key>StandardErrorPath</key><string>/Users/shadman.arko/Documents/Work_DoNotTouch/Dhaka Kacchi/MarketIntelligence Data Platform/data/logs/weekly_launchd.log</string>
 </dict>

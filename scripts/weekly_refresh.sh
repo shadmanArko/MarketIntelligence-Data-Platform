@@ -13,15 +13,26 @@ run() { echo "== $(date -u +%F' '%H:%M) $*"; "$@" || echo "!! failed: $*"; }
 
 docker compose up -d --wait > /dev/null 2>&1
 run uv run mip db partitions
-for s in wolt lieferando first_party wikipedia reddit_archive youtube berlin_events; do
+# VPS collector configured? Then the light API sources were collected there all week: import them, and only run the
+# heavy / bot-protected sources here. YouTube: statistics refresh of known videos only (the VPS does the searching).
+if grep -q '^MIP_COLLECTOR_DSN=.' .env 2>/dev/null; then
+  COLLECTOR=1
+  run uv run mip collector import
+  LOCAL_SOURCES="wolt lieferando first_party youtube"
+  export MIP_YOUTUBE_SEARCHES=none
+else
+  COLLECTOR=0
+  LOCAL_SOURCES="wolt lieferando first_party wikipedia reddit_archive youtube berlin_events"
+fi
+for s in $LOCAL_SOURCES; do
   run uv run mip discover -m "$M" -s "$s" --refresh
 done
 uv run mip fetch -m "$M" -s wolt -w 8 --skip-health --refresh-children       > "$L/wolt.log" 2>&1 &
 uv run mip fetch -m "$M" -s lieferando -w 8 --skip-health --refresh-children > "$L/lieferando.log" 2>&1 &
 uv run mip fetch -m "$M" -s first_party -w 1 --skip-health                   > "$L/first_party.log" 2>&1 &
-uv run mip fetch -m "$M" -s wikipedia -w 3 --skip-health                     > "$L/wikipedia.log" 2>&1 &
-uv run mip fetch -m "$M" -s reddit_archive -w 2 --skip-health                > "$L/reddit.log" 2>&1 &
-uv run mip fetch -m "$M" -s berlin_events -w 1 --skip-health                 > "$L/berlin_events.log" 2>&1 &
+[ "$COLLECTOR" = 1 ] || uv run mip fetch -m "$M" -s wikipedia -w 3 --skip-health                     > "$L/wikipedia.log" 2>&1 &
+[ "$COLLECTOR" = 1 ] || uv run mip fetch -m "$M" -s reddit_archive -w 2 --skip-health                > "$L/reddit.log" 2>&1 &
+[ "$COLLECTOR" = 1 ] || uv run mip fetch -m "$M" -s berlin_events -w 1 --skip-health                 > "$L/berlin_events.log" 2>&1 &
 if uv run mip healthcheck -m "$M" -s youtube > /dev/null 2>&1; then          # needs YOUTUBE_API_KEY
   uv run mip fetch -m "$M" -s youtube -w 2 --refresh-children                > "$L/youtube.log" 2>&1 &
 fi
@@ -40,3 +51,4 @@ run uv run mip ml export business_features
 run uv run mip ml export offering_features
 run uv run mip ml export content_features
 echo "== weekly refresh finished $(date -u)"
+date -u +%FT%TZ > data/logs/weekly_last_success     # read by scripts/weekly_if_due.sh (catch-up after a missed Sunday)

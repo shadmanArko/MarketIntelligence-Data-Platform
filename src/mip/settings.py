@@ -28,6 +28,10 @@ class Settings(BaseSettings):
     youtube_api_key: str = ""
     dataforseo_login: str = ""
     dataforseo_password: str = ""
+    # VPS collector (light daily API sources run 24/7 on the VPS; the Mac imports their raw data)
+    mip_collector_dsn: str = ""  # postgresql://mip_sync:...@127.0.0.1:5436/collector (through the tunnel)
+    mip_collector_ssh: str = ""  # intel@<vps tailscale ip>
+    mip_collector_ssh_key: str = ""  # ~/.ssh/dk_intel_tunnel (tunnel-only key)
 
     @property
     def data_dir(self) -> Path:

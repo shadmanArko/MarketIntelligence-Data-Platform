@@ -1,0 +1,45 @@
+# VPS collector for the Market Intelligence Data Platform (light daily API sources, 24/7).
+# Separate compose project, network and database: nothing here touches the harness stack.
+name: mip-collector
+
+services:
+  collector-db:
+    image: postgres:18-alpine          # raw + ops only: no PostGIS / H3 needed
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: collector
+      POSTGRES_USER: mip
+      POSTGRES_PASSWORD: ${COLLECTOR_DB_PASSWORD:?set COLLECTOR_DB_PASSWORD in deploy/collector/.env}
+      MIP_SYNC_PASSWORD: ${MIP_SYNC_PASSWORD:?set MIP_SYNC_PASSWORD in deploy/collector/.env}
+    command: ["postgres", "-c", "shared_buffers=32MB", "-c", "max_connections=20"]
+    volumes:
+      - collector_db:/var/lib/postgresql
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:5442:5432"          # loopback only: the Mac reaches it through the tunnel-only SSH key
+    mem_limit: 256m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mip -d collector"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  collector:                           # runs only while collecting (docker compose run --rm collector ...)
+    build:
+      context: ../..
+      dockerfile: deploy/collector/Dockerfile
+    env_file: .env
+    environment:
+      MIP_DATABASE_URL: postgresql://mip:${COLLECTOR_DB_PASSWORD}@collector-db:5432/collector
+      MIP_DATA_DIR: /app/data
+    volumes:
+      - collector_data:/app/data
+    mem_limit: 512m
+    depends_on:
+      collector-db:
+        condition: service_healthy
+    profiles: [job]
+
+volumes:
+  collector_db:
+  collector_data:

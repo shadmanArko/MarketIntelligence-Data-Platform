@@ -19,12 +19,41 @@ ds_app = typer.Typer(no_args_is_help=True, help="Bulk datasets: download once, r
 er_app = typer.Typer(no_args_is_help=True, help="Entity resolution")
 ml_app = typer.Typer(no_args_is_help=True, help="Versioned ML training-set exports")
 enrich_app = typer.Typer(no_args_is_help=True, help="Deterministic text enrichment (languages, mentions)")
+collector_app = typer.Typer(no_args_is_help=True, help="VPS collector: import its raw data into this database")
 app.add_typer(db_app, name="db")
 app.add_typer(geo_app, name="geo")
 app.add_typer(ds_app, name="datasets")
 app.add_typer(er_app, name="resolve")
 app.add_typer(ml_app, name="ml")
 app.add_typer(enrich_app, name="enrich")
+app.add_typer(collector_app, name="collector")
+
+
+@collector_app.command("import")
+def collector_import() -> None:
+    """Copy new raw data from the VPS collector (through the tunnel); idempotent, safe to rerun."""
+    from mip.collector import import_from_collector
+
+    r = import_from_collector(log=console.print)
+    console.print(
+        f"[green]collector import: {r['observations']} observations, {r['payloads']} payloads, "
+        f"{r['runs']} runs from {', '.join(r['sources']) or 'nothing new'}[/green]"
+    )
+
+
+@collector_app.command("status")
+def collector_status() -> None:
+    """Recent imports from the VPS collector."""
+    from mip.db import connect
+
+    with connect() as c:
+        for r in c.execute("select * from ops.collector_import order by started_at desc limit 8"):
+            console.print(
+                f"{r['started_at']:%Y-%m-%d %H:%M} {r['status']:9s} obs {r['observations']:>6} "
+                f"payloads {r['payloads']:>6} {','.join(r['sources'])} {r['error'] or ''}"
+            )
+
+
 console = Console()
 
 Market = Annotated[str, typer.Option("--market", "-m", help="market id, e.g. berlin-food")]
@@ -169,8 +198,9 @@ def status(market: Market = "berlin-food", source: str | None = typer.Option(Non
             t2.add_row(r["source"], r["entity_type"], str(r["n"]), str(r["k"]), str(r["last"])[:19])
         console.print(t2)
         q = c.execute("SELECT source, reason, count(*) n FROM ops.quarantine GROUP BY 1,2 ORDER BY 1").fetchall()
-        d = c.execute("SELECT source, entity_type, count(*) n FROM ops.schema_drift WHERE NOT acknowledged"
-                      " GROUP BY 1,2").fetchall()
+        d = c.execute(
+            "SELECT source, entity_type, count(*) n FROM ops.schema_drift WHERE NOT acknowledged GROUP BY 1,2"
+        ).fetchall()
         if q:
             console.print("[yellow]quarantine:[/]", [dict(r) for r in q])
         if d:
@@ -215,8 +245,14 @@ def ds_list() -> None:
     with connect() as c:
         t = Table("name", "version", "rows", "raw table", "terms", "loaded")
         for r in c.execute("SELECT * FROM ops.datasets ORDER BY name, loaded_at DESC"):
-            t.add_row(r["name"], r["version"], str(r["row_count"]), r["raw_table"] or "", r["terms"] or "",
-                      str(r["loaded_at"])[:19])
+            t.add_row(
+                r["name"],
+                r["version"],
+                str(r["row_count"]),
+                r["raw_table"] or "",
+                r["terms"] or "",
+                str(r["loaded_at"])[:19],
+            )
         console.print(t)
 
 
@@ -275,8 +311,10 @@ def enrich_mentions() -> None:
 
 
 @ml_app.command("export")
-def ml_export_cmd(name: str = typer.Argument("business_features"),
-                  as_of: str | None = typer.Option(None, help="cut-off timestamp (UTC); default now")) -> None:
+def ml_export_cmd(
+    name: str = typer.Argument("business_features"),
+    as_of: str | None = typer.Option(None, help="cut-off timestamp (UTC); default now"),
+) -> None:
     """Build point-in-time features as of a cut-off and write a registered, versioned Parquet set."""
     from mip.ml_export import export
 
@@ -290,8 +328,15 @@ def ml_list() -> None:
     with connect() as c:
         t = Table("name", "version", "as of", "rows", "features", "git", "path")
         for r in c.execute("SELECT * FROM ml.training_sets ORDER BY name, version"):
-            t.add_row(r["name"], str(r["version"]), str(r["as_of"])[:19], f"{r['row_count']:,}",
-                      str(len(r["feature_list"])), r["git_commit"] or "", r["path"])
+            t.add_row(
+                r["name"],
+                str(r["version"]),
+                str(r["as_of"])[:19],
+                f"{r['row_count']:,}",
+                str(len(r["feature_list"])),
+                r["git_commit"] or "",
+                r["path"],
+            )
         console.print(t)
 
 
@@ -312,8 +357,10 @@ app.add_typer(brief_app, name="brief")
 
 
 @brief_app.command("content")
-def brief_content(days: int = typer.Option(10, help="number of days"),
-                  start: str | None = typer.Option(None, help="first day YYYY-MM-DD (default tomorrow)")) -> None:
+def brief_content(
+    days: int = typer.Option(10, help="number of days"),
+    start: str | None = typer.Option(None, help="first day YYYY-MM-DD (default tomorrow)"),
+) -> None:
     """Day x platform content briefs (format, hook, language, greeting, audio, hashtags, timing) -> data/briefs."""
     from datetime import date, timedelta
 
@@ -327,9 +374,11 @@ app.add_typer(export_app, name="export")
 
 
 @export_app.command("snapshot")
-def export_snapshot(to: str = typer.Option("data/exports", help="target folder, e.g. /Volumes/MyDrive/dk-data"),
-                    dump: bool = typer.Option(True, help="include the full pg_dump backup"),
-                    parquet: bool = typer.Option(True, help="include Parquet copies of core / marts / ml")) -> None:
+def export_snapshot(
+    to: str = typer.Option("data/exports", help="target folder, e.g. /Volumes/MyDrive/dk-data"),
+    dump: bool = typer.Option(True, help="include the full pg_dump backup"),
+    parquet: bool = typer.Option(True, help="include Parquet copies of core / marts / ml"),
+) -> None:
     """Copy everything to a folder / external drive: full DB backup, Parquet tables, training sets, docs."""
     from mip.export_snapshot import snapshot
 
