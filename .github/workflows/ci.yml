@@ -39,7 +39,7 @@ jobs:
           MSG: ${{ github.event.head_commit.message }}
           URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          [ -n "$TOKEN" ] && [ -n "$CHAT" ] || { echo "::notice::CI_TELEGRAM_* not set: no alert sent"; exit 0; }
+          if [ -z "$TOKEN" ] || [ -z "$CHAT" ]; then echo "::notice::CI_TELEGRAM_* not set: no alert sent"; exit 0; fi
           text="🔴 Data platform CI failed on ${GITHUB_REF_NAME} (${GITHUB_SHA:0:7})
           ${MSG%%$'\n'*}
           ${URL}"
