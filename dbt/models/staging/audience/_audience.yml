@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: stg_afs__citizenship
+    description: >
+      Foreign residents of Berlin by citizenship (AfS A I 5, T10), one row per release and label. Subtotal rows of the
+      sheet (region / EU / Nicht-EU / continent "zusammen", grand total "Insgesamt") are kept with is_aggregate = true;
+      sum only where not is_aggregate. Leaves reconcile exactly with "Insgesamt" (tests/afs_citizenship_reconciles.sql).
+    tests:
+      - unique_combination: {columns: [reference_date, citizenship]}
+    columns:
+      - name: citizenship
+        tests: [not_null]
+      - name: is_aggregate
+        tests: [not_null]
+      - name: residents
+        tests: [not_null, {between: {min_value: 0}}]
+
+seeds:
+  - name: afs_citizenship_alias
+    description: >
+      Hand-maintained. AfS T10 labels renamed between releases (footnote markers already stripped) -> the latest
+      spelling, so a citizenship keeps one label across releases. Does not merge scope changes (2025h2 "China"
+      includes Hongkong / Macau / Taiwan); communities.yaml lists the split labels instead.
+    columns:
+      - name: source_label
+        tests: [unique, not_null]
+      - name: citizenship
+        tests: [not_null]
