@@ -1,26 +1,26 @@
 # Changing facts: the single source of truth for prices, times and logistics. Agents and the customer chatbot read
 # these through a live tool. They never quote them from the brand book text, so nothing goes stale.
 # Values below are the latest seen in our posts (up to 2026-09-22). Every [CONFIRM] needs the owner.
-version: 2026-10-06-draft
+version: 2026-10-13-draft
 currency: EUR
-prices_include_vat: null          # [CONFIRM] German law (PAngV): advertised prices must be final prices incl. VAT
+prices_include_vat: true          # confirmed by the owner 2026-10-13 (PAngV: advertised prices are final prices incl. VAT)
 
 menu:
   - id: mutton_kacchi_regular
     name: Mutton Kacchi Biryani — Regular Box
     size_ml: 1000
-    price: null                   # [CONFIRM] lamb box was 15.00 (Apr–Aug 2026); mutton price not stated in posts
+    price: 15.00                  # confirmed by the owner 2026-10-13 (the lamb box was also 15.00, Apr–Aug 2026)
     available: true
   - id: kacchi_taster
     name: Kacchi Taster Box
     size_ml: 750
-    price: 9.99                   # introduced 2026-07-11 [CONFIRM still offered, and mutton or lamb]
-    available: null
+    price: 10.00                  # confirmed by the owner 2026-10-13 (was 9.99 when introduced 2026-07-11); mutton
+    available: true
   - id: lamb_kacchi_regular
     name: Smokey Lamb Kacchi — Regular Box
     size_ml: 1000
-    price: 15.00
-    available: null               # [CONFIRM] replaced by mutton in Sep 2026?
+    price: null                   # not sold any more
+    available: false              # confirmed by the owner 2026-10-13: only mutton biryani and borhani are served (no lamb, no beef)
   - id: shahi_borhani
     name: Shahi Borhani
     size_ml: 500
@@ -28,8 +28,9 @@ menu:
     available: true
   - id: chutney
     name: Tok-Jhal-Mishti Chutney
-    price: null                   # [CONFIRM] included with kacchi or separate?
+    price: null                   # no price: it is not sold separately
     available: true
+    note: included free with the Regular Box only (not with the Taster Box)   # confirmed by the owner 2026-10-13
 
 ordering:
   channels: [whatsapp, website]
