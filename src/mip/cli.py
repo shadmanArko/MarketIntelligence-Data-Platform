@@ -155,10 +155,15 @@ def fetch(
     skip_health: bool = typer.Option(False),
     refresh_children: bool = typer.Option(False, help="re-queue follow-up tasks already done (refresh runs)"),
 ) -> None:
-    """Work through the queue; resumable — rerun to continue where the last run stopped."""
+    """Work through the queue; resumable — rerun to continue where the last run stopped.
+
+    Exits 1 when the run did not succeed (a worker lost its database connection, the circuit breaker opened, or it
+    was interrupted), so schedulers see the failure; task-level errors stay in the queue for the next run."""
     from mip.core.runner import fetch as f
 
-    f(load_market(market), source, workers, max_tasks, entity, skip_health, refresh_children)
+    res = f(load_market(market), source, workers, max_tasks, entity, skip_health, refresh_children)
+    if res.get("status") != "succeeded":
+        raise typer.Exit(1)
 
 
 @app.command()
@@ -223,7 +228,9 @@ def transform(
 
 @app.command()
 def report(market: Market = "berlin-food") -> None:
-    """Quality report per source: completeness, volume vs last run, freshness, quarantine."""
+    """Quality report per source: completeness, volume vs last run, freshness, quarantine.
+
+    Exit 0 = all checks passed, 3 = the report ran but some data-quality checks failed, anything else = it crashed."""
     from mip.quality import run_report
 
     run_report(load_market(market))

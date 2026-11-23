@@ -1,0 +1,33 @@
+# /etc/systemd/system/mip-weekly.service — the mip weekly crawl + rebuild (deploy/weekly). Started by mip-weekly.timer.
+# A failed week (scripts/weekly_refresh.sh exits 1: a crawl lost the DB, transform failed, ...) is retried after 6 h,
+# at most 3 starts in 2 days. Re-runs resume: raw is append-only and task claims go stale after 30 min.
+[Unit]
+Description=mip weekly crawl + rebuild (Market Intelligence Data Platform)
+Documentation=file:///srv/apps/mip-weekly/repo/deploy/weekly/README.md
+Wants=network-online.target
+After=network-online.target docker.service
+Requires=docker.service
+StartLimitIntervalSec=2d
+StartLimitBurst=3
+
+[Service]
+Type=oneshot
+User=shadmanarko
+Group=docker
+WorkingDirectory=/srv/apps/mip-weekly/repo/deploy/weekly
+Environment=MIN_FREE_GIB=8 MAX_WAIT_MIN=120
+ExecStartPre=/srv/apps/mip-weekly/repo/deploy/weekly/ram_guard.sh
+ExecStartPre=/usr/bin/docker compose --env-file /srv/apps/mip-weekly/weekly.env config --quiet
+ExecStart=/usr/bin/docker compose --env-file /srv/apps/mip-weekly/weekly.env run --rm --no-deps --name mip-weekly-run weekly
+# a stopped or timed-out job must not leave the container running on its own
+ExecStopPost=-/usr/bin/docker rm -f mip-weekly-run
+# Type=oneshot: the maximum runtime is TimeoutStartSec (RuntimeMaxSec has no effect on oneshot units).
+# Mac runs (Oct-Nov 2026) finished 10-18 h after the 01:00 start; dbt is 1.4-2.4x slower per core on the server.
+# Includes ram_guard's wait. Raise it if a clean run comes close.
+TimeoutStartSec=24h
+TimeoutStopSec=3min
+KillMode=mixed
+Restart=on-failure
+RestartSec=6h
+Nice=5
+# no [Install]: only mip-weekly.timer is enabled

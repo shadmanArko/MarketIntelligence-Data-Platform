@@ -1,0 +1,100 @@
+# mip weekly refresh on the homelab server. A batch job, not a daemon: the systemd timer starts it with
+#   docker compose run --rm --no-deps --name mip-weekly-run weekly
+# (see mip-weekly.service). It publishes no ports. It talks to mip-postgres over that project's Docker network and
+# to the internet (crawls, collector VPS) over its own bridge network.
+#
+# Server-side files, outside the git checkout (so a checkout/clean never touches them) and never in Git:
+#   /srv/apps/mip-weekly/weekly.env    non-secret settings, passed with --env-file: see .env.example
+#   /srv/apps/mip-weekly/secrets/*     one file per secret, mode 600, owned by uid 10003; unused secret = EMPTY file
+#   /srv/apps/mip-weekly/known_hosts   the VPS collector's SSH host key (verified fingerprint), mode 644
+name: mip-weekly
+
+services:
+  weekly:
+    image: mip-weekly:${GIT_COMMIT:?set GIT_COMMIT in .env (the commit the image is built from)}
+    build:
+      context: ../..
+      dockerfile: deploy/weekly/Dockerfile
+      args:
+        GIT_COMMIT: ${GIT_COMMIT}
+        WITH_CHROMIUM: "0"
+    hostname: mip-weekly            # stable: `mip fetch` releases orphaned task claims by hostname:pid
+    user: "10003:10003"
+    restart: "no"                   # batch job: systemd owns scheduling and retries (unless-stopped would loop it)
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    cpus: 4                         # 8 logical CPUs on the server; mip-postgres (7 CPU limit) does the dbt work
+    mem_limit: 6g
+    memswap_limit: 6g
+    pids_limit: 1024
+    environment:
+      MIP_PG_HOST: ${MIP_PG_HOST:?set MIP_PG_HOST in .env (mip-postgres container name on its network)}
+      MIP_PG_PORT: "5432"
+      MIP_PG_USER: mip
+      MIP_PG_DB: mip
+      MIP_COLLECTOR_SSH: ${MIP_COLLECTOR_SSH:-}
+      MIP_METRICS_DIR: /metrics
+      TZ: UTC
+    secrets:
+      - mip_pg_password
+      - mip_hash_salt
+      - mip_collector_dsn
+      - collector_ssh_key
+      - youtube_api_key
+      - youtube_client_id
+      - youtube_client_secret
+      - youtube_refresh_token
+      - youtube_channel_id
+      - meta_access_token
+      - meta_ig_user_id
+      - dk_warehouse_dsn
+    volumes:
+      - ${MIP_WEEKLY_DATA:-/srv/data/mip-weekly}:/app/data          # logs, ML exports, resolution cache (HDD)
+      - ${MIP_WEEKLY_METRICS:-/srv/data/mip-weekly/metrics}:/metrics  # status gauges (node-exporter textfile dir if any)
+      - ${MIP_WEEKLY_KNOWN_HOSTS:-./known_hosts}:/home/mip/.ssh/known_hosts:ro
+    tmpfs:
+      - /tmp:size=1g
+    networks: [mipdb, egress]
+    healthcheck:
+      test: ["CMD", "/app/.venv/bin/python", "/usr/local/lib/mip-weekly/healthcheck.py"]
+      interval: 5m
+      timeout: 30s
+      start_period: 1m
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  mipdb:
+    external: true
+    name: ${MIP_DB_NETWORK:?set MIP_DB_NETWORK in .env (the Docker network mip-postgres is on)}
+  egress: {}                        # plain bridge: outbound only, NAT through the host's home connection
+
+secrets:
+  mip_pg_password:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/mip_pg_password"
+  mip_hash_salt:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/mip_hash_salt"
+  mip_collector_dsn:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/mip_collector_dsn"
+  collector_ssh_key:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/collector_ssh_key"
+  youtube_api_key:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/youtube_api_key"
+  youtube_client_id:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/youtube_client_id"
+  youtube_client_secret:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/youtube_client_secret"
+  youtube_refresh_token:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/youtube_refresh_token"
+  youtube_channel_id:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/youtube_channel_id"
+  meta_access_token:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/meta_access_token"
+  meta_ig_user_id:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/meta_ig_user_id"
+  dk_warehouse_dsn:
+    file: "${MIP_WEEKLY_SECRETS:-./secrets}/dk_warehouse_dsn"
