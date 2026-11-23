@@ -53,7 +53,7 @@ Needs Docker. From the project repository (or any Postgres 18 with PostGIS, pgve
 docker compose up -d
 docker exec -i mip-postgres pg_restore -U mip -d mip --clean --if-exists --no-owner < database/mip.dump
 ```
-Connection afterwards: host localhost, port 5434, database `mip`, user `mip_reader` / password `mip_reader`
+Connection afterwards: host localhost, port 5434, database `mip`, user `mip_reader` / password `<set in ~/.config/homelab-readers/mip_reader.pw>`
 (read-only) or `mip` / `mip` (owner).
 """
 
