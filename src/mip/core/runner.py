@@ -72,35 +72,50 @@ class _Worker(threading.Thread):
         self.rr = 0
 
     def run(self) -> None:
+        # Anything escaping _work() means this worker's own database connection is gone (a task error is handled
+        # per task): record it so fetch() marks the run failed instead of reporting a silent "succeeded".
+        try:
+            self._work()
+        except BaseException as e:  # a thread must never die silently
+            self.ctx.worker_failed(self.name, e)
+
+    def _work(self) -> None:
         ctx = self.ctx
         connector = make_connector(ctx.market, ctx.source)
-        with connect(autocommit=False) as c:
-            writer = RawWriter(c, ctx.market.id, ctx.source, connector.version, ctx.run_id, connector.contracts)
-            while not ctx.stop.is_set():
-                if ctx.max_tasks and ctx.claimed >= ctx.max_tasks:
-                    break
-                # rotate entity types across workers so one throttled endpoint never starves the others
-                tasks = []
-                if ctx.lanes:
-                    pref = ctx.lanes[(self.rr + int(self.name_id.rsplit(":", 1)[1])) % len(ctx.lanes)]
-                    self.rr += 1
-                    tasks = queue.claim(c, ctx.market.id, ctx.source, self.name_id, ctx.run_id, 1, [pref])
-                if not tasks:
-                    tasks = queue.claim(c, ctx.market.id, ctx.source, self.name_id, ctx.run_id, 1, ctx.entity_types)
-                c.commit()
-                if not tasks:
-                    if ctx.idle_wait():
-                        continue
-                    break
+        writer = None
+        try:
+            with connect(autocommit=False) as c:
+                writer = RawWriter(c, ctx.market.id, ctx.source, connector.version, ctx.run_id, connector.contracts)
+                self._loop(c, connector, writer)
+        finally:  # count what this worker stored even if its connection died
+            ctx.merge_stats(writer.stats if writer else {}, getattr(getattr(connector, "http", None), "stats", {}))
+
+    def _loop(self, c, connector, writer: RawWriter) -> None:
+        ctx = self.ctx
+        while not ctx.stop.is_set():
+            if ctx.max_tasks and ctx.claimed >= ctx.max_tasks:
+                break
+            # rotate entity types across workers so one throttled endpoint never starves the others
+            tasks = []
+            if ctx.lanes:
+                pref = ctx.lanes[(self.rr + int(self.name_id.rsplit(":", 1)[1])) % len(ctx.lanes)]
+                self.rr += 1
+                tasks = queue.claim(c, ctx.market.id, ctx.source, self.name_id, ctx.run_id, 1, [pref])
+            if not tasks:
+                tasks = queue.claim(c, ctx.market.id, ctx.source, self.name_id, ctx.run_id, 1, ctx.entity_types)
+            c.commit()
+            if not tasks:
+                if ctx.idle_wait():
+                    continue
+                break
+            with ctx.lock:
+                ctx.claimed += 1
+                ctx.active += 1
+            try:
+                self._process(c, connector, writer, tasks[0])
+            finally:
                 with ctx.lock:
-                    ctx.claimed += 1
-                    ctx.active += 1
-                try:
-                    self._process(c, connector, writer, tasks[0])
-                finally:
-                    with ctx.lock:
-                        ctx.active -= 1
-            ctx.merge_stats(writer.stats, getattr(getattr(connector, "http", None), "stats", {}))
+                    ctx.active -= 1
 
     def _process(self, c, connector, writer: RawWriter, t: dict) -> None:
         ctx = self.ctx
@@ -170,6 +185,7 @@ class _FetchCtx:
         self.writer_stats: Counter = Counter()
         self.http_stats: Counter = Counter()
         self.breaker_open = False
+        self.worker_errors: list[str] = []
         self.progress = None
         self.ptask = None
         self.lanes: list[str] = []
@@ -177,6 +193,13 @@ class _FetchCtx:
     def count(self, k: str, n: int = 1) -> None:
         with self.lock:
             self.counter[k] += n
+
+    def worker_failed(self, worker: str, e: BaseException) -> None:
+        msg = f"{worker}: {type(e).__name__}: {str(e)[:300]}"
+        with self.lock:
+            self.worker_errors.append(msg)
+        log.error("worker.died", worker=worker, error=msg)
+        console.print(f"[red]{self.source}: {msg} — worker stopped, run will be marked failed[/]")
 
     def merge_stats(self, w: dict, h: dict) -> None:
         with self.lock:
@@ -255,7 +278,12 @@ def fetch(market: Market, source: str, workers: int = 4, max_tasks: int | None =
         status, err = "aborted", "KeyboardInterrupt"
     if ctx.breaker_open:
         status, err = "failed", "circuit breaker open"
+    if ctx.worker_errors:  # e.g. psycopg.OperationalError "the connection is lost": tasks may be stuck 'running'
+        status = "failed"
+        err = "; ".join(filter(None, [err, f"{len(ctx.worker_errors)}/{workers} worker(s) died: "
+                                           + " | ".join(ctx.worker_errors[:3])]))
     metrics = {"tasks": dict(ctx.counter), "raw": dict(ctx.writer_stats), "http": dict(ctx.http_stats)}
     end_run(run_id, status, metrics, err)
-    console.print(f"[bold]{source}[/] run {run_id} {status}: {metrics}")
-    return metrics
+    console.print(f"[bold]{source}[/] run {run_id} {'[red]' if status != 'succeeded' else ''}{status}"
+                  f"{'[/]' if status != 'succeeded' else ''}: {metrics}" + (f" — {err}" if err else ""))
+    return {**metrics, "status": status, "error": err}

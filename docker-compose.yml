@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: mip
       POSTGRES_DB: mip
     ports:
-      - "5434:5432"
+      - "127.0.0.1:5434:5432"
     volumes:
       - mip-pgdata:/var/lib/postgresql
     command: >

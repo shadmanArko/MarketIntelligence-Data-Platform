@@ -1,0 +1,24 @@
+# Build context for deploy/*/Dockerfile is the repo root: keep secrets, data and local state out of it.
+.git
+.env
+.env.*
+!deploy/weekly/.env.example
+**/.env
+**/secrets/
+**/known_hosts
+*.pw
+.mip_reader_password
+data/
+.venv/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+*.pdf
+*.pre-*
+.idea/
+*.iml
+.DS_Store

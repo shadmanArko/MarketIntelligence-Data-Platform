@@ -10,3 +10,5 @@ dbt/logs/
 dbt/dbt_packages/
 *.pdf
 .DS_Store
+.mip_reader_password
+.env.pre-*

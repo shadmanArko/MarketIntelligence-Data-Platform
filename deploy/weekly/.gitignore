@@ -1,0 +1,4 @@
+# server-side only: never commit
+.env
+secrets/
+known_hosts

@@ -1,0 +1,13 @@
+# /etc/systemd/system/mip-weekly.timer — Sunday 01:00 Berlin. Persistent: a Sunday missed while the server was off
+# runs once at the next boot (the Mac's hourly catch-up wrapper is not needed here).
+[Unit]
+Description=mip weekly crawl + rebuild, Sundays 01:00 Europe/Berlin
+
+[Timer]
+OnCalendar=Sun *-*-* 01:00:00 Europe/Berlin
+Persistent=true
+AccuracySec=1min
+Unit=mip-weekly.service
+
+[Install]
+WantedBy=timers.target

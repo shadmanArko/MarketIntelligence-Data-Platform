@@ -1,5 +1,6 @@
 """Run records: what ran, which code and config, what it fetched and what failed."""
 
+import os
 import subprocess
 from typing import Any
 from uuid import UUID
@@ -15,9 +16,11 @@ def git_commit() -> str | None:
                              timeout=5)
         sha = out.stdout.strip() or None
         dirty = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT, capture_output=True, text=True, timeout=5)
-        return f"{sha}-dirty" if sha and dirty.stdout.strip() else sha
+        if sha:
+            return f"{sha}-dirty" if dirty.stdout.strip() else sha
     except Exception:
-        return None
+        pass
+    return os.environ.get("MIP_GIT_COMMIT") or None  # baked into the server image (no .git inside the container)
 
 
 def start_run(market_id: str, source: str, command: str, args: dict[str, Any]) -> UUID:

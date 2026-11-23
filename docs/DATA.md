@@ -27,7 +27,7 @@ PostGIS, pgvector, h3, pg_trgm, unaccent). Its files are in the Docker volume
 | Database | `mip` |
 | Read-only user (use this for analysis, notebooks, BI, agents) | `mip_reader` / `mip_reader` |
 | Owner (pipelines only) | `mip` / `mip` |
-| URL | `postgresql://mip_reader:mip_reader@localhost:5434/mip` |
+| URL | `postgresql://mip_reader:<set in ~/.config/homelab-readers/mip_reader.pw>@localhost:5434/mip` |
 
 `mip_reader` can read `core`, `marts`, `ml`, `staging` and the `ops` registries (datasets, languages, tags, entity-resolution ids, runs). It cannot write: every transaction is read-only and
 queries stop after 5 minutes. Tenant tables (`core.tenant_*`) return no rows unless the session sets
@@ -37,12 +37,12 @@ Docker Desktop must be running. Start the database with `docker compose up -d` i
 
 **DataGrip:** New → Data Source → PostgreSQL, using the values above. Starter queries are in `docs/explore.sql`.
 
-**Terminal:** `psql postgresql://mip_reader:mip_reader@localhost:5434/mip`
+**Terminal:** `psql postgresql://mip_reader:<set in ~/.config/homelab-readers/mip_reader.pw>@localhost:5434/mip`
 
 **Python (pandas):**
 ```python
 import pandas as pd, sqlalchemy as sa
-eng = sa.create_engine("postgresql+psycopg://mip_reader:mip_reader@localhost:5434/mip")
+eng = sa.create_engine("postgresql+psycopg://mip_reader:<set in ~/.config/homelab-readers/mip_reader.pw>@localhost:5434/mip")
 df = pd.read_sql("select * from marts.occasion_content_calendar where day < current_date + 30", eng)
 ```
 
@@ -50,7 +50,7 @@ df = pd.read_sql("select * from marts.occasion_content_calendar where day < curr
 ```python
 import duckdb
 con = duckdb.connect(); con.sql("INSTALL postgres; LOAD postgres;")
-con.sql("ATTACH 'postgresql://mip_reader:mip_reader@localhost:5434/mip' AS pg (TYPE postgres, READ_ONLY)")
+con.sql("ATTACH 'postgresql://mip_reader:<set in ~/.config/homelab-readers/mip_reader.pw>@localhost:5434/mip' AS pg (TYPE postgres, READ_ONLY)")
 con.sql("select platform, count(*) from pg.core.post group by 1").show()
 ```
 

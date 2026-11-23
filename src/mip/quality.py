@@ -1,5 +1,6 @@
 """Quality report per run (feeds the promotion gates): status mix, volume vs previous run, completeness of key
-fields, freshness, quarantine. Written to ops.quality_report; any failed check makes `mip report` exit 1."""
+fields, freshness, quarantine. Written to ops.quality_report. Any failed check makes `mip report` exit
+CHECKS_FAILED_EXIT (3), distinct from a crash (1), so the weekly job can warn on checks and fail on crashes."""
 
 import typer
 from rich.console import Console
@@ -10,6 +11,7 @@ from mip.db import connect
 
 console = Console()
 
+CHECKS_FAILED_EXIT = 3  # scripts/weekly_refresh.sh treats this as a warning, not a failed week
 MAX_BAD_STATUS_SHARE = 0.20
 BAD_STATUS_OVERRIDES = {"web_crawl": 0.60, "tiktok": 0.70, "instagram_graph": 0.50}  # the open web is messy
 MAX_VOLUME_DROP = 0.30
@@ -98,4 +100,4 @@ def run_report(market: Market) -> None:
     console.print(t)
     console.print(f"[{'red' if failures else 'green'}]{failures} failed check(s)[/]")
     if failures:
-        raise typer.Exit(1)
+        raise typer.Exit(CHECKS_FAILED_EXIT)
